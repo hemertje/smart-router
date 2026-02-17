@@ -84,8 +84,11 @@ export class OpenRouterClient {
     // These are approximate costs per 1M tokens
     const pricing: Record<string, number> = {
       'xiaomi/mimo-v2-flash': 0,      // FREE
+      'swe-1.5': 0,                  // FREE
       'deepseek/deepseek-coder-v3': 0.14,  // ~$0.14/1M input, $0.28/1M output
-      'minimax/minimax-m2.1': 0.15,   // ~$0.15/1M input, $0.30/1M output
+      'minimax/minimax-m2.5': 0.15,   // ~$0.15/1M input, $0.30/1M output
+      'qwen/qwen3.5-397b-a17b': 0.36,  // ~$0.36/1M input, $1.80/1M output
+      'qwen/qwen3.5-plus-02-15': 0.24, // ~$0.24/1M input, $1.20/1M output
       'anthropic/claude-opus-4-6': 15, // ~$15/1M input, $75/1M output
     };
 

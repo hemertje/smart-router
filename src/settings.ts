@@ -9,6 +9,9 @@ export interface SmartRouterSettings {
   budgetAlerts: boolean;
   monthlyBudget: number;
   preferredModels: Record<string, string>;
+  zhipuApiKey: string;
+  minimaxApiKey: string;
+  alibabaApiKey: string;
 }
 
 export class SettingsManager {
@@ -25,7 +28,10 @@ export class SettingsManager {
       localClassifier: config.get<string>('localClassifier', 'ollama:qwen3:8b'),
       budgetAlerts: config.get<boolean>('budgetAlerts', true),
       monthlyBudget: config.get<number>('monthlyBudget', 50),
-      preferredModels: config.get<Record<string, string>>('preferredModels', {})
+      preferredModels: config.get<Record<string, string>>('preferredModels', {}),
+      zhipuApiKey: config.get<string>('zhipuApiKey', ''),
+      minimaxApiKey: config.get<string>('minimaxApiKey', ''),
+      alibabaApiKey: config.get<string>('alibabaApiKey', '')
     };
   }
 

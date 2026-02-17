@@ -2,7 +2,7 @@
   "name": "smart-router",
   "displayName": "Smart Router",
   "description": "Automatic AI model routing based on intent classification for VS Code",
-  "version": "0.2.0",
+  "version": "2.1.0",
   "engines": {
     "vscode": "^1.74.0"
   },

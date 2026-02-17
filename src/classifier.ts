@@ -33,7 +33,10 @@ export class IntentClassifier {
       simple: this.countMatches(lowerQuery, PATTERNS.simple),
       code_gen: this.countMatches(lowerQuery, PATTERNS.code_gen),
       debug: this.countMatches(lowerQuery, PATTERNS.debug),
-      architecture: this.countMatches(lowerQuery, PATTERNS.architecture)
+      architecture: this.countMatches(lowerQuery, PATTERNS.architecture),
+      architecture_screening: 0, // Not used in direct classification
+      architecture_screening_alt: 0, // Not used in direct classification
+      architecture_premium: 0     // Not used in direct classification
     };
     
     // Find intent with highest score

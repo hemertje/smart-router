@@ -98,7 +98,37 @@ export function activate(context: vscode.ExtensionContext) {
       
       // Use enhanced classifier
       const classification = await enhancedClassifier.classify(userQuery);
-      const routing = classifier.getRouting(classification.intent);
+      let routing = classifier.getRouting(classification.intent);
+      
+      // Enhanced architecture routing - 3-staps raket met slimme keuze
+      if (classification.intent === 'architecture') {
+        // Check for previous architecture attempts in context
+        const context = contextCache.getContext();
+        const previousAttempts = context.filter(c => 
+          c.intent === 'architecture' || 
+          c.intent === 'architecture_screening' ||
+          c.intent === 'architecture_screening_alt' ||
+          c.intent === 'architecture_premium'
+        );
+        
+        if (previousAttempts.length === 0) {
+          // Stap 1: SWE 1.5 snelle screening (FREE)
+          routing = classifier.getRouting('architecture');
+          stream.progress(`🚀 Stap 1: SWE 1.5 snelle architectuur screening (FREE)`);
+        } else if (previousAttempts.length === 1) {
+          // Stap 2: Kies tussen GLM-5 (kwaliteit) en Qwen (budget)
+          const settings = SettingsManager.getSettings();
+          
+          // Check voor Chinese API keys (niet meer nodig, GLM-5 werkt via OpenRouter)
+          // Gebruik altijd GLM-5 voor beste kwaliteit
+          routing = classifier.getRouting('architecture_screening');
+          stream.progress(`🏗️ Stap 2: GLM-5 Chinese model (open weights leader, $0.21)`);
+        } else {
+          // Stap 3: Opus 4.6 premium deep dive ($5.00)
+          routing = classifier.getRouting('architecture_premium');
+          stream.progress(`💎 Stap 3: Opus 4.6 premium deep dive (1M tokens)`);
+        }
+      }
       
       // Show progress with classification details
       stream.progress(

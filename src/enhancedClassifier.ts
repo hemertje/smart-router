@@ -176,7 +176,10 @@ export class EnhancedIntentClassifier {
       simple: this.calculateScore(lowerQuery, patterns.simple),
       code_gen: this.calculateScore(lowerQuery, patterns.code_gen),
       debug: this.calculateScore(lowerQuery, patterns.debug),
-      architecture: this.calculateScore(lowerQuery, patterns.architecture)
+      architecture: this.calculateScore(lowerQuery, patterns.architecture),
+      architecture_screening: 0, // Not used in direct classification
+      architecture_screening_alt: 0, // Not used in direct classification
+      architecture_premium: 0     // Not used in direct classification
     };
 
     // Find best intent
