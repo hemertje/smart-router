@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { IntentClassifier } from './classifier';
 import { EnhancedIntentClassifier } from './enhancedClassifier';
 import { OpenRouterClient } from './openrouter';
@@ -13,6 +14,8 @@ import { Intent, MODEL_ROUTING, BattleGroup, ChineseModelConfig, ArenaModeConfig
 import { ArenaModeManager } from './arenaMode';
 import { ChineseModelManager } from './chineseModels';
 import { ContextCache } from './contextCache';
+import { ImageAnalyzer } from './imageAnalyzer';
+import { ProactiveValidator } from './proactiveValidator';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Smart Router extension is now active!');
@@ -36,9 +39,16 @@ export function activate(context: vscode.ExtensionContext) {
   const chineseModelConfig: ChineseModelConfig = {
     enabled: true,
     costAdvantage: 0.7,
-    preferredModels: ['zhipu/glm-5', 'minimax/minimax-m2.5', 'alibaba/qwen-3.5']
+    preferredModels: ['z-ai/glm-5', 'minimax/minimax-m2.5', 'alibaba/qwen-3.5']
   };
   const chineseModelManager = new ChineseModelManager(chineseModelConfig);
+  
+  // Initialize image analyzer
+  const settings = SettingsManager.getSettings();
+  const imageAnalyzer = new ImageAnalyzer(settings.openrouterApiKey);
+  
+  // Initialize proactive validator
+  const proactiveValidator = new ProactiveValidator(settings.openrouterApiKey);
   
   // Initialize async components
   const initialize = async () => {
@@ -51,17 +61,37 @@ export function activate(context: vscode.ExtensionContext) {
     const validation = SettingsManager.validateSettings(settings);
     
     if (!validation.valid) {
-      logger.warn('Settings validation failed', { errors: validation.errors });
+      logger.warn(`Settings validation failed: ${validation.errors.join(', ')}`);
       vscode.window.showWarningMessage(
-        `Smart Router: ${validation.errors.join(', ')}`,
-        'Open Settings'
-      ).then(selection => {
-        if (selection === 'Open Settings') {
-          SettingsManager.openSettings();
-        }
-      });
+        `Smart Router settings validation failed. Check settings: ${validation.errors.join(', ')}`
+      );
     }
     
+    // Proactive system validation (async, non-blocking)
+    setTimeout(async () => {
+      try {
+        const systemValidation = await proactiveValidator.validateSystem();
+        if (!systemValidation.valid) {
+          logger.warn(`System validation found ${systemValidation.issues.length} issues`);
+          // Show notification for critical issues
+          const criticalIssues = systemValidation.issues.filter(i => i.type === 'error');
+          if (criticalIssues.length > 0) {
+            vscode.window.showWarningMessage(
+              `Smart Router: ${criticalIssues.length} critical issues found. Run 'Smart Router: Validate System' for details.`,
+              'Validate System'
+            ).then(selection => {
+              if (selection === 'Validate System') {
+                vscode.commands.executeCommand('smart.validateSystem');
+              }
+            });
+          }
+        } else {
+          logger.info('System validation passed - all systems operational');
+        }
+      } catch (error: any) {
+        logger.error(`Proactive validation failed: ${error.message}`);
+      }
+    }, 5000); // Run after 5 seconds
     // Start status bar
     if (settings.enabled) {
       statusBarManager.start();
@@ -473,6 +503,82 @@ ${Object.entries(stats.mostUsedIntents).map(([intent, count]) =>
     vscode.window.showInformationMessage('Context cache geleegd');
   });
   
+  // Image analysis command
+  const analyzeImageCommand = vscode.commands.registerCommand('smart.analyzeImage', async () => {
+    // Show file picker for image
+    const fileUri = await vscode.window.showOpenDialog({
+      canSelectMany: false,
+      openLabel: 'Select Image to Analyze',
+      filters: {
+        'Images': ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
+      }
+    });
+    
+    if (!fileUri || fileUri.length === 0) {
+      vscode.window.showInformationMessage('No image selected');
+      return;
+    }
+    
+    const imagePath = fileUri[0].fsPath;
+    
+    // Show progress
+    await vscode.window.withProgress({
+      location: vscode.ProgressLocation.Notification,
+      title: 'Analyzing Image',
+      cancellable: false
+    }, async (progress) => {
+      progress.report({ increment: 0, message: 'Loading image...' });
+      
+      // Analyze image
+      const result = await imageAnalyzer.analyzeImage(imagePath);
+      
+      if (result.success) {
+        progress.report({ increment: 100, message: 'Analysis complete!' });
+        
+        // Show results
+        const analysis = `
+🖼️ **Image Analysis Results**
+
+**File:** ${path.basename(imagePath)}
+**Model:** ${result.model}
+**Tokens:** ${result.tokens}
+**Cost:** $${result.cost?.toFixed(4)}
+
+**Analysis:**
+${result.analysis}
+
+---
+*Powered by GLM-5 via OpenRouter*
+        `;
+        
+        // Create new document with results
+        const doc = await vscode.workspace.openTextDocument({
+          content: analysis,
+          language: 'markdown'
+        });
+        
+        await vscode.window.showTextDocument(doc);
+        
+        // Track cost
+        if (result.cost) {
+          const project = await projectDetector.detectProject();
+          await costTracker.trackUsage('debug' as Intent, result.model!, result.cost!, 'Image analysis', 0, {
+            prompt: Math.floor(result.tokens! * 0.3),
+            completion: Math.floor(result.tokens! * 0.7),
+            total: result.tokens!
+          });
+        }
+      } else {
+        vscode.window.showErrorMessage(`Image analysis failed: ${result.error}`);
+      }
+    });
+  });
+  
+  // Proactive validation command
+  const validateSystemCommand = vscode.commands.registerCommand('smart.validateSystem', async () => {
+    await proactiveValidator.showValidationResults();
+  });
+  
   context.subscriptions.push(
     showCostsCommand,
     showStatusCommand,
@@ -482,7 +588,9 @@ ${Object.entries(stats.mostUsedIntents).map(([intent, count]) =>
     startArenaModeCommand,
     showChineseModelsCommand,
     showContextCacheCommand,
-    clearContextCacheCommand
+    clearContextCacheCommand,
+    analyzeImageCommand,
+    validateSystemCommand
   );
   
   // Add status bar to subscriptions for cleanup

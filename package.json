@@ -2,7 +2,7 @@
   "name": "smart-router",
   "displayName": "Smart Router",
   "description": "Automatic AI model routing based on intent classification for VS Code",
-  "version": "2.1.0",
+  "version": "2.3.0",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -68,6 +68,16 @@
       {
         "command": "smart.clearContextCache",
         "title": "Clear Context Cache",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.analyzeImage",
+        "title": "Analyze Image",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.validateSystem",
+        "title": "Validate System",
         "category": "Smart Router"
       }
     ],
