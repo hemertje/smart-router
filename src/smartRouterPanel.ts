@@ -121,12 +121,12 @@ export class SmartRouterPanel {
       const messages: OpenRouterMessage[] = [
         { 
           role: 'system', 
-          content: 'You are a helpful AI assistant specialized in analyzing screenshots and code. Provide detailed analysis and suggestions for improvements. Be concise but thorough.' 
+          content: 'Je bent een behulpzame AI assistent gespecialiseerd in het analyseren van screenshots en code. Geef gedetailleerde analyse en suggesties voor verbeteringen in het Nederlands. Wees beknopt maar grondig. Antwoord altijd in het Nederlands.' 
         },
         { 
           role: 'user', 
           content: [
-            { type: 'text', text: prompt || 'Analyseer deze screenshot en identificeer problemen en suggesties voor verbetering.' },
+            { type: 'text', text: prompt || 'Analyseer deze screenshot en identificeer problemen en suggesties voor verbetering. Geef antwoord in het Nederlands.' },
             { type: 'image_url', image_url: { url: imageData } }
           ]
         }
