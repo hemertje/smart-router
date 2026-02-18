@@ -920,12 +920,6 @@ function generateHECOReportHtml(analysis: any): string {
   </div>
 </div>
 
-<script>
-  // Auto-refresh every 30 seconds
-  setTimeout(() => {
-    location.reload();
-  }, 30000);
-</script>
 </body>
 </html>
   `;
