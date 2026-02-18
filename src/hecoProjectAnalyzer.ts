@@ -22,11 +22,13 @@ export class HECOProjectAnalyzer {
     
     return {
       structure: structure,
+      issues: issues,
+      suggestions: suggestions,
       summary: {
         totalFiles: structure.length,
         issuesFound: issues.length,
         suggestionsMade: suggestions.length,
-        criticalIssues: issues.filter(i => i.severity === 'critical').length
+        criticalIssues: issues.filter((i: any) => i.severity === 'critical').length
       },
       websiteData
     };
