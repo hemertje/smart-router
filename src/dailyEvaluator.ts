@@ -15,6 +15,8 @@ const WATCHLIST_MODELS = [
   { id: 'inclusionAI/Ling-2.5-1T', name: 'Ling-2.5-1T', targetIntent: 'debug' },
   { id: 'inclusionAI/Ring-2.5-1T', name: 'Ring-2.5-1T', targetIntent: 'reasoning' },
   { id: 'inclusionAI/Ming-Flash-Omni-2.0', name: 'Ming-Flash-Omni-2.0', targetIntent: 'multimodal' },
+  { id: 'qwen/qwen3-max-thinking', name: 'Qwen3 Max Thinking', targetIntent: 'architecture_premium' },
+  { id: 'qwen/qwen3-coder-next', name: 'Qwen3 Coder Next', targetIntent: 'code_gen' },
 ];
 
 export class DailyEvaluator {

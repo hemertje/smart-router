@@ -89,6 +89,7 @@ export class ProactiveValidator {
     const criticalModels = [
       'qwen/qwen3-235b-a22b',
       'anthropic/claude-sonnet-4.6',
+      'anthropic/claude-haiku-4.5',
       'google/gemini-2.0-flash-001'
     ];
 

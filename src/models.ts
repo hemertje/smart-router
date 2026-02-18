@@ -24,10 +24,10 @@ export const MODEL_ROUTING = {
     description: 'Stap 1: Qwen3 235B snelle architectuur screening (free)'
   },
   architecture_screening: { 
-    model: 'thudm/glm-4-32b', 
-    cost: 0.21,
-    maxTokens: 128000,
-    description: 'Stap 2: GLM-4 32B Chinese model ($0.21)'
+    model: 'qwen/qwen3-235b-a22b', 
+    cost: 0,
+    maxTokens: 8192,
+    description: 'Stap 2: Qwen3 235B screening (free, glm-4-32b niet meer beschikbaar)'
   },
   architecture_screening_alt: { 
     model: 'qwen/qwen3.5-397b-a17b', 
@@ -43,10 +43,10 @@ export const MODEL_ROUTING = {
   },
   // Roo Code integrated routes
   roo_code_gen: {
-    model: 'openai/gpt-5.3-codex',
-    cost: 2.0,
-    maxTokens: 128000,
-    description: 'GPT-5.3 Codex via Roo Code (code specialist)'
+    model: 'anthropic/claude-haiku-4.5',
+    cost: 0.8,
+    maxTokens: 200000,
+    description: 'Claude Haiku 4.5 via Roo Code (snel, goedkoop, gpt-5.3-codex niet beschikbaar)'
   },
   roo_architect: {
     model: 'anthropic/claude-sonnet-4.6',
@@ -55,10 +55,10 @@ export const MODEL_ROUTING = {
     description: 'Claude Sonnet 4.6 via Roo Code (architect mode, 1M context)'
   },
   roo_debug: {
-    model: 'google/gemini-3-flash',
-    cost: 0.075,
+    model: 'google/gemini-2.0-flash-001',
+    cost: 0.1,
     maxTokens: 1000000,
-    description: 'Gemini 3 Flash via Roo Code (fast debug, 1M tokens)'
+    description: 'Gemini 2.0 Flash via Roo Code (fast debug, 1M tokens, gemini-3-flash niet beschikbaar)'
   },
   roo_premium: {
     model: 'anthropic/claude-opus-4.6',
@@ -72,17 +72,17 @@ export const MODEL_ROUTING = {
 export const ARENA_BATTLE_GROUPS = {
   frontier: {
     name: 'Frontier',
-    models: ['anthropic/claude-opus-4.6', 'anthropic/claude-sonnet-4.6', 'anthropic/claude-opus-4-5', 'anthropic/claude-sonnet-4-5'],
+    models: ['anthropic/claude-opus-4.6', 'anthropic/claude-sonnet-4.6', 'anthropic/claude-opus-4.5', 'anthropic/claude-sonnet-4.5'],
     description: 'Top reasoning modellen voor maximale intelligentie (incl. Sonnet 4.6)'
   },
   fast: {
     name: 'Fast',
-    models: ['qwen/qwen3-235b-a22b', 'anthropic/claude-haiku-4-5', 'google/gemini-flash-1.5', 'google/gemini-2.0-flash-001'],
+    models: ['qwen/qwen3-235b-a22b', 'anthropic/claude-haiku-4.5', 'google/gemini-2.0-flash-001', 'qwen/qwen3-coder-next'],
     description: 'Snelle modellen geoptimaliseerd voor snelheid'
   },
   hybrid: {
     name: 'Hybrid',
-    models: ['anthropic/claude-sonnet-4-5', 'qwen/qwen3-235b-a22b', 'minimax/minimax-m1-40k'],
+    models: ['anthropic/claude-sonnet-4.5', 'qwen/qwen3-235b-a22b', 'minimax/minimax-m2.5'],
     description: 'Balans tussen snelheid en intelligentie'
   }
 };
