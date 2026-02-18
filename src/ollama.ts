@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as http from 'http';
 import { Intent } from './models';
 
 export interface OllamaResponse {
@@ -21,27 +21,57 @@ export class OllamaClient {
     this.model = model;
   }
 
+  private httpPost(path: string, body: object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const data = JSON.stringify(body);
+      const url = new URL(this.baseUrl);
+      const options = {
+        hostname: url.hostname,
+        port: url.port || 11434,
+        path,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) }
+      };
+      const req = http.request(options, (res) => {
+        let raw = '';
+        res.on('data', (chunk) => raw += chunk);
+        res.on('end', () => { try { resolve(JSON.parse(raw)); } catch { resolve(raw); } });
+      });
+      req.on('error', reject);
+      req.setTimeout(10000, () => { req.destroy(new Error('timeout')); });
+      req.write(data);
+      req.end();
+    });
+  }
+
+  private httpGet(path: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const url = new URL(this.baseUrl);
+      const options = { hostname: url.hostname, port: url.port || 11434, path, method: 'GET' };
+      const req = http.request(options, (res) => {
+        let raw = '';
+        res.on('data', (chunk) => raw += chunk);
+        res.on('end', () => { try { resolve(JSON.parse(raw)); } catch { resolve(raw); } });
+      });
+      req.on('error', reject);
+      req.setTimeout(2000, () => { req.destroy(new Error('timeout')); });
+      req.end();
+    });
+  }
+
   async generate(prompt: string): Promise<string> {
     try {
-      const response = await axios.post<OllamaResponse>(
-        `${this.baseUrl}/api/generate`,
-        {
-          model: this.model,
-          prompt: prompt,
-          stream: false,
-          options: {
-            temperature: 0.1, // Low temperature for consistent classification
-            top_p: 0.9,
-          }
-        }
-      );
-
-      return response.data.response.trim();
+      const data = await this.httpPost('/api/generate', {
+        model: this.model,
+        prompt: prompt,
+        stream: false,
+        options: { temperature: 0.1, top_p: 0.9 }
+      });
+      return (data as OllamaResponse).response.trim();
     } catch (error: any) {
       if (error.code === 'ECONNREFUSED') {
         throw new Error('Ollama is not running. Start with: ollama serve');
       }
-      console.error('Ollama error:', error.response?.data || error.message);
       throw new Error(`Ollama error: ${error.message}`);
     }
   }
@@ -75,8 +105,8 @@ Category (one word only):`;
 
   async isAvailable(): Promise<boolean> {
     try {
-      const response = await axios.get(`${this.baseUrl}/api/tags`, { timeout: 2000 });
-      return response.status === 200;
+      await this.httpGet('/api/tags');
+      return true;
     } catch {
       return false;
     }
@@ -85,21 +115,18 @@ Category (one word only):`;
   async pullModel(model: string = this.model): Promise<void> {
     console.log(`Pulling Ollama model: ${model}`);
     try {
-      const response = await axios.post(`${this.baseUrl}/api/pull`, {
-        model: model,
-        stream: false
-      });
+      await this.httpPost('/api/pull', { model, stream: false });
       console.log('Model pulled successfully');
     } catch (error: any) {
-      console.error('Failed to pull model:', error.response?.data || error.message);
+      console.error('Failed to pull model:', error.message);
       throw error;
     }
   }
 
   async listModels(): Promise<string[]> {
     try {
-      const response = await axios.get(`${this.baseUrl}/api/tags`);
-      return response.data.models.map((m: any) => m.name);
+      const data = await this.httpGet('/api/tags');
+      return data.models.map((m: any) => m.name);
     } catch (error) {
       console.error('Failed to list models:', error);
       return [];

@@ -9,7 +9,6 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/create_package.py
-**/node_modules/**
 .git/**
 **/.DS_Store
 **/*.log

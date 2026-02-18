@@ -85,32 +85,41 @@ export class ProactiveValidator {
   private async validateModelAvailability(): Promise<{ valid: boolean; issues: ValidationIssue[] }> {
     const issues: ValidationIssue[] = [];
 
-    // Check critical models
+    // Check critical models - fetch list once for efficiency
     const criticalModels = [
-      'swe-1.5',
-      'z-ai/glm-5',
-      'anthropic/claude-3.5-sonnet'
+      'qwen/qwen3-235b-a22b',
+      'anthropic/claude-sonnet-4.6',
+      'google/gemini-2.0-flash-001'
     ];
 
-    for (const modelId of criticalModels) {
-      try {
-        const modelInfo = await this.openRouter.getModelInfo(modelId);
-        if (!modelInfo) {
-          issues.push({
-            type: 'error',
-            component: 'Model Availability',
-            message: `Critical model not available: ${modelId}`,
-            fix: 'Check model availability and update routing configuration'
-          });
-        }
-      } catch (error: any) {
+    try {
+      const availableModels = await this.openRouter.listModels();
+      if (availableModels.length === 0) {
         issues.push({
           type: 'warning',
           component: 'Model Availability',
-          message: `Cannot validate model ${modelId}: ${error.message}`,
-          fix: 'Verify OpenRouter service status'
+          message: 'Could not fetch model list from OpenRouter (API key may not be set)',
+          fix: 'Set smartRouter.openrouterApiKey in VS Code settings'
         });
+      } else {
+        for (const modelId of criticalModels) {
+          if (!availableModels.includes(modelId)) {
+            issues.push({
+              type: 'warning',
+              component: 'Model Availability',
+              message: `Model not found in OpenRouter: ${modelId}`,
+              fix: 'Check model availability at openrouter.ai/models'
+            });
+          }
+        }
       }
+    } catch (error: any) {
+      issues.push({
+        type: 'warning',
+        component: 'Model Availability',
+        message: `Cannot validate models: ${error.message}`,
+        fix: 'Verify OpenRouter service status and API key'
+      });
     }
 
     return { valid: issues.length === 0, issues };

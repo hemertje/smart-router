@@ -12,6 +12,9 @@ export interface SmartRouterSettings {
   zhipuApiKey: string;
   minimaxApiKey: string;
   alibabaApiKey: string;
+  rooCodeIntegration: boolean;
+  rooCodeAutoDelegate: boolean;
+  rooCodePreferredMode: string;
 }
 
 export class SettingsManager {
@@ -31,7 +34,10 @@ export class SettingsManager {
       preferredModels: config.get<Record<string, string>>('preferredModels', {}),
       zhipuApiKey: config.get<string>('zhipuApiKey', ''),
       minimaxApiKey: config.get<string>('minimaxApiKey', ''),
-      alibabaApiKey: config.get<string>('alibabaApiKey', '')
+      alibabaApiKey: config.get<string>('alibabaApiKey', ''),
+      rooCodeIntegration: config.get<boolean>('rooCodeIntegration', true),
+      rooCodeAutoDelegate: config.get<boolean>('rooCodeAutoDelegate', false),
+      rooCodePreferredMode: config.get<string>('rooCodePreferredMode', 'code')
     };
   }
 

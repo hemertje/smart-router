@@ -2,9 +2,10 @@
   "name": "smart-router",
   "displayName": "Smart Router",
   "description": "Automatic AI model routing based on intent classification for VS Code",
-  "version": "2.3.0",
+  "version": "2.7.0",
+  "publisher": "universal-vibe",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.109.0"
   },
   "categories": [
     "Other",
@@ -12,14 +13,27 @@
     "Snippets"
   ],
   "activationEvents": [
+    "onStartupFinished",
     "onChatParticipant:smart"
   ],
   "main": "./out/extension.js",
+  "files": [
+    "out/**/*",
+    "node_modules/**/*",
+    "package.json",
+    "LICENSE.txt",
+    ".vsixmanifest"
+  ],
+  "exclude": [
+    "src/test/**/*",
+    "test/**/*",
+    "**/*.test.ts"
+  ],
   "contributes": {
     "chatParticipants": [
       {
         "id": "smart",
-        "name": "Smart Router",
+        "name": "smart",
         "description": "AI model routing based on intent classification",
         "isSticky": true
       }
@@ -78,6 +92,41 @@
       {
         "command": "smart.validateSystem",
         "title": "Validate System",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.showHealth",
+        "title": "Show Health Dashboard",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.showCostPredictions",
+        "title": "Show Cost Predictions",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.showPerformance",
+        "title": "Show Performance Dashboard",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.openChat",
+        "title": "Open Chat Panel",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.showRooCodeStatus",
+        "title": "Show Roo Code Integration Status",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.delegateToRooCode",
+        "title": "Delegate Task to Roo Code",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smart.toggleRooCode",
+        "title": "Toggle Roo Code Integration",
         "category": "Smart Router"
       }
     ],
@@ -155,6 +204,27 @@
           "type": "boolean",
           "default": false,
           "description": "Enable predictive cost engine (v2.0 feature)"
+        },
+        "smartRouter.rooCodeIntegration": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Roo Code integration for task delegation (v2.7.0)"
+        },
+        "smartRouter.rooCodeAutoDelegate": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-delegate code_gen and debug tasks to Roo Code when available"
+        },
+        "smartRouter.rooCodePreferredMode": {
+          "type": "string",
+          "default": "code",
+          "description": "Preferred Roo Code mode for delegated tasks",
+          "enum": [
+            "code",
+            "architect",
+            "ask",
+            "debug"
+          ]
         }
       }
     }
@@ -165,7 +235,7 @@
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
+    "@types/vscode": "^1.109.0",
     "@types/node": "16.x",
     "typescript": "^4.9.4"
   },

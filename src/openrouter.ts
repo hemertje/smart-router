@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as https from 'https';
 import { ModelConfig, Intent } from './models';
 
 export interface OpenRouterResponse {
@@ -28,6 +28,44 @@ export class OpenRouterClient {
     this.apiKey = apiKey;
   }
 
+  private httpsRequest(method: string, path: string, body?: object, extraHeaders?: Record<string,string>): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const data = body ? JSON.stringify(body) : undefined;
+      const options: https.RequestOptions = {
+        hostname: 'openrouter.ai',
+        port: 443,
+        path,
+        method,
+        headers: {
+          'Authorization': `Bearer ${this.apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://github.com/hemertje/HECO',
+          'X-Title': 'Smart Router Extension',
+          ...(data ? { 'Content-Length': Buffer.byteLength(data) } : {}),
+          ...extraHeaders
+        }
+      };
+      const req = https.request(options, (res) => {
+        let raw = '';
+        res.on('data', (chunk) => raw += chunk);
+        res.on('end', () => {
+          try {
+            const parsed = JSON.parse(raw);
+            if (res.statusCode && res.statusCode >= 400) {
+              reject(new Error(parsed?.error?.message || `HTTP ${res.statusCode}`));
+            } else {
+              resolve(parsed);
+            }
+          } catch { resolve(raw); }
+        });
+      });
+      req.on('error', reject);
+      req.setTimeout(30000, () => { req.destroy(new Error('Request timeout')); });
+      if (data) req.write(data);
+      req.end();
+    });
+  }
+
   async complete(
     model: string,
     messages: Array<{ role: string; content: string }>,
@@ -38,43 +76,36 @@ export class OpenRouterClient {
     } = {}
   ): Promise<OpenRouterResponse> {
     try {
-      const response = await axios.post(
-        `${this.baseUrl}/chat/completions`,
-        {
-          model: model,
-          messages: messages,
-          max_tokens: options.max_tokens || 4096,
-          temperature: options.temperature || 0.7,
-          stream: options.stream || false,
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${this.apiKey}`,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://github.com/hemertje/HECO',
-            'X-Title': 'Smart Router Extension',
-          },
-        }
-      );
-
-      return response.data;
+      const result = await this.httpsRequest('POST', '/api/v1/chat/completions', {
+        model,
+        messages,
+        max_tokens: options.max_tokens || 4096,
+        temperature: options.temperature || 0.7,
+        stream: options.stream || false,
+      });
+      return result as OpenRouterResponse;
     } catch (error: any) {
-      console.error('OpenRouter API error:', error.response?.data || error.message);
-      throw new Error(`OpenRouter API error: ${error.response?.data?.error?.message || error.message}`);
+      throw new Error(`OpenRouter API error: ${error.message}`);
+    }
+  }
+
+  async listModels(): Promise<string[]> {
+    try {
+      const result = await this.httpsRequest('GET', '/api/v1/models');
+      return (result?.data || []).map((m: any) => m.id as string);
+    } catch (error: any) {
+      console.error('List models error:', error.message);
+      return [];
     }
   }
 
   async getModelInfo(model: string): Promise<any> {
     try {
-      const response = await axios.get(`${this.baseUrl}/model`, {
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-        },
-        params: { model }
-      });
-      return response.data;
+      const result = await this.httpsRequest('GET', '/api/v1/models');
+      const models: any[] = result?.data || [];
+      return models.find((m: any) => m.id === model) || null;
     } catch (error: any) {
-      console.error('Model info error:', error.response?.data || error.message);
+      console.error('Model info error:', error.message);
       return null;
     }
   }

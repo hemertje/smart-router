@@ -36,7 +36,11 @@ export class IntentClassifier {
       architecture: this.countMatches(lowerQuery, PATTERNS.architecture),
       architecture_screening: 0, // Not used in direct classification
       architecture_screening_alt: 0, // Not used in direct classification
-      architecture_premium: 0     // Not used in direct classification
+      architecture_premium: 0,    // Not used in direct classification
+      roo_code_gen: 0,            // Roo Code delegation routes
+      roo_architect: 0,
+      roo_debug: 0,
+      roo_premium: 0
     };
     
     // Find intent with highest score

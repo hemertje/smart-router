@@ -16,6 +16,11 @@ import { ChineseModelManager } from './chineseModels';
 import { ContextCache } from './contextCache';
 import { ImageAnalyzer } from './imageAnalyzer';
 import { ProactiveValidator } from './proactiveValidator';
+import { AutoHealingSystem } from './autoHealing';
+import { PredictiveCostEngine } from './predictiveCost';
+import { RealTimePerformanceMonitor } from './performanceMonitor';
+import { RooCodeBridge } from './rooCodeBridge';
+import { SmartRouterPanel } from './smartRouterPanel';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Smart Router extension is now active!');
@@ -33,6 +38,10 @@ export function activate(context: vscode.ExtensionContext) {
   const costTracker = new CostTracker(projectDetector);
   const statusBarManager = new StatusBarManager(costTracker, projectDetector);
   
+  // Initialize OpenRouter client
+  const settings = SettingsManager.getSettings();
+  const openRouterClient = new OpenRouterClient(settings.openrouterApiKey);
+  
   // Initialize new v2.0 components
   const contextCache = new ContextCache();
   const arenaModeManager = new ArenaModeManager(costTracker);
@@ -44,17 +53,36 @@ export function activate(context: vscode.ExtensionContext) {
   const chineseModelManager = new ChineseModelManager(chineseModelConfig);
   
   // Initialize image analyzer
-  const settings = SettingsManager.getSettings();
   const imageAnalyzer = new ImageAnalyzer(settings.openrouterApiKey);
   
   // Initialize proactive validator
   const proactiveValidator = new ProactiveValidator(settings.openrouterApiKey);
+  
+  // Initialize auto-healing system
+  const autoHealing = new AutoHealingSystem(openRouterClient);
+  
+  // Initialize predictive cost engine
+  const predictiveCost = new PredictiveCostEngine(costTracker);
+  
+  // Initialize performance monitor
+  const performanceMonitor = new RealTimePerformanceMonitor();
+  
+  // Initialize Roo Code bridge
+  const rooCodeBridge = new RooCodeBridge();
   
   // Initialize async components
   const initialize = async () => {
     logger.info('Initializing Smart Router extension...');
     
     await costTracker.initialize();
+    
+    // Detect Roo Code
+    const rooStatus = await rooCodeBridge.detect();
+    if (rooStatus.installed) {
+      logger.info(`Roo Code detected: v${rooStatus.version} (active: ${rooStatus.active})`);
+    } else {
+      logger.info('Roo Code not detected - running standalone');
+    }
     
     // Validate settings
     const settings = SettingsManager.getSettings();
@@ -116,7 +144,53 @@ export function activate(context: vscode.ExtensionContext) {
   };
   
   initialize();
-  
+
+  // Register Smart Router as a VS Code language model provider
+  // This fixes "Language model unavailable" when GitHub Copilot is not installed
+  if (typeof (vscode.lm as any).registerChatModelProvider === 'function') {
+    const modelProvider = (vscode.lm as any).registerChatModelProvider(
+      'smart-router',
+      {
+        async provideLanguageModelResponse(
+          messages: vscode.LanguageModelChatMessage[],
+          options: any,
+          extensionId: string,
+          progress: any,
+          token: vscode.CancellationToken
+        ) {
+          const settings = SettingsManager.getSettings();
+          const apiKey = settings.openrouterApiKey;
+          if (!apiKey) {
+            progress.report({ index: 0, part: new vscode.LanguageModelTextPart('⚠️ Set smartRouter.openrouterApiKey in VS Code settings to use Smart Router.') });
+            return;
+          }
+          const openrouter = new OpenRouterClient(apiKey);
+          const msgs = messages.map((m: any) => ({
+            role: m.role === 1 ? 'user' : 'assistant',
+            content: m.content.map((p: any) => p.value || '').join('')
+          }));
+          try {
+            const result = await openrouter.complete('qwen/qwen3-235b-a22b', msgs, { max_tokens: 4096 });
+            const text = result.choices[0]?.message?.content || '';
+            progress.report({ index: 0, part: new vscode.LanguageModelTextPart(text) });
+          } catch (e: any) {
+            progress.report({ index: 0, part: new vscode.LanguageModelTextPart(`Error: ${e.message}`) });
+          }
+        },
+        async countTokens(text: string) { return Math.ceil(text.length / 4); }
+      },
+      {
+        vendor: 'smart-router',
+        name: 'Smart Router (OpenRouter)',
+        family: 'smart-router',
+        version: '2.7.0',
+        maxInputTokens: 128000,
+        maxOutputTokens: 4096
+      }
+    );
+    context.subscriptions.push(modelProvider);
+  }
+
   // Register chat participant
   const participant = vscode.chat.createChatParticipant('smart', async (request, context, stream) => {
     const userQuery = request.prompt;
@@ -172,34 +246,61 @@ export function activate(context: vscode.ExtensionContext) {
       const settings = SettingsManager.getSettings();
       const openrouterApiKey = process.env.OPENROUTER_API_KEY || settings.openrouterApiKey;
       
+      // Always try VS Code built-in model first (request.model)
+      // This fixes "Language model unavailable" - VS Code Chat requires sendRequest()
+      const vsCodeModel = request.model;
+      
+      const routingHeader = `🧠 **Smart Router** | Intent: \`${classification.intent}\` | Model: \`${routing.config.model}\` | Cost: $${routing.config.cost}\n\n`;
+
       if (!openrouterApiKey) {
-        // No API key - show routing info only
-        const response = `🧠 **Smart Router Analysis**
-
-**Project Context:**
-${projectContext}
-
-**Classification:**
-- Intent: ${classification.intent}
-- Method: ${classification.method}
-- Confidence: ${(classification.confidence * 100).toFixed(0)}%
-- Reasoning: ${classification.reasoning}
-
-**Selected Model:** ${routing.config.model}
-**Cost:** $${routing.config.cost}
-**Description:** ${routing.config.description}
-
-**Query:** "${userQuery}"
-
-⚠️ *Note: OpenRouter API key not configured. Set OPENROUTER_API_KEY environment variable to enable full functionality.*`;
+        // No OpenRouter key - use VS Code built-in model with routing context
+        stream.markdown(routingHeader);
         
-        stream.markdown(response);
+        const systemPrompt = `You are a helpful AI assistant. Smart Router has classified this as a "${classification.intent}" task. Project context:\n${projectContext}`;
+        const messages = [
+          vscode.LanguageModelChatMessage.User(systemPrompt + '\n\nUser query: ' + userQuery)
+        ];
         
-        // Track usage (no cost)
+        try {
+          const vsResponse = await vsCodeModel.sendRequest(messages, {});
+          for await (const chunk of vsResponse.text) {
+            stream.markdown(chunk);
+          }
+        } catch (vsErr: any) {
+          stream.markdown(`⚠️ *No OpenRouter API key configured. Set \`smartRouter.openrouterApiKey\` in VS Code settings for full model routing.*\n\n*Routing would use: ${routing.config.model} (${routing.config.description})*`);
+        }
+        
         await costTracker.trackUsage(classification.intent, routing.config.model, 0, userQuery, Date.now() - startTime);
         return;
       }
       
+      // Check if task should be delegated to Roo Code
+      const rooSettings = SettingsManager.getSettings();
+      if (rooSettings.rooCodeIntegration && rooCodeBridge.isAvailable()) {
+        // Delegate code_gen and debug tasks to Roo Code when auto-delegate is on
+        if (rooSettings.rooCodeAutoDelegate && 
+            (classification.intent === 'code_gen' || classification.intent === 'debug')) {
+          stream.progress(`🔄 Delegating to Roo Code (${rooSettings.rooCodePreferredMode} mode)...`);
+          const delegation = await rooCodeBridge.delegateTask(userQuery, {
+            mode: rooSettings.rooCodePreferredMode as any,
+            model: routing.config.model
+          });
+          if (delegation.success) {
+            stream.markdown(
+              `✅ **Task delegated to Roo Code**\n\n` +
+              `- **Mode:** ${rooSettings.rooCodePreferredMode}\n` +
+              `- **Model:** ${routing.config.model}\n` +
+              `- **Result:** ${delegation.response}\n\n` +
+              `*Check the Roo Code panel for the full response.*`
+            );
+            await costTracker.trackUsage(classification.intent, routing.config.model, 0, userQuery, Date.now() - startTime);
+            return;
+          }
+          // If delegation fails, fall through to direct API call
+          stream.progress('⚠️ Roo Code delegation failed, using direct API...');
+        }
+      }
+
       // Full API integration
       const openrouter = new OpenRouterClient(openrouterApiKey);
       
@@ -579,6 +680,80 @@ ${result.analysis}
     await proactiveValidator.showValidationResults();
   });
   
+  // Health dashboard command
+  const showHealthCommand = vscode.commands.registerCommand('smart.showHealth', async () => {
+    await autoHealing.showHealthDashboard();
+  });
+  
+  // Cost predictions command
+  const showCostPredictionsCommand = vscode.commands.registerCommand('smart.showCostPredictions', async () => {
+    await predictiveCost.showCostPredictions();
+  });
+  
+  // Performance dashboard command
+  const showPerformanceCommand = vscode.commands.registerCommand('smart.showPerformance', async () => {
+    await performanceMonitor.showPerformanceDashboard();
+  });
+  
+  // Roo Code integration commands
+  const showRooCodeStatusCommand = vscode.commands.registerCommand('smart.showRooCodeStatus', async () => {
+    const report = await rooCodeBridge.getIntegrationReport();
+    const doc = await vscode.workspace.openTextDocument({
+      content: report,
+      language: 'markdown'
+    });
+    await vscode.window.showTextDocument(doc);
+  });
+
+  const delegateToRooCodeCommand = vscode.commands.registerCommand('smart.delegateToRooCode', async () => {
+    if (!rooCodeBridge.isAvailable()) {
+      vscode.window.showWarningMessage('Roo Code is not installed or not active. Install it from the VS Code marketplace.');
+      return;
+    }
+
+    const modes = [
+      { label: 'Code', description: 'Write and edit code', value: 'code' },
+      { label: 'Architect', description: 'Design architecture and plan', value: 'architect' },
+      { label: 'Ask', description: 'Ask questions about code', value: 'ask' },
+      { label: 'Debug', description: 'Debug issues', value: 'debug' }
+    ];
+
+    const selectedMode = await vscode.window.showQuickPick(modes, {
+      placeHolder: 'Select Roo Code mode'
+    });
+
+    if (!selectedMode) return;
+
+    const prompt = await vscode.window.showInputBox({
+      prompt: 'Enter your prompt for Roo Code',
+      placeHolder: 'e.g., Create a REST API with authentication'
+    });
+
+    if (!prompt) return;
+
+    const result = await rooCodeBridge.delegateTask(prompt, {
+      mode: selectedMode.value as any
+    });
+
+    if (result.success) {
+      vscode.window.showInformationMessage(`Task delegated to Roo Code: ${result.response}`);
+    } else {
+      vscode.window.showErrorMessage(`Roo Code delegation failed: ${result.error}`);
+    }
+  });
+
+  const openChatCommand = vscode.commands.registerCommand('smart.openChat', () => {
+    SmartRouterPanel.createOrShow(context.extensionUri);
+  });
+
+  const toggleRooCodeCommand = vscode.commands.registerCommand('smart.toggleRooCode', async () => {
+    const current = SettingsManager.getSettings().rooCodeIntegration;
+    await SettingsManager.updateSetting('rooCodeIntegration', !current);
+    vscode.window.showInformationMessage(
+      `Roo Code integration ${!current ? 'enabled' : 'disabled'}`
+    );
+  });
+
   context.subscriptions.push(
     showCostsCommand,
     showStatusCommand,
@@ -590,11 +765,19 @@ ${result.analysis}
     showContextCacheCommand,
     clearContextCacheCommand,
     analyzeImageCommand,
-    validateSystemCommand
+    validateSystemCommand,
+    showHealthCommand,
+    showCostPredictionsCommand,
+    showPerformanceCommand,
+    showRooCodeStatusCommand,
+    delegateToRooCodeCommand,
+    toggleRooCodeCommand,
+    openChatCommand
   );
   
   // Add status bar to subscriptions for cleanup
   context.subscriptions.push(statusBarManager);
+  
 }
 
 export function deactivate() {
