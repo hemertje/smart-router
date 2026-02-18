@@ -377,15 +377,15 @@ export class SmartRouterPanel {
   <div class="message assistant">👋 Hallo! Ik ben Smart Router. Stel een vraag of geef een taak en ik selecteer automatisch het beste AI model via OpenRouter.</div>
 </div>
 <div id="input-area">
-  <div id="image-upload-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+  <div id="image-upload-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onpaste="handlePaste(event)" tabindex="0">
     <input type="file" id="image-input" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
     <div id="upload-prompt">
-      📷 Sleep een screenshot hier of <a href="#" onclick="document.getElementById('image-input').click(); return false;">klik om te selecteren</a>
+      📷 Sleep, plak (Ctrl+V) of <a href="#" onclick="document.getElementById('image-input').click(); return false;">klik om te selecteren</a>
     </div>
     <div id="image-preview" style="display:none">
       <img id="preview-img" style="max-width:200px;max-height:150px;border-radius:4px;margin-bottom:8px">
       <div id="image-prompt">
-        <input type="text" id="prompt-input" placeholder="Wat wil je weten over deze screenshot?" style="width:100%;padding:8px;margin-bottom:8px;border:1px solid var(--vscode-input-border);background:var(--vscode-input-background);color:var(--vscode-input-foreground);border-radius:4px">
+        <input type="text" id="prompt-input" placeholder="📝 Voeg hier je specifieke vraag over deze screenshot in..." style="width:100%;padding:8px;margin-bottom:8px;border:1px solid var(--vscode-input-border);background:var(--vscode-input-background);color:var(--vscode-input-foreground);border-radius:4px">
         <button id="analyze-btn" onclick="analyzeImage()">Analyseer</button>
         <button id="cancel-btn" onclick="cancelImage()">Annuleren</button>
       </div>
@@ -455,6 +455,23 @@ export class SmartRouterPanel {
     const files = e.dataTransfer.files;
     if (files.length > 0 && files[0].type.startsWith('image/')) {
       handleImageFile(files[0]);
+    }
+  }
+
+  function handlePaste(e) {
+    e.preventDefault();
+    const items = e.clipboardData.items;
+    
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (file) {
+          handleImageFile(file);
+          break;
+        }
+      }
     }
   }
 
