@@ -15,6 +15,8 @@ export interface SmartRouterSettings {
   rooCodeIntegration: boolean;
   rooCodeAutoDelegate: boolean;
   rooCodePreferredMode: string;
+  hecoUrl: string;
+  hecoProjectPath: string;
 }
 
 export class SettingsManager {
@@ -37,7 +39,9 @@ export class SettingsManager {
       alibabaApiKey: config.get<string>('alibabaApiKey', ''),
       rooCodeIntegration: config.get<boolean>('rooCodeIntegration', true),
       rooCodeAutoDelegate: config.get<boolean>('rooCodeAutoDelegate', false),
-      rooCodePreferredMode: config.get<string>('rooCodePreferredMode', 'code')
+      rooCodePreferredMode: config.get<string>('rooCodePreferredMode', 'code'),
+      hecoUrl: config.get<string>('hecoUrl', 'http://homeassistant.tailaf9b6d.ts.net:1880'),
+      hecoProjectPath: config.get<string>('hecoProjectPath', 'C:\\Dev\\HECO')
     };
   }
 

@@ -235,6 +235,16 @@
             "ask",
             "debug"
           ]
+        },
+        "smartRouter.hecoUrl": {
+          "type": "string",
+          "default": "http://homeassistant.tailaf9b6d.ts.net:1880",
+          "description": "URL van de Node-RED instantie voor HECO Project Analyzer (bijv. http://homeassistant.local:1880)"
+        },
+        "smartRouter.hecoProjectPath": {
+          "type": "string",
+          "default": "C:\\Dev\\HECO",
+          "description": "Lokaal pad naar het HECO project (bijv. C:\\Dev\\HECO)"
         }
       }
     }

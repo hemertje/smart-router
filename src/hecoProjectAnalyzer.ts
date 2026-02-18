@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Logger } from './logger';
+import { SettingsManager } from './settings';
 
 export class HECOProjectAnalyzer {
   private context: vscode.ExtensionContext;
@@ -10,8 +11,9 @@ export class HECOProjectAnalyzer {
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
-    this.hecoPath = 'C:\\Dev\\HECO';
-    this.hecoUrl = 'http://homeassistant.tailaf9b6d.ts.net:1880';
+    const settings = SettingsManager.getSettings();
+    this.hecoPath = settings.hecoProjectPath;
+    this.hecoUrl = settings.hecoUrl;
   }
 
   async analyzeFullProject(): Promise<any> {
