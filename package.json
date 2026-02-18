@@ -1,251 +1,60 @@
-{
+﻿{
   "name": "smart-router",
   "displayName": "Smart Router",
   "description": "Automatic AI model routing based on intent classification for VS Code",
   "version": "2.7.0",
   "publisher": "universal-vibe",
-  "engines": {
-    "vscode": "^1.109.0"
-  },
-  "categories": [
-    "Other",
-    "Machine Learning",
-    "Snippets"
-  ],
-  "activationEvents": [
-    "onStartupFinished",
-    "onChatParticipant:smart"
-  ],
+  "engines": { "vscode": "^1.109.0" },
+  "categories": ["Other", "Machine Learning", "Snippets"],
+  "activationEvents": ["onStartupFinished", "onChatParticipant:smart"],
   "main": "./out/extension.js",
-  "files": [
-    "out/**/*",
-    "node_modules/**/*",
-    "package.json",
-    "LICENSE.txt",
-    ".vsixmanifest"
-  ],
-  "exclude": [
-    "src/test/**/*",
-    "test/**/*",
-    "**/*.test.ts"
-  ],
+  "files": ["out/**/*", "node_modules/**/*", "package.json", "LICENSE.txt", ".vsixmanifest"],
+  "exclude": ["src/test/**/*", "test/**/*", "**/*.test.ts"],
   "contributes": {
-    "chatParticipants": [
-      {
-        "id": "smart",
-        "name": "smart",
-        "description": "AI model routing based on intent classification",
-        "isSticky": true
-      }
-    ],
+    "chatParticipants": [{ "id": "smart", "name": "smart", "description": "AI model routing based on intent classification", "isSticky": true }],
     "commands": [
-      {
-        "command": "smart.showCosts",
-        "title": "Show Model Costs",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showStatus",
-        "title": "Show Status",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.clearPreferences",
-        "title": "Clear Preferences",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.openSettings",
-        "title": "Open Settings",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.explainRouting",
-        "title": "Explain Routing Logic",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.startArena",
-        "title": "Start Arena Mode",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showChineseModels",
-        "title": "Show Chinese Models",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showContextCache",
-        "title": "Show Context Cache",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.clearContextCache",
-        "title": "Clear Context Cache",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.analyzeImage",
-        "title": "Analyze Image",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.validateSystem",
-        "title": "Validate System",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showHealth",
-        "title": "Show Health Dashboard",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showCostPredictions",
-        "title": "Show Cost Predictions",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showPerformance",
-        "title": "Show Performance Dashboard",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.openChat",
-        "title": "Open Chat Panel",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.runDailyEval",
-        "title": "Run Daily Evaluation Now",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.showRooCodeStatus",
-        "title": "Show Roo Code Integration Status",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.delegateToRooCode",
-        "title": "Delegate Task to Roo Code",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.toggleRooCode",
-        "title": "Toggle Roo Code Integration",
-        "category": "Smart Router"
-      },
-      {
-        "command": "smart.analyzeHECO",
-        "title": "Analyze HECO Project",
-        "category": "Smart Router"
-      }
+      { "command": "smart.showCosts", "title": "Show Model Costs", "category": "Smart Router" },
+      { "command": "smart.showStatus", "title": "Show Status", "category": "Smart Router" },
+      { "command": "smart.clearPreferences", "title": "Clear Preferences", "category": "Smart Router" },
+      { "command": "smart.openSettings", "title": "Open Settings", "category": "Smart Router" },
+      { "command": "smart.explainRouting", "title": "Explain Routing Logic", "category": "Smart Router" },
+      { "command": "smart.startArena", "title": "Start Arena Mode", "category": "Smart Router" },
+      { "command": "smart.showChineseModels", "title": "Show Chinese Models", "category": "Smart Router" },
+      { "command": "smart.showContextCache", "title": "Show Context Cache", "category": "Smart Router" },
+      { "command": "smart.clearContextCache", "title": "Clear Context Cache", "category": "Smart Router" },
+      { "command": "smart.analyzeImage", "title": "Analyze Image", "category": "Smart Router" },
+      { "command": "smart.validateSystem", "title": "Validate System", "category": "Smart Router" },
+      { "command": "smart.showHealth", "title": "Show Health Dashboard", "category": "Smart Router" },
+      { "command": "smart.showCostPredictions", "title": "Show Cost Predictions", "category": "Smart Router" },
+      { "command": "smart.showPerformance", "title": "Show Performance Dashboard", "category": "Smart Router" },
+      { "command": "smart.openChat", "title": "Open Chat Panel", "category": "Smart Router" },
+      { "command": "smart.runDailyEval", "title": "Run Daily Evaluation Now", "category": "Smart Router" },
+      { "command": "smart.showRooCodeStatus", "title": "Show Roo Code Integration Status", "category": "Smart Router" },
+      { "command": "smart.delegateToRooCode", "title": "Delegate Task to Roo Code", "category": "Smart Router" },
+      { "command": "smart.toggleRooCode", "title": "Toggle Roo Code Integration", "category": "Smart Router" },
+      { "command": "smart.analyzeHECO", "title": "Analyze HECO Project", "category": "Smart Router" }
     ],
     "configuration": {
       "title": "Smart Router",
       "properties": {
-        "smartRouter.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable Smart Router extension"
-        },
-        "smartRouter.openrouterApiKey": {
-          "type": "string",
-          "default": "",
-          "description": "OpenRouter API key",
-          "scope": "application"
-        },
-        "smartRouter.defaultModel": {
-          "type": "string",
-          "default": "auto",
-          "description": "Default model to use",
-          "enum": [
-            "auto",
-            "free",
-            "budget",
-            "premium"
-          ]
-        },
-        "smartRouter.costWarningThreshold": {
-          "type": "number",
-          "default": 5.0,
-          "description": "Daily cost warning threshold"
-        },
-        "smartRouter.monthlyBudget": {
-          "type": "number",
-          "default": 50.0,
-          "description": "Monthly budget limit"
-        },
-        "smartRouter.budgetAlerts": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable budget alerts"
-        },
-        "smartRouter.localClassifier": {
-          "type": "string",
-          "default": "ollama:qwen3:8b",
-          "description": "Local classifier model"
-        },
-        "smartRouter.arenaMode": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enable Arena Mode (v2.0 feature)"
-        },
-        "smartRouter.battleGroup": {
-          "type": "string",
-          "default": "hybrid",
-          "description": "Default battle group for Arena Mode",
-          "enum": [
-            "frontier",
-            "fast",
-            "hybrid"
-          ]
-        },
-        "smartRouter.chineseModels": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable Chinese AI models (v2.0 feature)"
-        },
-        "smartRouter.contextCache": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable context caching (v2.0 feature)"
-        },
-        "smartRouter.predictiveCost": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enable predictive cost engine (v2.0 feature)"
-        },
-        "smartRouter.rooCodeIntegration": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable Roo Code integration for task delegation (v2.7.0)"
-        },
-        "smartRouter.rooCodeAutoDelegate": {
-          "type": "boolean",
-          "default": false,
-          "description": "Auto-delegate code_gen and debug tasks to Roo Code when available"
-        },
-        "smartRouter.rooCodePreferredMode": {
-          "type": "string",
-          "default": "code",
-          "description": "Preferred Roo Code mode for delegated tasks",
-          "enum": [
-            "code",
-            "architect",
-            "ask",
-            "debug"
-          ]
-        },
-        "smartRouter.hecoUrl": {
-          "type": "string",
-          "default": "http://homeassistant.tailaf9b6d.ts.net:1880",
-          "description": "URL van de Node-RED instantie voor HECO Project Analyzer (bijv. http://homeassistant.local:1880)"
-        },
-        "smartRouter.hecoProjectPath": {
-          "type": "string",
-          "default": "C:\\Dev\\HECO",
-          "description": "Lokaal pad naar het HECO project (bijv. C:\\Dev\\HECO)"
-        }
+        "smartRouter.enabled": { "type": "boolean", "default": true, "description": "Enable Smart Router extension" },
+        "smartRouter.openrouterApiKey": { "type": "string", "default": "", "description": "OpenRouter API key", "scope": "application" },
+        "smartRouter.defaultModel": { "type": "string", "default": "auto", "description": "Default model to use", "enum": ["auto", "free", "budget", "premium"] },
+        "smartRouter.costWarningThreshold": { "type": "number", "default": 5.0, "description": "Daily cost warning threshold" },
+        "smartRouter.monthlyBudget": { "type": "number", "default": 50.0, "description": "Monthly budget limit" },
+        "smartRouter.budgetAlerts": { "type": "boolean", "default": true, "description": "Enable budget alerts" },
+        "smartRouter.localClassifier": { "type": "string", "default": "ollama:qwen3:8b", "description": "Local classifier model" },
+        "smartRouter.arenaMode": { "type": "boolean", "default": false, "description": "Enable Arena Mode (v2.0 feature)" },
+        "smartRouter.battleGroup": { "type": "string", "default": "hybrid", "description": "Default battle group for Arena Mode", "enum": ["frontier", "fast", "hybrid"] },
+        "smartRouter.chineseModels": { "type": "boolean", "default": true, "description": "Enable Chinese AI models (v2.0 feature)" },
+        "smartRouter.contextCache": { "type": "boolean", "default": true, "description": "Enable context caching (v2.0 feature)" },
+        "smartRouter.predictiveCost": { "type": "boolean", "default": false, "description": "Enable predictive cost engine (v2.0 feature)" },
+        "smartRouter.rooCodeIntegration": { "type": "boolean", "default": true, "description": "Enable Roo Code integration for task delegation (v2.7.0)" },
+        "smartRouter.rooCodeAutoDelegate": { "type": "boolean", "default": false, "description": "Auto-delegate code_gen and debug tasks to Roo Code when available" },
+        "smartRouter.rooCodePreferredMode": { "type": "string", "default": "code", "description": "Preferred Roo Code mode for delegated tasks", "enum": ["code", "architect", "ask", "debug"] },
+        "smartRouter.hecoUrl": { "type": "string", "default": "http://homeassistant.tailaf9b6d.ts.net:1880", "description": "URL van de Node-RED instantie voor HECO Project Analyzer" },
+        "smartRouter.hecoProjectPath": { "type": "string", "default": "C:\\Dev\\HECO", "description": "Lokaal pad naar het HECO project" },
+        "smartRouter.hecoApiToken": { "type": "string", "default": "", "description": "Optioneel: Node-RED API token voor live flow statistieken via /flows endpoint. Laat leeg voor alleen online/offline check.", "scope": "application" }
       }
     }
   },

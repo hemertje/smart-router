@@ -217,23 +217,14 @@ export class HECOProjectAnalyzer {
   private async analyzeIssues(structure: any[]): Promise<any[]> {
     const issues: any[] = [];
     
-    for (const item of structure) {
+    // Alleen actieve flows analyseren op issues - geen archief, specs of scripts
+    const activeFlows = structure.filter(item => item.status === 'active' && item.type === 'flow');
+    
+    for (const item of activeFlows) {
       if (!item.content) continue;
       
-      if (item.type === 'flow') {
-        const flowIssues = await this.analyzeNodeREDFlow(item);
-        issues.push(...flowIssues);
-      }
-      
-      if (item.type === 'config') {
-        const configIssues = await this.analyzeConfig(item);
-        issues.push(...configIssues);
-      }
-      
-      if (item.type === 'script') {
-        const scriptIssues = await this.analyzeScript(item);
-        issues.push(...scriptIssues);
-      }
+      const flowIssues = await this.analyzeNodeREDFlow(item);
+      issues.push(...flowIssues);
       
       const hecoIssues = await this.analyzeHECOSpecific(item);
       issues.push(...hecoIssues);
@@ -390,13 +381,14 @@ export class HECOProjectAnalyzer {
   private async generateSuggestions(structure: any[]): Promise<any[]> {
     const suggestions: any[] = [];
     
-    for (const item of structure) {
+    // Alleen actieve flows analyseren op suggesties
+    const activeFlows = structure.filter(item => item.status === 'active' && item.type === 'flow');
+    
+    for (const item of activeFlows) {
       if (!item.content) continue;
       
-      if (item.type === 'flow') {
-        const perfSuggestions = await this.generatePerformanceSuggestions(item);
-        suggestions.push(...perfSuggestions);
-      }
+      const perfSuggestions = await this.generatePerformanceSuggestions(item);
+      suggestions.push(...perfSuggestions);
       
       const hecoSuggestions = await this.generateHECOIntegrationSuggestions(item);
       suggestions.push(...hecoSuggestions);
@@ -472,55 +464,82 @@ export class HECOProjectAnalyzer {
 
   private async scrapeHECOWebsite(): Promise<any> {
     const http = require('http');
-    
-    const fetchJson = (url: string): Promise<any> => {
+    const settings = SettingsManager.getSettings();
+    const apiToken: string = (settings as any).hecoApiToken || '';
+
+    // Generieke HTTP GET helper
+    const httpGet = (url: string, headers: Record<string, string> = {}): Promise<{ status: number; body: string }> => {
       return new Promise((resolve, reject) => {
-        const req = http.get(url, { timeout: 5000 }, (res: any) => {
-          let data = '';
-          res.on('data', (chunk: string) => data += chunk);
-          res.on('end', () => {
-            try { resolve(JSON.parse(data)); }
-            catch { resolve(null); }
-          });
+        const req = http.get(url, { timeout: 6000, headers }, (res: any) => {
+          let body = '';
+          res.on('data', (chunk: string) => body += chunk);
+          res.on('end', () => resolve({ status: res.statusCode, body }));
         });
         req.on('error', reject);
         req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
       });
     };
 
-    try {
-      // Node-RED Admin API: get all flows
-      const flows = await fetchJson(`${this.hecoUrl}/flows`);
-      
-      const flowCount = Array.isArray(flows)
-        ? flows.filter((n: any) => n.type === 'tab').length
-        : 0;
-      const nodeCount = Array.isArray(flows)
-        ? flows.filter((n: any) => n.type !== 'tab').length
-        : 0;
-      const errorNodes = Array.isArray(flows)
-        ? flows.filter((n: any) => n.type === 'catch').length
-        : 0;
+    const lastUpdate = new Date().toISOString();
 
+    try {
+      // Stap 1: ping de dashboard UI — geen auth nodig, bewijst dat server online is
+      const pingUrl = `${this.hecoUrl}/ui`;
+      const ping = await httpGet(pingUrl);
+      const isOnline = ping.status < 500;
+
+      if (!isOnline) {
+        return { status: 'offline', url: this.hecoUrl, lastUpdate, error: `Server antwoordt met HTTP ${ping.status}` };
+      }
+
+      // Stap 2: probeer /flows API — werkt alleen als API token geconfigureerd is
+      if (apiToken) {
+        const flowsHeaders = {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${apiToken}`,
+          'Node-RED-API-Version': 'v2'
+        };
+        const flowsRes = await httpGet(`${this.hecoUrl}/flows`, flowsHeaders);
+
+        if (flowsRes.status === 200) {
+          const flows = JSON.parse(flowsRes.body);
+          const allNodes = Array.isArray(flows) ? flows
+            : (flows && Array.isArray(flows.flows) ? flows.flows : []);
+          return {
+            status: 'online',
+            url: this.hecoUrl,
+            lastUpdate,
+            apiAccess: true,
+            metrics: {
+              flows: allNodes.filter((n: any) => n.type === 'tab').length,
+              activeNodes: allNodes.filter((n: any) => n.type !== 'tab').length,
+              catchNodes: allNodes.filter((n: any) => n.type === 'catch').length,
+              performance: 'good'
+            },
+            rawFlowCount: allNodes.length
+          };
+        }
+      }
+
+      // Stap 3: online maar geen API toegang — toon wat we weten
       return {
         status: 'online',
         url: this.hecoUrl,
-        lastUpdate: new Date().toISOString(),
-        metrics: {
-          flows: flowCount,
-          activeNodes: nodeCount,
-          catchNodes: errorNodes,
-          performance: errorNodes === 0 ? 'good' : 'has-catch-nodes'
-        },
-        rawFlowCount: Array.isArray(flows) ? flows.length : 0
+        lastUpdate,
+        apiAccess: false,
+        note: apiToken
+          ? 'API token geconfigureerd maar toegang geweigerd (401/403)'
+          : 'Stel smartRouter.hecoApiToken in voor live flow statistieken',
+        metrics: null
       };
+
     } catch (error) {
-      Logger.getInstance().warn(`HECO website scraping failed: ${error}`);
+      Logger.getInstance().warn(`HECO website check failed: ${error}`);
       return {
         status: 'offline',
         url: this.hecoUrl,
-        lastUpdate: new Date().toISOString(),
-        error: `Kan niet verbinden met ${this.hecoUrl}`
+        lastUpdate,
+        error: `Kan niet verbinden met ${this.hecoUrl} (${error})`
       };
     }
   }
