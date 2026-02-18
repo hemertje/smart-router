@@ -865,19 +865,36 @@ function generateHECOReportHtml(analysis: any): string {
   </div>
   
   <div class="card">
-    <h3>🌐 Node-RED Status</h3>
-    ${analysis.websiteData ? `
-      <p><strong>Status:</strong> <span style="color:${analysis.websiteData.status === 'online' ? 'lime' : 'red'}">${analysis.websiteData.status === 'online' ? '✅ Online' : '❌ Offline'}</span></p>
-      <p><strong>URL:</strong> <a href="${analysis.websiteData.url}" style="color:var(--vscode-textLink-foreground)">${analysis.websiteData.url}</a></p>
-      <p><strong>Laatste check:</strong> ${new Date(analysis.websiteData.lastUpdate).toLocaleString('nl-NL')}</p>
-      ${analysis.websiteData.status === 'online' ? `
-        <p><strong>Flows (tabs):</strong> ${analysis.websiteData.metrics.flows}</p>
-        <p><strong>Nodes:</strong> ${analysis.websiteData.metrics.activeNodes}</p>
-        <p><strong>Catch nodes:</strong> ${analysis.websiteData.metrics.catchNodes}</p>
-        <p><strong>Totaal objecten:</strong> ${analysis.websiteData.rawFlowCount}</p>
-        <p><strong>Performance:</strong> ${analysis.websiteData.metrics.performance}</p>
-      ` : `<p style="color:red"><strong>Fout:</strong> ${analysis.websiteData.error}</p>`}
-    ` : '<p>Website data niet beschikbaar</p>'}
+    <h3>🌐 Node-RED Dashboard Status</h3>
+    ${analysis.websiteData ? (() => {
+      const wd = analysis.websiteData;
+      if (wd.status === 'offline') {
+        return `
+          <p><strong>Status:</strong> <span style="color:red">❌ Offline</span></p>
+          <p><strong>URL:</strong> ${wd.url}</p>
+          <p style="color:red"><strong>Fout:</strong> ${wd.error || 'Verbinding mislukt'}</p>
+        `;
+      }
+      const db = wd.dashboard || {};
+      return `
+        <p><strong>Status:</strong> <span style="color:lime">✅ Online</span> (HTTP ${wd.httpStatus})</p>
+        <p><strong>Dashboard URL:</strong> <a href="${wd.dashboardUrl}" style="color:var(--vscode-textLink-foreground)">${wd.dashboardUrl}</a></p>
+        <p><strong>Pagina titel:</strong> ${db.pageTitle || 'onbekend'}</p>
+        <p><strong>HTML grootte:</strong> ${db.htmlSize || '?'}</p>
+        <hr style="border-color:var(--vscode-panel-border);margin:8px 0">
+        <p><strong>HECO Monitor tab:</strong> ${db.hasMonitor ? '✅ Aanwezig' : '❌ Niet gevonden'}</p>
+        <p><strong>HECO Optimizer tab:</strong> ${db.hasOptimizer ? '✅ Aanwezig' : '❌ Niet gevonden'}</p>
+        <p><strong>Widgets gevonden:</strong> ${db.widgetCount || 0}</p>
+        ${db.errors && db.errors.length > 0 ? `<p style="color:orange"><strong>⚠️ Errors in UI:</strong> ${db.errors.length}</p>` : '<p style="color:lime"><strong>UI errors:</strong> Geen</p>'}
+        ${wd.flowMetrics ? `
+          <hr style="border-color:var(--vscode-panel-border);margin:8px 0">
+          <p><strong>Flow tabs (API):</strong> ${wd.flowMetrics.tabs}</p>
+          <p><strong>Nodes (API):</strong> ${wd.flowMetrics.nodes}</p>
+          <p><strong>Catch nodes (API):</strong> ${wd.flowMetrics.catchNodes}</p>
+        ` : `<p style="color:var(--vscode-descriptionForeground);font-size:11px">💡 ${wd.note || 'Stel hecoApiToken in voor live flow statistieken'}</p>`}
+        <p><strong>Laatste check:</strong> ${new Date(wd.lastUpdate).toLocaleString('nl-NL')}</p>
+      `;
+    })() : '<p>Dashboard data niet beschikbaar</p>'}
   </div>
 </div>
 

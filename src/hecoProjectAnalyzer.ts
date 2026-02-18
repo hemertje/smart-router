@@ -466,11 +466,11 @@ export class HECOProjectAnalyzer {
     const http = require('http');
     const settings = SettingsManager.getSettings();
     const apiToken: string = (settings as any).hecoApiToken || '';
+    const lastUpdate = new Date().toISOString();
 
-    // Generieke HTTP GET helper
     const httpGet = (url: string, headers: Record<string, string> = {}): Promise<{ status: number; body: string }> => {
       return new Promise((resolve, reject) => {
-        const req = http.get(url, { timeout: 6000, headers }, (res: any) => {
+        const req = http.get(url, { timeout: 8000, headers }, (res: any) => {
           let body = '';
           res.on('data', (chunk: string) => body += chunk);
           res.on('end', () => resolve({ status: res.statusCode, body }));
@@ -480,66 +480,111 @@ export class HECOProjectAnalyzer {
       });
     };
 
-    const lastUpdate = new Date().toISOString();
+    // Parse dashboard HTML voor UI informatie
+    const parseDashboardHtml = (html: string): any => {
+      const dashboard: any = {
+        tabs: [],
+        hasMonitor: false,
+        hasOptimizer: false,
+        hasHeader: false,
+        widgetCount: 0,
+        errors: []
+      };
+
+      // Zoek tab namen in de Angular app state of title tags
+      const tabMatches = html.match(/ng-reflect-name="([^"]+)"/g) || [];
+      tabMatches.forEach((m: string) => {
+        const name = m.replace('ng-reflect-name="', '').replace('"', '');
+        if (name && !dashboard.tabs.includes(name)) dashboard.tabs.push(name);
+      });
+
+      // Fallback: zoek in <title> of <md-tab-label>
+      const titleMatch = html.match(/<title>([^<]+)<\/title>/);
+      const pageTitle = titleMatch ? titleMatch[1] : 'Node-RED Dashboard';
+
+      // Controleer of HECO tabs aanwezig zijn (zoek in HTML body)
+      dashboard.hasMonitor = html.includes('HECO Monitor') || html.includes('heco-monitor') || html.includes('heco monitor');
+      dashboard.hasOptimizer = html.includes('HECO Optimizer') || html.includes('heco-optimizer') || html.includes('heco optimizer');
+      dashboard.hasHeader = html.includes('HECO') && html.includes('header');
+
+      // Tel widgets (ui-elements in Angular Material)
+      const widgetMatches = html.match(/md-card|ui-gauge|ui-chart|ui-text|ui-button|ui-template/gi) || [];
+      dashboard.widgetCount = widgetMatches.length;
+
+      // Check voor error indicators
+      if (html.includes('Error') || html.includes('error')) {
+        const errorMatches = html.match(/error[^"<]{0,50}/gi) || [];
+        dashboard.errors = errorMatches.slice(0, 3);
+      }
+
+      dashboard.pageTitle = pageTitle;
+      dashboard.htmlSize = Math.round(html.length / 1024) + 'KB';
+      return dashboard;
+    };
 
     try {
-      // Stap 1: ping de dashboard UI — geen auth nodig, bewijst dat server online is
-      const pingUrl = `${this.hecoUrl}/ui`;
-      const ping = await httpGet(pingUrl);
-      const isOnline = ping.status < 500;
+      // Stap 1: haal dashboard UI op — dit is wat de gebruiker ziet
+      const dashboardUrl = `${this.hecoUrl}/ui`;
+      const dashRes = await httpGet(dashboardUrl);
 
-      if (!isOnline) {
-        return { status: 'offline', url: this.hecoUrl, lastUpdate, error: `Server antwoordt met HTTP ${ping.status}` };
+      if (dashRes.status >= 500) {
+        return { status: 'offline', url: this.hecoUrl, lastUpdate, error: `Dashboard HTTP ${dashRes.status}` };
       }
 
-      // Stap 2: probeer /flows API — werkt alleen als API token geconfigureerd is
+      const dashboard = parseDashboardHtml(dashRes.body);
+      const dashboardOnline = dashRes.status < 400;
+
+      // Stap 2: optioneel /flows API met token
+      let flowMetrics = null;
       if (apiToken) {
-        const flowsHeaders = {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${apiToken}`,
-          'Node-RED-API-Version': 'v2'
-        };
-        const flowsRes = await httpGet(`${this.hecoUrl}/flows`, flowsHeaders);
-
-        if (flowsRes.status === 200) {
-          const flows = JSON.parse(flowsRes.body);
-          const allNodes = Array.isArray(flows) ? flows
-            : (flows && Array.isArray(flows.flows) ? flows.flows : []);
-          return {
-            status: 'online',
-            url: this.hecoUrl,
-            lastUpdate,
-            apiAccess: true,
-            metrics: {
-              flows: allNodes.filter((n: any) => n.type === 'tab').length,
-              activeNodes: allNodes.filter((n: any) => n.type !== 'tab').length,
+        try {
+          const flowsRes = await httpGet(`${this.hecoUrl}/flows`, {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${apiToken}`,
+            'Node-RED-API-Version': 'v2'
+          });
+          if (flowsRes.status === 200) {
+            const flows = JSON.parse(flowsRes.body);
+            const allNodes = Array.isArray(flows) ? flows
+              : (flows && Array.isArray(flows.flows) ? flows.flows : []);
+            flowMetrics = {
+              tabs: allNodes.filter((n: any) => n.type === 'tab').length,
+              nodes: allNodes.filter((n: any) => n.type !== 'tab').length,
               catchNodes: allNodes.filter((n: any) => n.type === 'catch').length,
-              performance: 'good'
-            },
-            rawFlowCount: allNodes.length
-          };
-        }
+              total: allNodes.length
+            };
+          }
+        } catch (_) { /* token aanwezig maar API niet bereikbaar */ }
       }
 
-      // Stap 3: online maar geen API toegang — toon wat we weten
       return {
         status: 'online',
         url: this.hecoUrl,
+        dashboardUrl,
         lastUpdate,
-        apiAccess: false,
-        note: apiToken
-          ? 'API token geconfigureerd maar toegang geweigerd (401/403)'
-          : 'Stel smartRouter.hecoApiToken in voor live flow statistieken',
-        metrics: null
+        httpStatus: dashRes.status,
+        dashboard: {
+          online: dashboardOnline,
+          pageTitle: dashboard.pageTitle,
+          htmlSize: dashboard.htmlSize,
+          hasMonitor: dashboard.hasMonitor,
+          hasOptimizer: dashboard.hasOptimizer,
+          tabs: dashboard.tabs,
+          widgetCount: dashboard.widgetCount,
+          errors: dashboard.errors
+        },
+        flowMetrics,
+        apiTokenConfigured: !!apiToken,
+        note: !apiToken ? 'Stel smartRouter.hecoApiToken in voor live Node-RED flow statistieken' : null
       };
 
     } catch (error) {
-      Logger.getInstance().warn(`HECO website check failed: ${error}`);
+      Logger.getInstance().warn(`HECO dashboard check failed: ${error}`);
       return {
         status: 'offline',
         url: this.hecoUrl,
         lastUpdate,
-        error: `Kan niet verbinden met ${this.hecoUrl} (${error})`
+        error: `Kan niet verbinden met ${this.hecoUrl}: ${error}`
       };
     }
   }
