@@ -45,6 +45,8 @@ export class SmartRouterPanel {
           await this._handleMessage(message.text);
         } else if (message.command === 'analyzeImage') {
           await this._handleImageAnalysis(message.imageData, message.prompt);
+        } else if (message.command === 'executeCommand') {
+          await vscode.commands.executeCommand(message.args);
         }
       },
       null,
@@ -306,6 +308,34 @@ export class SmartRouterPanel {
   #cancel-btn:hover {
     background: var(--vscode-button-secondaryHoverBackground);
   }
+  #quick-commands {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--vscode-editor-background);
+    border-bottom: 1px solid var(--vscode-panel-border);
+    flex-wrap: wrap;
+  }
+  .quick-cmd {
+    padding: 4px 8px;
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+    border: 1px solid var(--vscode-button-border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+  }
+  .quick-cmd:hover {
+    background: var(--vscode-button-secondaryHoverBackground);
+    border-color: var(--vscode-focusBorder);
+  }
+  .quick-cmd:active {
+    transform: scale(0.95);
+  }
   code { 
     background: var(--vscode-textCodeBlock-background);
     padding: 1px 4px;
@@ -319,6 +349,13 @@ export class SmartRouterPanel {
 <div id="header">
   🧠 Smart Router Chat
   <span style="font-weight:normal;color:var(--vscode-descriptionForeground);font-size:11px;">powered by OpenRouter</span>
+</div>
+<div id="quick-commands">
+  <button class="quick-cmd" onclick="executeCommand('smart.analyzeImage')" title="Analyseer screenshot">📷 Analyze Image</button>
+  <button class="quick-cmd" onclick="executeCommand('smart.validateSystem')" title="Valideer systeem">✅ Validate</button>
+  <button class="quick-cmd" onclick="executeCommand('smart.showCosts')" title="Toon kosten">💰 Costs</button>
+  <button class="quick-cmd" onclick="executeCommand('smart.runDailyEval')" title="Dagelijkse evaluatie">🔭 Daily Eval</button>
+  <button class="quick-cmd" onclick="executeCommand('smart.showRooCodeStatus')" title="Roo Code status">🤖 Roo Code</button>
 </div>
 <div id="routing-bar">
   <span id="routing-info">Wacht op eerste bericht...</span>
@@ -448,6 +485,10 @@ export class SmartRouterPanel {
     document.getElementById('upload-prompt').style.display = 'block';
     document.getElementById('image-preview').style.display = 'none';
     document.getElementById('image-input').value = '';
+  }
+
+  function executeCommand(command) {
+    vscode.postMessage({ command: 'executeCommand', args: command });
   }
 
   window.addEventListener('message', (event) => {
