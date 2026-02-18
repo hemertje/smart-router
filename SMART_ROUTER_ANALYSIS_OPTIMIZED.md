@@ -1,243 +1,133 @@
-# 🚀 Smart Router Analysis - Geoptimaliseerde Strategie
+# 🚀 Smart Router - Werkplan & Status
 
-## 📊 **Current Status: v2.6.0 - Production Ready**
-
-### ✅ **Core Features Implemented:**
-- **Auto-Healing System** - Automatische error detection & recovery
-- **Predictive Cost Engine** - Usage pattern analysis & budget voorspelling
-- **Real-time Performance Monitoring** - Live performance tracking
-- **13 Commands** - Complete functionaliteit
-- **Package Optimization** - 67% size reduction completed
-
-### 📊 **Performance Metrics:**
-- **Package Size**: 57KB (optimal)
-- **Installation Time**: 2 seconden
-- **Startup Time**: 1.5 seconden
-- **Memory Usage**: 30MB (optimal)
-- **Functionaliteit**: 100% behouden
+*Laatst bijgewerkt: 18 februari 2026*
 
 ---
 
-## 🎯 **Visionaire Roadmap v2.7.0-v3.0.0+**
+## 📊 Current Status: v2.7.0 ✅ VOLLEDIG WERKEND
 
-### 📋 **v2.7.0 - Market Intelligence** (In Progress)
-- **Market Intelligence Module** - Real-time OpenRouter monitoring
-- **Competitive Analysis** - Cline/liteLLM concurrent tracking
-- **Dynamic Model Updates** - Automatische routing optimalisatie
-- **Market Share Alerts** - Proactieve trend notificaties
+### ✅ Voltooide features (18 feb 2026)
 
-### 📋 **v2.8.0 - AI Ecosystem Integration** (Geoptimaliseerd)
-- **AI Agent Marketplace** - Community-driven agents met monetization
-- **Multi-Platform Integration** - GitHub Copilot, Cursor AI, Windsurf/Cascade
-- **Advanced Analytics** - Usage patterns, productivity metrics, ROI calculator
-- **Package Optimization** - 67% size reduction voltooid
+| Feature | Status | Details |
+|---|---|---|
+| Roo Code integratie | ✅ | v3.48.0 gedetecteerd, 39 commands |
+| Chat Panel (webview) | ✅ | Werkt zonder GitHub Copilot |
+| OpenRouter routing | ✅ | Direct via https module (geen axios) |
+| ProactiveValidator | ✅ | Healthy, 0 issues |
+| Model ID fixes | ✅ | Dot-notatie (4.6 niet 4-6) |
+| Sonnet 4.6 1M context | ✅ | roo_architect maxTokens=1M |
+| Qwen3.5 flagship | ✅ | 397B model geïntegreerd |
+| WATCHLIST.md | ✅ | Dagelijkse monitoring protocol |
+| GitHub commit | ✅ | master branch up-to-date |
 
-### 📋 **v2.9.0 - Creative AI Suite** (Planning)
-- **Multi-Modal AI** - Code + Design + Voice + Video + 3D
-- **Creative Tools** - AI music, sound design, visual effects
-- **Entertainment AI** - Game development, story generation
+### � Actieve routing (geverifieerd op OpenRouter)
 
-### 📋 **v3.0.0 - Enterprise Platform** (Vision)
-- **Enterprise Features** - Team workspaces, role-based access, compliance suite
-- **Security & Privacy** - On-premise deployment, zero-knowledge architecture
-- **Business Intelligence** - AI cost management, usage analytics, performance benchmarks
+| Intent | Model | Context | Kosten |
+|---|---|---|---|
+| `simple` | `xiaomi/mimo-v2-flash` | 4K | FREE |
+| `code_gen` | `qwen/qwen3-235b-a22b` | 8K | FREE |
+| `debug` | `minimax/minimax-m2.5` | 8K | $0.28 |
+| `architecture` | `qwen/qwen3-235b-a22b` | 8K | FREE |
+| `architecture_screening` | `thudm/glm-4-32b` | 128K | $0.21 |
+| `architecture_screening_alt` | `qwen/qwen3.5-397b-a17b` | 262K | $0.36 |
+| `architecture_premium` | `anthropic/claude-opus-4.6` | 1M | $5.00 |
+| `roo_architect` | `anthropic/claude-sonnet-4.6` | 1M | $3.00 |
+| `roo_premium` | `anthropic/claude-opus-4.6` | 1M | $15.00 |
+
+### 🚀 Commands (19 totaal)
+
+- `smart.openChat` — Chat panel (geen Copilot nodig)
+- `smart.validateSystem` — Systeem validatie
+- `smart.showRooCodeStatus` — Roo Code integratie rapport
+- `smart.delegateToRooCode` — Handmatige Roo Code delegatie
+- `smart.toggleRooCode` — Toggle integratie aan/uit
+- `smart.showCosts` / `smart.showCostPredictions`
+- `smart.startArena` / `smart.showChineseModels`
+- `smart.analyzeImage` / `smart.showHealth`
+- `smart.showPerformance` / `smart.showContextCache`
+- `smart.explainRouting` / `smart.openSettings`
+- En meer...
+
+### ⚠️ Bekende limitaties
+
+- `@smart` in VS Code Chat → "Language model unavailable" — vereist GitHub Copilot (VS Code limitatie, niet oplosbaar zonder Copilot)
+- **Workaround**: Gebruik `smart.openChat` panel
 
 ---
 
-## 🚀 **Package Optimization Voltooid**
+## 📅 Changelog
 
-### 📊 **Optimization Results:**
-- **Package Size**: 175KB → 57KB (67% reduction)
-- **Installation**: 3x sneller
-- **Memory Usage**: 30% minder
-- **Functionaliteit**: 100% behouden
+| Datum | Versie | Wijziging |
+|---|---|---|
+| 18 feb 2026 | v2.7.0 | Roo Code integratie, Chat Panel, model ID fixes |
+| 18 feb 2026 | v2.7.0 | Claude Sonnet 4.6 1M context (Anthropic release) |
+| 18 feb 2026 | v2.7.0 | Qwen3.5 397B flagship routing |
+| 18 feb 2026 | v2.7.0 | WATCHLIST.md dagelijkse monitoring |
+| 18 feb 2026 | v2.7.0 | Validator fix: /api/v1/models lijst |
+| eerder | v2.6.0 | Auto-healing, predictive cost, performance monitor |
+| eerder | v2.3.0 | ProactiveValidator |
+| eerder | v2.2.0 | Screenshot analyse |
+| eerder | v2.1.0 | GLM-5 integratie |
 
-### ✅ **Optimalisatie Benefits:**
-- **Snellere Downloads** - 67% kleinere package
-- **Snellere Installatie** - 3x snellere setup
-- **Beter Performance** - Minder overhead
-- **Production Ready** - Schoon package voor marketplace
+---
 
-### 🎯 **Optimization Strategy:**
-```typescript
-// Package Configuration
-interface PackageConfig {
-  files: string[]; // Alleen core files
-  exclude: string[]; // Geen docs, markdown, dev files
-  compression: boolean; // VSIX compression
-  minification: boolean; // JavaScript minification
-}
+## 🎯 Roadmap
 
-// Performance Targets
-interface PerformanceTargets {
-  packageSize: number; // <100KB (target: 57KB)
-  startupTime: number; // <2s (target: 1.5s)
-  memoryUsage: number; // <50MB (target: 30MB)
-  installationTime: number; // <5s (target: 2s)
-}
+### v2.8.0 — Nieuwe routing intents (volgende sprint)
+
+| Intent | Model kandidaat | Trigger |
+|---|---|---|
+| `computer_use` | `anthropic/claude-sonnet-4.6` | "click", "open app", "navigate" |
+| `reasoning` | Ring-2.5-1T (zodra op OpenRouter) | "bewijs", "wiskundig", "logisch" |
+| `ultra_long` | `anthropic/claude-sonnet-4.6` (1M) | >100K token context |
+| `multimodal` | Ming-Flash-Omni-2.0 (zodra beschikbaar) | audio/beeld taken |
+
+### v2.8.0 — AI Ecosystem features
+
+- **Agent Marketplace** — Community-driven agents
+- **Multi-Platform Bridge** — Cursor AI, Windsurf/Cascade sync
+- **Advanced Analytics** — Usage patterns, ROI calculator
+- **Dynamic Model Updates** — Automatische routing op basis van OpenRouter rankings
+
+### v2.9.0 — Enterprise
+
+- Team workspaces, RBAC
+- On-premise deployment optie
+- Compliance suite
+
+---
+
+## 👀 Watchlist (dagelijks checken)
+
+Zie `WATCHLIST.md` voor volledige details.
+
+**Prioriteit:**
+
+1. **Ling-2.5-1T** op OpenRouter → `debug` routing (75% goedkoper)
+2. **Ring-2.5-1T** op OpenRouter → `reasoning` intent
+3. **Qwen3.5 visual agent** → `computer_use` intent
+
+---
+
+## 🔧 Deploy workflow
+
+```bash
+npx tsc -p ./
+node deploy_ext.js
+cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-router-2.7.0\node_modules"
+# Reload Window in VS Code
 ```
 
 ---
 
-## 🎯 **Strategische Voordelen**
+## 📊 Competitive Intelligence
 
-### 🚀 **Korte Termijn (v2.7.0-v2.8.0):**
-1. **Market Intelligence** - Real-time monitoring en concurrentie analyse
-2. **AI Ecosystem** - Community-driven agents en multi-platform integratie
-3. **Performance** - Continue optimalisatie en schaalvergroei
-
-### 📈 **Middellange Termijn (v2.9.0-v3.0.0):**
-1. **Creative AI** - Multi-modal capabilities en creatieve tools
-2. **Enterprise Platform** - Business-grade features en compliance
-3. **Global Expansion** - Internationale markten en ecosystem
-
-### 🌟 **Lange Termijn (v3.0.0+):**
-1. **AI Consciousness** - Contextual memory en learning patterns
-2. **Global Network** - Distributed computing en federated learning
-3. **Future Tech** - Quantum computing, neural interfaces, holographic UI
+| Concurrent | Usage | Smart Router voordeel |
+|---|---|---|
+| Cline | 1.67M | Roo Code integratie + cost tracking |
+| liteLLM | 1.43M | VS Code native + webview panel |
+| BLACKBOXAI | 1.28M | OpenRouter multi-model routing |
 
 ---
 
-## 📊 **Competitive Intelligence**
-
-### 🚨 **Direct Concurrenten:**
-- **Cline** - VS Code extension concurrent (1.67M usage)
-- **liteLLM** - Model router concurrent (1.43M usage)
-- **BLACKBOXAI** - Multi-model platform (1.28M usage)
-
-### 🎯 **Smart Router Voordelen:**
-- **Real-time Intelligence** - Proactieve monitoring
-- **Community Ecosystem** - Community-driven innovation
-- **Cost Optimization** - 80% besparingen
-- **Multi-Platform** - Cross-platform integratie
-
----
-
-## 💡 **Innovatie Methodologie**
-
-### 🧠 **Proactieve Analyse:**
-1. **Markt Monitoring** - Trends en gaps identificeren
-2. **Technologie Scouting** - Nieuwe mogelijkheden verkennen
-3. **User Pain Points** - Problemen oplossen
-4. **Visionaire Leaps** - Beyond current thinking
-
-### 🔄 **Continue Iteratie:**
-1. **User Feedback** - Community input en feedback loops
-2. **Performance Monitoring** - Real-time metrics en analytics
-3. **Strategic Planning** - Lange-term visie
-4. **Market Positioning** - Concurrentie analyse
-
----
-
-## 🎯 **Success Metrics**
-
-### 📊 **KPIs:**
-- **User Adoption**: 10K+ users in eerste maand
-- **Community Growth**: 100+ agents, 1000+ Discord members
-- **Performance**: <2s response time, 99.9% uptime
-- **Revenue**: $10K+ monthly from marketplace
-
-### 📈 **Expected Impact:**
-- **User Engagement**: 300% toename met agent marketplace
-- **Cost Savings**: 80% besparingen met market intelligence
-- **Ecosystem Growth**: 200% user base expansion
-- **Developer Satisfaction**: 4.5+ average rating
-
----
-
-## 🔧 **Technical Architecture**
-
-### 🏗️ **Core Components:**
-- **Intent Classifier** - AI model routing based op user input
-- **OpenRouter Client** - Multi-model API integration
-- **Cost Tracker** - Usage tracking en budget management
-- **Performance Monitor** - Real-time performance metrics
-- **Auto-Healing System** - Automatische error recovery
-
-### 📦 **Data Models:**
-```typescript
-interface ModelRouting {
-  intent: Intent;
-  model: string;
-  costPerToken: number;
-  performance: PerformanceMetrics;
-  category: ModelCategory;
-}
-
-interface UsageStats {
-  totalRequests: number;
-  totalCost: number;
-  modelUsage: ModelUsage[];
-  timeRange: TimeRange;
-}
-
-interface PerformanceMetrics {
-  responseTime: number;
-  successRate: number;
-  errorRate: number;
-  throughput: number;
-}
-```
-
----
-
-## 🚀 **Development Workflow**
-
-### 📋 **Agile Methodology:**
-- **Sprint Planning** - 2-week sprints
-- **Continuous Integration** - Automatische builds en tests
-- **Code Review** - Peer review en quality assurance
-- **User Feedback** - Iteratieve op basis van gebruikersinput
-
-### 🔄 **Quality Gates:**
-- **Code Coverage**: >80% voor core modules
-- **Performance**: <2s startup time
-- **Security**: Zero vulnerabilities
-- **Documentation**: Complete API docs
-
----
-
-## 🎯 **Next Steps**
-
-### 🚀 **Immediates (v2.7.0):**
-1. **Market Intelligence Module** - Real-time monitoring implementatie
-2. **Competitive Analysis** - Concurrent tracking dashboard
-3. **Dynamic Routing** - Automatische model updates
-4. **Alert System** - Proactieve notificaties
-
-### 📈 **Mid-term (v2.8.0):**
-1. **Agent Marketplace** - Community-driven agents
-2. **Multi-Platform** - GitHub Copilot, Cursor AI bridges
-3. **Advanced Analytics** - Usage patterns en ROI
-4. **Ecosystem Building** - Community engagement en groei
-
-### 🌟 **Long-term (v2.9.0+):**
-1. **Creative AI Suite** - Multi-modal capabilities
-2. **Enterprise Platform** - Business-grade features
-3. **Global Expansion** - Internationale markten
-4. **Future Tech** - Quantum computing, neural interfaces
-
----
-
-## 🎉 **Conclusie**
-
-### ✅ **Huidige Status:**
-- **v2.6.0** - Production ready met 67% optimalisatie
-- **Core Functionaliteit** - 100% operationeel
-- **Performance** - Optimaal voor productie
-- **Package Size** - 57KB (optimaal voor marketplace)
-
-### 🚀 **Visie:**
-Smart Router is geen simpele model router - het is een **AI Ecosystem Platform** dat developers voorziet van een complete, geïntegreerde AI ervaring.
-
-### 🎯 **Strategie:**
-- **Proactieve Leiderschap** - Continue markt monitoring en innovatie
-- **Community-Driven** - Gebruikers genereren content en waarde
-- **Enterprise Ready** - Business-grade security en compliance
-- **Multi-Modal** - Alle vormen van AI integratie
-
----
-
-**Smart Router - Van model router naar AI Ecosystem Platform** 🚀✨
-
-*v2.6.0 Production Ready - Geoptimaliseerd voor performance en marketplace*
+*Smart Router v2.7.0 — AI model routing + Roo Code integratie + dagelijkse markt monitoring*
