@@ -914,15 +914,31 @@ function generateHECOReportHtml(analysis: any): string {
 </div>
 
 <div class="card">
-  <h3>📁 Project Structuur</h3>
-  <div class="file-list">
-    ${analysis.structure.map((file: any) => `
-      <div class="file-item">
-        <strong>${file.name}</strong> (${file.type})<br>
-        <small>${file.path}</small>
-      </div>
-    `).join('')}
-  </div>
+  <h3>📁 Project Structuur (${analysis.structure.length} bestanden)</h3>
+  ${(() => {
+    const groups: Record<string, any[]> = {};
+    for (const f of analysis.structure) {
+      const c = f.component || 'HECO General';
+      if (!groups[c]) groups[c] = [];
+      groups[c].push(f);
+    }
+    return Object.entries(groups).map(([comp, files]) => `
+      <details style="margin-bottom:8px">
+        <summary style="cursor:pointer;font-weight:bold;padding:4px 0">
+          📦 ${comp} (${files.length} bestanden)
+        </summary>
+        <div class="file-list" style="margin-top:4px">
+          ${files.map((f: any) => `
+            <div class="file-item" style="opacity:${f.skipped ? '0.5' : '1'}">
+              <strong>${f.name}</strong>
+              <span style="color:var(--vscode-descriptionForeground);font-size:10px"> ${f.type} · ${f.sizeMB}MB${f.skipped ? ' · ⚠️ te groot (overgeslagen)' : ''}</span><br>
+              <small style="color:var(--vscode-descriptionForeground)">${f.path}</small>
+            </div>
+          `).join('')}
+        </div>
+      </details>
+    `).join('');
+  })()}
 </div>
 
 </body>

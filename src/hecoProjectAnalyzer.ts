@@ -45,6 +45,9 @@ export class HECOProjectAnalyzer {
       throw new Error(`HECO project niet gevonden op: ${this.hecoPath}`);
     }
 
+    const SKIP_DIRS = new Set(['node_modules', '.git', '.venv', '.vscode', 'screenshots', 'outputs', '.claude', '.claude-backup']);
+    const RELEVANT_EXTENSIONS = new Set(['.json', '.js', '.ts', '.py', '.yaml', '.yml', '.md', '.txt', '.env']);
+
     const scanDirectory = (dir: string, relativePath: string = ''): void => {
       const items = fs.readdirSync(dir);
       
@@ -54,15 +57,23 @@ export class HECOProjectAnalyzer {
         const stats = fs.statSync(fullPath);
         
         if (stats.isDirectory()) {
-          scanDirectory(fullPath, itemRelativePath);
+          if (!SKIP_DIRS.has(item)) {
+            scanDirectory(fullPath, itemRelativePath);
+          }
         } else {
+          const ext = path.extname(item).toLowerCase();
+          if (!RELEVANT_EXTENSIONS.has(ext)) continue;
+
           const fileType = this.determineFileType(item, itemRelativePath);
-          const content = this.readSafely(fullPath);
+          const content = this.readSafely(fullPath, stats.size);
           
           structure.push({
             name: item,
             type: fileType,
             path: fullPath,
+            sizeMB: Math.round(stats.size / 1024 / 10) / 100,
+            skipped: content === undefined,
+            component: this.detectComponent(itemRelativePath),
             content: content
           });
         }
@@ -87,10 +98,10 @@ export class HECOProjectAnalyzer {
     return 'config';
   }
 
-  private readSafely(filePath: string): string | undefined {
+  private readSafely(filePath: string, size?: number): string | undefined {
     try {
-      const stats = fs.statSync(filePath);
-      if (stats.size > 1024 * 1024) {
+      const fileSize = size ?? fs.statSync(filePath).size;
+      if (fileSize > 500 * 1024) {
         return undefined;
       }
       return fs.readFileSync(filePath, 'utf8');
@@ -98,6 +109,19 @@ export class HECOProjectAnalyzer {
       Logger.getInstance().warn(`Kan bestand niet lezen: ${filePath}`);
       return undefined;
     }
+  }
+
+  private detectComponent(relativePath: string): string {
+    const p = relativePath.toLowerCase();
+    if (p.includes('monitor')) return 'HECO Monitor';
+    if (p.includes('optimizer')) return 'HECO Optimizer';
+    if (p.includes('overview')) return 'HECO Overview';
+    if (p.includes('settings')) return 'HECO Settings';
+    if (p.includes('header')) return 'HECO Header';
+    if (p.includes('knmi')) return 'HECO KNMI';
+    if (p.includes('src/monitor')) return 'HECO Monitor';
+    if (p.includes('src/optimizer')) return 'HECO Optimizer';
+    return 'HECO General';
   }
 
   private async analyzeIssues(structure: any[]): Promise<any[]> {
