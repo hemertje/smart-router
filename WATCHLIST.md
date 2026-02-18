@@ -7,7 +7,7 @@
 
 ## 📋 Monitoring Protocol
 
-**Wekelijks checken:**
+**Dagelijks checken:**
 - [OpenRouter Models](https://openrouter.ai/models) — nieuwe model IDs
 - [OpenRouter Rankings](https://openrouter.ai/rankings) — market share shifts
 - [Anthropic News](https://www.anthropic.com/news) — Claude releases
