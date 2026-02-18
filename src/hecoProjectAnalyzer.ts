@@ -311,8 +311,33 @@ export class HECOProjectAnalyzer {
   }
 
   private isValidNodeType(nodeType: string): boolean {
-    const commonTypes = ['inject', 'debug', 'function', 'switch', 'change', 'template', 'comment', 'catch', 'status'];
-    return commonTypes.includes(nodeType) || nodeType.startsWith('heco-') || nodeType.includes('ras_controller');
+    const commonTypes = [
+      // Core Node-RED
+      'inject', 'debug', 'function', 'switch', 'change', 'template', 'comment',
+      'catch', 'status', 'complete', 'link in', 'link out', 'link call',
+      'delay', 'trigger', 'exec', 'rbe', 'range', 'sort', 'batch',
+      'split', 'join', 'csv', 'html', 'json', 'xml', 'yaml',
+      'file', 'file in', 'watch', 'http in', 'http response', 'http request',
+      'websocket in', 'websocket out', 'tcp in', 'tcp out', 'tcp request',
+      'udp in', 'udp out', 'mqtt in', 'mqtt out', 'mqtt-broker',
+      'tab', 'subflow', 'unknown',
+      // Node-RED Dashboard (ui_*)
+      'ui_tab', 'ui_group', 'ui_text', 'ui_button', 'ui_gauge', 'ui_chart',
+      'ui_template', 'ui_numeric', 'ui_dropdown', 'ui_switch', 'ui_slider',
+      'ui_colour_picker', 'ui_date_picker', 'ui_form', 'ui_audio', 'ui_toast',
+      'ui_control', 'ui_ui_control', 'ui_spacer', 'ui_markdown', 'ui_table',
+      // Home Assistant
+      'ha-api', 'ha-call-service', 'ha-entity', 'ha-events-all', 'ha-get-entities',
+      'ha-get-history', 'ha-poll-state', 'ha-sensor', 'ha-tag', 'ha-time',
+      'ha-webhook', 'ha-zone', 'server', 'server-state-changed',
+      // Other common
+      'moment', 'node-red-contrib-moment'
+    ];
+    return commonTypes.includes(nodeType)
+      || nodeType.startsWith('heco-')
+      || nodeType.startsWith('ui_')
+      || nodeType.startsWith('ha-')
+      || nodeType.includes('ras_controller');
   }
 
   private async analyzeConfig(item: any): Promise<any[]> {
@@ -468,12 +493,19 @@ export class HECOProjectAnalyzer {
     const apiToken: string = (settings as any).hecoApiToken || '';
     const lastUpdate = new Date().toISOString();
 
-    const httpGet = (url: string, headers: Record<string, string> = {}): Promise<{ status: number; body: string }> => {
+    const httpGet = (url: string, headers: Record<string, string> = {}, redirects = 3): Promise<{ status: number; body: string; finalUrl: string }> => {
       return new Promise((resolve, reject) => {
         const req = http.get(url, { timeout: 8000, headers }, (res: any) => {
+          // Volg redirects (301/302)
+          if ((res.statusCode === 301 || res.statusCode === 302) && res.headers.location && redirects > 0) {
+            const location = res.headers.location;
+            const nextUrl = location.startsWith('http') ? location : `${this.hecoUrl}${location}`;
+            resolve(httpGet(nextUrl, headers, redirects - 1));
+            return;
+          }
           let body = '';
           res.on('data', (chunk: string) => body += chunk);
-          res.on('end', () => resolve({ status: res.statusCode, body }));
+          res.on('end', () => resolve({ status: res.statusCode, body, finalUrl: url }));
         });
         req.on('error', reject);
         req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
@@ -503,8 +535,9 @@ export class HECOProjectAnalyzer {
       const pageTitle = titleMatch ? titleMatch[1] : 'Node-RED Dashboard';
 
       // Controleer of HECO tabs aanwezig zijn (zoek in HTML body)
-      dashboard.hasMonitor = html.includes('HECO Monitor') || html.includes('heco-monitor') || html.includes('heco monitor');
-      dashboard.hasOptimizer = html.includes('HECO Optimizer') || html.includes('heco-optimizer') || html.includes('heco optimizer');
+      const htmlLower = html.toLowerCase();
+      dashboard.hasMonitor = htmlLower.includes('heco monitor') || htmlLower.includes('heco-monitor') || htmlLower.includes('monitor');
+      dashboard.hasOptimizer = htmlLower.includes('heco optimizer') || htmlLower.includes('heco-optimizer') || htmlLower.includes('optimizer');
       dashboard.hasHeader = html.includes('HECO') && html.includes('header');
 
       // Tel widgets (ui-elements in Angular Material)
@@ -539,6 +572,9 @@ export class HECOProjectAnalyzer {
 
       const dashboard = parseDashboardHtml(dashRes.body);
       const dashboardOnline = dashRes.status < 400;
+      if (dashRes.finalUrl && dashRes.finalUrl !== dashboardUrl) {
+        dashboardUrl = dashRes.finalUrl;
+      }
 
       // Stap 2: optioneel /flows API met token
       let flowMetrics = null;
