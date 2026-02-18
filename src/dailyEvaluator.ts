@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as cp from 'child_process';
 import { MODEL_ROUTING } from './models';
 import { SettingsManager } from './settings';
 import { Logger } from './logger';
@@ -53,6 +54,7 @@ export class DailyEvaluator {
     }
 
     const findings: string[] = [];
+    const autoApplied: string[] = [];
 
     try {
       const availableModels = await this.fetchOpenRouterModels(apiKey);
@@ -61,9 +63,13 @@ export class DailyEvaluator {
       const routingFindings = this.checkRoutingModels(availableModels);
       findings.push(...routingFindings);
 
-      // 2. Check watchlist models now available
-      const watchlistFindings = this.checkWatchlistModels(availableModels);
-      findings.push(...watchlistFindings);
+      // 2. Check watchlist models now available — auto-apply to models.ts
+      const watchlistHits = this.getWatchlistHits(availableModels);
+      for (const hit of watchlistHits) {
+        findings.push(`🎉 WATCHLIST HIT: \`${hit.id}\` is nu beschikbaar op OpenRouter! → Automatisch toegevoegd aan \`${hit.targetIntent}\` routing`);
+        const applied = this.autoUpdateRouting(hit);
+        if (applied) { autoApplied.push(`routing: ${hit.id} → ${hit.targetIntent}`); }
+      }
 
       // 3. Check for new Anthropic/Qwen models not yet in routing
       const newModelFindings = this.checkForNewModels(availableModels);
@@ -73,19 +79,25 @@ export class DailyEvaluator {
       Logger.getInstance().warn(`DailyEvaluator: OpenRouter check failed: ${error.message}`);
     }
 
-    // Always update the plan file with today's evaluation timestamp
-    this.updatePlanTimestamp(findings);
+    // Always update WATCHLIST.md + werkplan
+    this.updateWatchlist(findings);
+    this.updateWerkplan(findings);
 
-    // Notify user if there are findings
+    // Auto git commit if anything was changed
+    if (autoApplied.length > 0) {
+      this.autoGitCommit(autoApplied);
+    }
+
+    // Notify user
     if (findings.length > 0) {
-      const message = `🔭 Smart Router Daily Check: ${findings.length} bevinding(en)`;
+      const message = `🔭 Smart Router Daily Check: ${findings.length} bevinding(en)${autoApplied.length > 0 ? ` (${autoApplied.length} auto-toegepast)` : ''}`;
       const action = await vscode.window.showInformationMessage(
         message,
         'Bekijk rapport',
         'Negeer'
       );
       if (action === 'Bekijk rapport') {
-        this.showReport(findings);
+        this.showReport(findings, autoApplied);
       }
     } else {
       Logger.getInstance().info('DailyEvaluator: alles up-to-date, geen bevindingen');
@@ -107,16 +119,40 @@ export class DailyEvaluator {
     return findings;
   }
 
-  private checkWatchlistModels(availableModels: string[]): string[] {
-    const findings: string[] = [];
+  private getWatchlistHits(availableModels: string[]): typeof WATCHLIST_MODELS {
+    return WATCHLIST_MODELS.filter(w => availableModels.includes(w.id));
+  }
 
-    for (const watched of WATCHLIST_MODELS) {
-      if (availableModels.includes(watched.id)) {
-        findings.push(`🎉 WATCHLIST HIT: \`${watched.id}\` is nu beschikbaar op OpenRouter! → Toevoegen aan \`${watched.targetIntent}\` routing`);
-      }
+  private autoUpdateRouting(hit: { id: string; name: string; targetIntent: string }): boolean {
+    try {
+      const modelsPath = path.join(this.context.extensionPath, '..', '..', 'smart-router-v2.0.0', 'src', 'models.ts');
+      if (!fs.existsSync(modelsPath)) { return false; }
+
+      let content = fs.readFileSync(modelsPath, 'utf8');
+
+      // Only add if not already present
+      if (content.includes(hit.id)) { return false; }
+
+      // Insert new routing entry before the closing }; of MODEL_ROUTING
+      const newEntry = `  ${hit.targetIntent}: {
+    model: '${hit.id}',
+    cost: 0,
+    maxTokens: 1000000,
+    description: '${hit.name} - automatisch toegevoegd door DailyEvaluator'
+  },
+`;
+      content = content.replace(
+        '  // Roo Code integrated routes',
+        `${newEntry}  // Roo Code integrated routes`
+      );
+
+      fs.writeFileSync(modelsPath, content, 'utf8');
+      Logger.getInstance().info(`DailyEvaluator: auto-updated models.ts with ${hit.id}`);
+      return true;
+    } catch (error: any) {
+      Logger.getInstance().warn(`DailyEvaluator: autoUpdateRouting failed: ${error.message}`);
+      return false;
     }
-
-    return findings;
   }
 
   private checkForNewModels(availableModels: string[]): string[] {
@@ -150,34 +186,68 @@ export class DailyEvaluator {
     return findings;
   }
 
-  private updatePlanTimestamp(findings: string[]): void {
+  private updateWatchlist(findings: string[]): void {
     try {
-      const planPath = path.join(this.context.extensionPath, '..', '..', 'smart-router-v2.0.0', 'SMART_ROUTER_ANALYSIS_OPTIMIZED.md');
-      // Update the last-evaluated timestamp in the watchlist instead
       const watchlistPath = path.join(this.context.extensionPath, '..', '..', 'smart-router-v2.0.0', 'WATCHLIST.md');
+      if (!fs.existsSync(watchlistPath)) { return; }
 
-      if (fs.existsSync(watchlistPath)) {
-        let content = fs.readFileSync(watchlistPath, 'utf8');
-        const timestamp = new Date().toLocaleString('nl-NL');
-        const newEntry = `| ${new Date().toLocaleDateString('nl-NL')} | Automatische dagelijkse evaluatie | ${findings.length} bevinding(en) |`;
+      let content = fs.readFileSync(watchlistPath, 'utf8');
+      const today = new Date().toLocaleDateString('nl-NL');
+      if (content.includes(today)) { return; } // already updated today
 
-        // Add to changelog if not already today
-        const today = new Date().toLocaleDateString('nl-NL');
-        if (!content.includes(today)) {
-          content = content.replace(
-            '## 📅 Changelog',
-            `## 📅 Changelog\n\n${newEntry}`
-          );
-          fs.writeFileSync(watchlistPath, content, 'utf8');
-          Logger.getInstance().info(`DailyEvaluator: WATCHLIST.md bijgewerkt om ${timestamp}`);
-        }
-      }
+      const status = findings.length === 0 ? '✅ Geen bevindingen' : `${findings.length} bevinding(en)`;
+      const newEntry = `| ${today} | Automatische dagelijkse evaluatie | ${status} |`;
+      content = content.replace('## 📅 Changelog', `## 📅 Changelog\n\n${newEntry}`);
+      fs.writeFileSync(watchlistPath, content, 'utf8');
+      Logger.getInstance().info(`DailyEvaluator: WATCHLIST.md bijgewerkt`);
     } catch (error: any) {
-      Logger.getInstance().warn(`DailyEvaluator: kon plan niet bijwerken: ${error.message}`);
+      Logger.getInstance().warn(`DailyEvaluator: updateWatchlist failed: ${error.message}`);
     }
   }
 
-  private showReport(findings: string[]): void {
+  private updateWerkplan(findings: string[]): void {
+    try {
+      const planPath = path.join(this.context.extensionPath, '..', '..', 'smart-router-v2.0.0', 'SMART_ROUTER_ANALYSIS_OPTIMIZED.md');
+      if (!fs.existsSync(planPath)) { return; }
+
+      let content = fs.readFileSync(planPath, 'utf8');
+      const today = new Date().toLocaleDateString('nl-NL');
+      if (content.includes(`Automatisch geëvalueerd: ${today}`)) { return; }
+
+      const timestamp = new Date().toLocaleString('nl-NL');
+      const status = findings.length === 0 ? '✅ Alles up-to-date' : `⚠️ ${findings.length} bevinding(en)`;
+
+      // Update the last-updated line at the top
+      content = content.replace(
+        /\*Laatst bijgewerkt:.*\*/,
+        `*Laatst bijgewerkt: ${timestamp} | Automatisch geëvalueerd: ${today} | ${status}*`
+      );
+      fs.writeFileSync(planPath, content, 'utf8');
+      Logger.getInstance().info(`DailyEvaluator: werkplan bijgewerkt`);
+    } catch (error: any) {
+      Logger.getInstance().warn(`DailyEvaluator: updateWerkplan failed: ${error.message}`);
+    }
+  }
+
+  private autoGitCommit(applied: string[]): void {
+    try {
+      const repoPath = path.join(this.context.extensionPath, '..', '..', 'smart-router-v2.0.0');
+      if (!fs.existsSync(path.join(repoPath, '.git'))) { return; }
+
+      const message = `chore(auto): DailyEvaluator auto-update ${new Date().toLocaleDateString('nl-NL')}\n\n${applied.join('\n')}`;
+
+      cp.execSync('git add -A', { cwd: repoPath });
+      cp.execSync(`git commit -m "${message.replace(/"/g, "'")}"`  , { cwd: repoPath });
+      cp.execSync('git push', { cwd: repoPath });
+
+      Logger.getInstance().info(`DailyEvaluator: auto git commit + push gedaan`);
+      vscode.window.showInformationMessage(`🤖 Smart Router: auto-commit gedaan (${applied.length} wijziging(en))`);
+    } catch (error: any) {
+      Logger.getInstance().warn(`DailyEvaluator: autoGitCommit failed: ${error.message}`);
+    }
+  }
+
+  private showReport(findings: string[], autoApplied: string[] = []): void {
     const date = new Date().toLocaleString('nl-NL');
     const report = [
       `# 🔭 Smart Router Dagelijkse Evaluatie`,
@@ -224,10 +294,10 @@ ${findings.map(f => {
   return `<li class="${cls}">${f.replace(/`([^`]+)`/g, '<code>$1</code>')}</li>`;
 }).join('\n')}
 </ul>
+${autoApplied.length > 0 ? `<h2>✅ Automatisch toegepast (${autoApplied.length})</h2><ul>${autoApplied.map(a => `<li class="hit">${a}</li>`).join('')}</ul>` : ''}
 <h2>Aanbevolen acties</h2>
 <ul>
-  <li>Controleer <code>WATCHLIST.md</code> voor watchlist hits</li>
-  <li>Update <code>src/models.ts</code> voor nieuwe modellen</li>
+  ${autoApplied.length === 0 ? '<li>Controleer <code>WATCHLIST.md</code> voor watchlist hits</li><li>Update <code>src/models.ts</code> voor nieuwe modellen</li>' : '<li>Hercompileer extensie na automatische routing updates: <code>npx tsc -p ./</code></li><li>Run <code>node deploy_ext.js</code> en reload VS Code</li>'}
   <li>Run <strong>Smart Router: Validate System</strong> voor volledige check</li>
 </ul>
 </body>
