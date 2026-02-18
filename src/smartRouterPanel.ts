@@ -101,14 +101,15 @@ export class SmartRouterPanel {
     }
   }
 
-  private async _handleImageAnalysis(imageData: string, prompt: string) {
+  private async _handleImageAnalysis(imageData: string, prompt: string, timeoutId?: number) {
     const settings = SettingsManager.getSettings();
     const apiKey = settings.openrouterApiKey;
 
     if (!apiKey) {
       this._panel.webview.postMessage({
-        command: 'response',
-        text: '⚠️ **OpenRouter API key niet geconfigureerd.**\n\nGa naar VS Code Settings → zoek op `smartRouter.openrouterApiKey` en voer je API key in.'
+        command: 'imageAnalysisComplete',
+        text: '⚠️ **OpenRouter API key niet geconfigureerd.**\n\nGa naar VS Code Settings → zoek op `smartRouter.openrouterApiKey` en voer je API key in.',
+        timeoutId
       });
       return;
     }
@@ -120,7 +121,7 @@ export class SmartRouterPanel {
       const messages: OpenRouterMessage[] = [
         { 
           role: 'system', 
-          content: 'You are a helpful AI assistant specialized in analyzing screenshots and code. Provide detailed analysis and suggestions for improvements.' 
+          content: 'You are a helpful AI assistant specialized in analyzing screenshots and code. Provide detailed analysis and suggestions for improvements. Be concise but thorough.' 
         },
         { 
           role: 'user', 
@@ -131,20 +132,32 @@ export class SmartRouterPanel {
         }
       ];
 
-      this._panel.webview.postMessage({ command: 'thinking' });
-
-      // Use multimodal model for image analysis
-      const result = await openrouter.complete('qwen/qwen3-vl-32b-instruct', messages, {
-        max_tokens: 2000,
-        temperature: 0.3
+      // Set timeout for 30 seconds
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Image analysis timeout')), 30000);
       });
 
-      const responseText = result.choices[0]?.message?.content || 'Geen response ontvangen.';
-      this._panel.webview.postMessage({ command: 'response', text: responseText });
+      // Race between analysis and timeout
+      const result = await Promise.race([
+        openrouter.complete('qwen/qwen3-vl-32b-instruct', messages, {
+          max_tokens: 1500, // Reduced for faster response
+          temperature: 0.3
+        }),
+        timeoutPromise
+      ]) as any;
+
+      const responseText = result.choices?.[0]?.message?.content || 'Geen response ontvangen.';
+      
+      this._panel.webview.postMessage({
+        command: 'imageAnalysisComplete',
+        text: responseText,
+        timeoutId
+      });
     } catch (e: any) {
       this._panel.webview.postMessage({
-        command: 'response',
-        text: `❌ **Fout bij image analysis:** ${e.message}\n\nControleer je OpenRouter API key in VS Code settings.`
+        command: 'imageAnalysisComplete',
+        text: `❌ **Fout bij image analysis:** ${e.message}\n\nControleer je OpenRouter API key in VS Code settings.`,
+        timeoutId
       });
     }
   }
@@ -469,10 +482,21 @@ export class SmartRouterPanel {
     const prompt = document.getElementById('prompt-input').value.trim();
     addMessage('📷 Analyseren screenshot...', 'user');
     
+    // Show progress
+    const progressMsg = addMessage('⏳ Bezig met analyseren (dit kan 10-30 seconden duren)...', 'thinking');
+    
+    // Start timeout for better UX
+    let analysisTimeout = setTimeout(() => {
+      if (progressMsg && progressMsg.parentNode) {
+        progressMsg.textContent = '⏳ Analyseren... (nog 10-20 seconden)...';
+      }
+    }, 10000);
+    
     vscode.postMessage({ 
       command: 'analyzeImage', 
       imageData: selectedImageData,
-      prompt: prompt 
+      prompt: prompt,
+      timeoutId: analysisTimeout
     });
     
     cancelImage();
@@ -504,6 +528,13 @@ export class SmartRouterPanel {
       addMessage(msg.text, 'assistant');
       sendBtn.disabled = false;
       inputEl.focus();
+    } else if (msg.command === 'imageAnalysisComplete') {
+      // Clear any pending timeouts
+      if (msg.timeoutId) {
+        clearTimeout(msg.timeoutId);
+      }
+      removeThinking();
+      addMessage(msg.text, 'assistant');
     }
   });
 
