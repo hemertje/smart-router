@@ -20,7 +20,15 @@
 | WATCHLIST.md | ✅ | Dagelijkse monitoring protocol |
 | GitHub commit | ✅ | master branch up-to-date |
 
-### � Actieve routing (geverifieerd op OpenRouter)
+### ⚠️ Bekende limitaties
+
+| Limitatie | Oorzaak | Workaround |
+|---|---|---|
+| `@smart` → "Language model unavailable" | VS Code Chat vereist GitHub Copilot als LM provider | Gebruik `smart.openChat` panel |
+| `swe-1.5` niet op OpenRouter | Windsurf-intern model, geen publieke API | Vervangen door `qwen/qwen3-235b-a22b` |
+| Ling-2.5-1T / Ring-2.5-1T niet beschikbaar | Nog niet op OpenRouter (alleen Hugging Face) | Staat op WATCHLIST, dagelijks checken |
+
+### 🔧 Actieve routing (geverifieerd op OpenRouter)
 
 | Intent | Model | Context | Kosten |
 |---|---|---|---|
@@ -47,11 +55,6 @@
 - `smart.showPerformance` / `smart.showContextCache`
 - `smart.explainRouting` / `smart.openSettings`
 - En meer...
-
-### ⚠️ Bekende limitaties
-
-- `@smart` in VS Code Chat → "Language model unavailable" — vereist GitHub Copilot (VS Code limitatie, niet oplosbaar zonder Copilot)
-- **Workaround**: Gebruik `smart.openChat` panel
 
 ---
 
