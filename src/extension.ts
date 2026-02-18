@@ -882,9 +882,8 @@ function generateHECOReportHtml(analysis: any): string {
         <p><strong>Pagina titel:</strong> ${db.pageTitle || 'onbekend'}</p>
         <p><strong>HTML grootte:</strong> ${db.htmlSize || '?'}</p>
         <hr style="border-color:var(--vscode-panel-border);margin:8px 0">
-        <p><strong>HECO Monitor tab:</strong> ${db.hasMonitor ? '✅ Aanwezig' : '❌ Niet gevonden'}</p>
-        <p><strong>HECO Optimizer tab:</strong> ${db.hasOptimizer ? '✅ Aanwezig' : '❌ Niet gevonden'}</p>
-        <p><strong>Widgets gevonden:</strong> ${db.widgetCount || 0}</p>
+        <p><strong>HECO Monitor:</strong> ${db.hasMonitor ? `✅ "${db.monitorTabName || 'HECO Monitor'}" (${db.monitorNodeCount || '?'} nodes)` : '❌ Flow bestand niet gevonden'}</p>
+        <p><strong>HECO Optimizer:</strong> ${db.hasOptimizer ? `✅ "${db.optimizerTabName || 'HECO Optimizer'}" (${db.optimizerNodeCount || '?'} nodes)` : '❌ Flow bestand niet gevonden'}</p>
         ${db.errors && db.errors.length > 0 ? `<p style="color:orange"><strong>⚠️ Errors in UI:</strong> ${db.errors.length}</p>` : '<p style="color:lime"><strong>UI errors:</strong> Geen</p>'}
         ${wd.flowMetrics ? `
           <hr style="border-color:var(--vscode-panel-border);margin:8px 0">

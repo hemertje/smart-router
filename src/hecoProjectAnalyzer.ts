@@ -462,7 +462,9 @@ export class HECOProjectAnalyzer {
   private async generateHECOIntegrationSuggestions(item: any): Promise<any[]> {
     const suggestions: any[] = [];
     
-    if (item.type === 'flow' && item.content && !item.content.includes('heco-monitor')) {
+    // Alleen suggesties voor flows die GEEN monitor/optimizer zijn en geen MQTT hebben
+    const isMonitorOrOptimizer = item.component === 'HECO Monitor' || item.component === 'HECO Optimizer';
+    if (item.type === 'flow' && item.content && !isMonitorOrOptimizer && !item.content.includes('mqtt')) {
       suggestions.push({
         type: 'heco-integration',
         priority: 'high',
@@ -574,6 +576,32 @@ export class HECOProjectAnalyzer {
       const dashboardOnline = dashRes.status < 400;
       if (dashRes.finalUrl && dashRes.finalUrl !== dashboardUrl) {
         dashboardUrl = dashRes.finalUrl;
+      }
+
+      // Stap 1b: tab-detectie uit lokale flow JSON (Angular SPA geeft lege HTML shell)
+      const fs = require('fs');
+      const path = require('path');
+      const flowsDir = path.join(this.hecoPath, 'flows');
+      const activeMonitorFile = path.join(flowsDir, 'heco-monitor-v0.8.4.json');
+      const activeOptimizerFile = path.join(flowsDir, 'heco-optimizer-v1.2.0.json');
+      
+      if (fs.existsSync(activeMonitorFile)) {
+        try {
+          const monitorFlow = JSON.parse(fs.readFileSync(activeMonitorFile, 'utf8'));
+          const tabNode = monitorFlow.find((n: any) => n.type === 'tab');
+          dashboard.hasMonitor = true;
+          dashboard.monitorTabName = tabNode ? tabNode.label : 'HECO Monitor';
+          dashboard.monitorNodeCount = monitorFlow.filter((n: any) => n.type !== 'tab' && n.type !== 'ui_tab' && n.type !== 'ui_group').length;
+        } catch (_) { dashboard.hasMonitor = false; }
+      }
+      if (fs.existsSync(activeOptimizerFile)) {
+        try {
+          const optimizerFlow = JSON.parse(fs.readFileSync(activeOptimizerFile, 'utf8'));
+          const tabNode = optimizerFlow.find((n: any) => n.type === 'tab');
+          dashboard.hasOptimizer = true;
+          dashboard.optimizerTabName = tabNode ? tabNode.label : 'HECO Optimizer';
+          dashboard.optimizerNodeCount = optimizerFlow.filter((n: any) => n.type !== 'tab' && n.type !== 'ui_tab' && n.type !== 'ui_group').length;
+        } catch (_) { dashboard.hasOptimizer = false; }
       }
 
       // Stap 2: optioneel /flows API met token
