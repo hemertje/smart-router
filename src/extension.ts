@@ -22,6 +22,7 @@ import { RealTimePerformanceMonitor } from './performanceMonitor';
 import { RooCodeBridge } from './rooCodeBridge';
 import { SmartRouterPanel } from './smartRouterPanel';
 import { DailyEvaluator } from './dailyEvaluator';
+import { HECOProjectAnalyzer } from './hecoProjectAnalyzer';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Smart Router extension is now active!');
@@ -751,8 +752,32 @@ ${result.analysis}
   const dailyEvaluator = new DailyEvaluator(context);
   setTimeout(() => dailyEvaluator.runIfNeeded(), 8000);
 
+  // HECO Project Analyzer
+  const hecoAnalyzer = new HECOProjectAnalyzer(context);
+
   const runDailyEvalCommand = vscode.commands.registerCommand('smart.runDailyEval', () => {
     dailyEvaluator.runNow();
+  });
+
+  const analyzeHECOCommand = vscode.commands.registerCommand('smart.analyzeHECO', async () => {
+    try {
+      const analysis = await hecoAnalyzer.analyzeFullProject();
+      
+      // Show results in webview
+      const panel = vscode.window.createWebviewPanel(
+        'heco-analysis',
+        'HECO Project Analysis',
+        vscode.ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true
+        }
+      );
+      
+      panel.webview.html = generateHECOReportHtml(analysis);
+    } catch (error: any) {
+      vscode.window.showErrorMessage(`HECO Analysis Error: ${error.message}`);
+    }
   });
 
   const toggleRooCodeCommand = vscode.commands.registerCommand('smart.toggleRooCode', async () => {
@@ -782,12 +807,128 @@ ${result.analysis}
     delegateToRooCodeCommand,
     toggleRooCodeCommand,
     openChatCommand,
-    runDailyEvalCommand
+    runDailyEvalCommand,
+    analyzeHECOCommand
   );
   
   // Add status bar to subscriptions for cleanup
   context.subscriptions.push(statusBarManager);
   
+}
+
+function generateHECOReportHtml(analysis: any): string {
+  return `
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HECO Project Analysis Report</title>
+<style>
+  body { font-family: var(--vscode-font-family); margin: 0; padding: 20px; background: var(--vscode-editor-background); color: var(--vscode-foreground); }
+  .header { border-bottom: 2px solid var(--vscode-panel-border); padding: 20px 0; margin-bottom: 20px; }
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .card { background: var(--vscode-editor-background); border: 1px solid var(--vscode-panel-border); border-radius: 8px; padding: 15px; }
+  .card h3 { margin: 0 0 10px 0; color: var(--vscode-textLink-foreground); }
+  .issues { margin-bottom: 30px; }
+  .issue { background: var(--vscode-editor-background); border-left: 4px solid var(--vscode-errorForeground); padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+  .issue.high { border-left-color: var(--vscode-errorForeground); }
+  .issue.medium { border-left-color: var(--vscode-warningForeground); }
+  .issue.low { border-left-color: var(--vscode-textLink-foreground); }
+  .suggestions { margin-bottom: 30px; }
+  .suggestion { background: var(--vscode-editor-background); border-left: 4px solid var(--vscode-textLink-foreground); padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+  .suggestion.high { border-left-color: var(--vscode-textLink-foreground); }
+  .suggestion.medium { border-left-color: var(--vscode-textLink-foreground); }
+  .suggestion.low { border-left-color: var(--vscode-textLink-foreground); }
+  .file-list { max-height: 300px; overflow-y: auto; }
+  .file-item { padding: 5px 10px; background: var(--vscode-editor-background); border-bottom: 1px solid var(--vscode-panel-border); }
+  .file-item:hover { background: var(--vscode-list-hoverBackground); }
+  .severity-critical { color: var(--vscode-errorForeground); font-weight: bold; }
+  .severity-high { color: var(--vscode-warningForeground); }
+  .severity-medium { color: var(--vscode-textLink-foreground); }
+  .severity-low { color: var(--vscode-descriptionForeground); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🔭 HECO Project Analysis Report</h1>
+  <p>Generated: ${new Date().toLocaleString('nl-NL')}</p>
+</div>
+
+<div class="summary">
+  <div class="card">
+    <h3>📊 Samenvatting</h3>
+    <p><strong>Totale bestanden:</strong> ${analysis.summary.totalFiles}</p>
+    <p><strong>Issues gevonden:</strong> ${analysis.summary.issuesFound}</p>
+    <p><strong>Kritieke issues:</strong> <span class="severity-critical">${analysis.summary.criticalIssues}</span></p>
+    <p><strong>Suggesties:</strong> ${analysis.summary.suggestionsMade}</p>
+  </div>
+  
+  <div class="card">
+    <h3>🌐 Website Status</h3>
+    ${analysis.websiteData ? `
+      <p><strong>Status:</strong> ${analysis.websiteData.status}</p>
+      <p><strong>Laatste update:</strong> ${new Date(analysis.websiteData.lastUpdate).toLocaleString('nl-NL')}</p>
+      <p><strong>Flows:</strong> ${analysis.websiteData.metrics.flows}</p>
+      <p><strong>Active Nodes:</strong> ${analysis.websiteData.metrics.activeNodes}</p>
+      <p><strong>Performance:</strong> ${analysis.websiteData.metrics.performance}</p>
+    ` : '<p>Website data niet beschikbaar</p>'}
+  </div>
+</div>
+
+<div class="issues">
+  <h2>🔍 Gevonden Issues (${analysis.summary.issuesFound})</h2>
+  ${analysis.issues.length > 0 ? 
+    analysis.issues.map((issue: any) => `
+      <div class="issue ${issue.severity}">
+        <strong>${issue.type.toUpperCase()} - ${issue.severity.toUpperCase()}</strong><br>
+        <strong>Beschrijving:</strong> ${issue.description}<br>
+        <strong>Bestand:</strong> ${issue.path}<br>
+        ${issue.line ? `<strong>Lijn:</strong> ${issue.line}<br>` : ''}
+        ${issue.fix ? `<strong>Fix:</strong> ${issue.fix}` : ''}
+      </div>
+    `).join('')
+    : '<p>Geen issues gevonden! ✅</p>'
+  }
+</div>
+
+<div class="suggestions">
+  <h2>💡 Verbeteringen (${analysis.summary.suggestionsMade})</h2>
+  ${analysis.suggestions.length > 0 ? 
+    analysis.suggestions.map((suggestion: any) => `
+      <div class="suggestion ${suggestion.priority}">
+        <strong>${suggestion.type.toUpperCase()} - ${suggestion.priority.toUpperCase()}</strong><br>
+        <strong>Beschrijving:</strong> ${suggestion.description}<br>
+        <strong>Implementatie:</strong> ${suggestion.implementation || 'N.v.t.'}<br>
+        <strong>Impact:</strong> ${suggestion.estimatedImpact || 'Onbekend'}<br>
+        <strong>Bestand:</strong> ${suggestion.path || 'N.v.t.'}
+      </div>
+    `).join('')
+    : '<p>Geen suggesties! ✅</p>'
+  }
+</div>
+
+<div class="card">
+  <h3>📁 Project Structuur</h3>
+  <div class="file-list">
+    ${analysis.structure.map((file: any) => `
+      <div class="file-item">
+        <strong>${file.name}</strong> (${file.type})<br>
+        <small>${file.path}</small>
+      </div>
+    `).join('')}
+  </div>
+</div>
+
+<script>
+  // Auto-refresh every 30 seconds
+  setTimeout(() => {
+    location.reload();
+  }, 30000);
+</script>
+</body>
+</html>
+  `;
 }
 
 export function deactivate() {

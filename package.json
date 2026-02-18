@@ -133,6 +133,11 @@
         "command": "smart.toggleRooCode",
         "title": "Toggle Roo Code Integration",
         "category": "Smart Router"
+      },
+      {
+        "command": "smart.analyzeHECO",
+        "title": "Analyze HECO Project",
+        "category": "Smart Router"
       }
     ],
     "configuration": {
