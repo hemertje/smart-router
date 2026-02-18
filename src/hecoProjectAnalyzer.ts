@@ -6,10 +6,12 @@ import { Logger } from './logger';
 export class HECOProjectAnalyzer {
   private context: vscode.ExtensionContext;
   private hecoPath: string;
+  private hecoUrl: string;
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
     this.hecoPath = 'C:\\Dev\\HECO';
+    this.hecoUrl = 'http://homeassistant.tailaf9b6d.ts.net:1880';
   }
 
   async analyzeFullProject(): Promise<any> {
@@ -353,20 +355,57 @@ export class HECOProjectAnalyzer {
   }
 
   private async scrapeHECOWebsite(): Promise<any> {
+    const http = require('http');
+    
+    const fetchJson = (url: string): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        const req = http.get(url, { timeout: 5000 }, (res: any) => {
+          let data = '';
+          res.on('data', (chunk: string) => data += chunk);
+          res.on('end', () => {
+            try { resolve(JSON.parse(data)); }
+            catch { resolve(null); }
+          });
+        });
+        req.on('error', reject);
+        req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
+      });
+    };
+
     try {
+      // Node-RED Admin API: get all flows
+      const flows = await fetchJson(`${this.hecoUrl}/flows`);
+      
+      const flowCount = Array.isArray(flows)
+        ? flows.filter((n: any) => n.type === 'tab').length
+        : 0;
+      const nodeCount = Array.isArray(flows)
+        ? flows.filter((n: any) => n.type !== 'tab').length
+        : 0;
+      const errorNodes = Array.isArray(flows)
+        ? flows.filter((n: any) => n.type === 'catch').length
+        : 0;
+
       return {
-        status: 'active',
+        status: 'online',
+        url: this.hecoUrl,
         lastUpdate: new Date().toISOString(),
         metrics: {
-          flows: 12,
-          activeNodes: 156,
-          errors: 0,
-          performance: 'good'
-        }
+          flows: flowCount,
+          activeNodes: nodeCount,
+          catchNodes: errorNodes,
+          performance: errorNodes === 0 ? 'good' : 'has-catch-nodes'
+        },
+        rawFlowCount: Array.isArray(flows) ? flows.length : 0
       };
     } catch (error) {
       Logger.getInstance().warn(`HECO website scraping failed: ${error}`);
-      return null;
+      return {
+        status: 'offline',
+        url: this.hecoUrl,
+        lastUpdate: new Date().toISOString(),
+        error: `Kan niet verbinden met ${this.hecoUrl}`
+      };
     }
   }
 

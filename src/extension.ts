@@ -865,13 +865,18 @@ function generateHECOReportHtml(analysis: any): string {
   </div>
   
   <div class="card">
-    <h3>🌐 Website Status</h3>
+    <h3>🌐 Node-RED Status</h3>
     ${analysis.websiteData ? `
-      <p><strong>Status:</strong> ${analysis.websiteData.status}</p>
-      <p><strong>Laatste update:</strong> ${new Date(analysis.websiteData.lastUpdate).toLocaleString('nl-NL')}</p>
-      <p><strong>Flows:</strong> ${analysis.websiteData.metrics.flows}</p>
-      <p><strong>Active Nodes:</strong> ${analysis.websiteData.metrics.activeNodes}</p>
-      <p><strong>Performance:</strong> ${analysis.websiteData.metrics.performance}</p>
+      <p><strong>Status:</strong> <span style="color:${analysis.websiteData.status === 'online' ? 'lime' : 'red'}">${analysis.websiteData.status === 'online' ? '✅ Online' : '❌ Offline'}</span></p>
+      <p><strong>URL:</strong> <a href="${analysis.websiteData.url}" style="color:var(--vscode-textLink-foreground)">${analysis.websiteData.url}</a></p>
+      <p><strong>Laatste check:</strong> ${new Date(analysis.websiteData.lastUpdate).toLocaleString('nl-NL')}</p>
+      ${analysis.websiteData.status === 'online' ? `
+        <p><strong>Flows (tabs):</strong> ${analysis.websiteData.metrics.flows}</p>
+        <p><strong>Nodes:</strong> ${analysis.websiteData.metrics.activeNodes}</p>
+        <p><strong>Catch nodes:</strong> ${analysis.websiteData.metrics.catchNodes}</p>
+        <p><strong>Totaal objecten:</strong> ${analysis.websiteData.rawFlowCount}</p>
+        <p><strong>Performance:</strong> ${analysis.websiteData.metrics.performance}</p>
+      ` : `<p style="color:red"><strong>Fout:</strong> ${analysis.websiteData.error}</p>`}
     ` : '<p>Website data niet beschikbaar</p>'}
   </div>
 </div>
