@@ -579,8 +579,6 @@ export class HECOProjectAnalyzer {
       }
 
       // Stap 1b: tab-detectie uit lokale flow JSON (Angular SPA geeft lege HTML shell)
-      const fs = require('fs');
-      const path = require('path');
       const flowsDir = path.join(this.hecoPath, 'flows');
       const activeMonitorFile = path.join(flowsDir, 'heco-monitor-v0.8.4.json');
       const activeOptimizerFile = path.join(flowsDir, 'heco-optimizer-v1.2.0.json');
