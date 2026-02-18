@@ -161,24 +161,30 @@ export class DailyEvaluator {
     const findings: string[] = [];
     const currentModels = new Set(Object.values(MODEL_ROUTING).map(c => c.model));
 
-    // Check for new Anthropic claude models not in our routing
-    const newAnthropicModels = availableModels.filter(id =>
-      id.startsWith('anthropic/claude') &&
-      !currentModels.has(id) &&
-      !id.includes('instant') &&
-      !id.includes('v1') &&
-      !id.includes('v2')
-    );
+    // Extract highest version number we currently use per family
+    const currentMaxVersion = this.getMaxVersionInUse(currentModels);
 
-    // Check for new Qwen models not in our routing
+    // Only report Anthropic models NEWER than what we already have
+    const newAnthropicModels = availableModels.filter(id => {
+      if (!id.startsWith('anthropic/claude')) { return false; }
+      if (currentModels.has(id)) { return false; }
+      if (id.includes('instant') || id.includes('v1') || id.includes('v2') || id.includes('v3')) { return false; }
+      // Only report if version number is higher than our current max
+      const version = this.extractVersion(id);
+      return version !== null && version > currentMaxVersion;
+    });
+
+    // Only report Qwen models not yet in routing or watchlist
+    const watchlistIds = new Set(WATCHLIST_MODELS.map(w => w.id));
     const newQwenModels = availableModels.filter(id =>
       id.startsWith('qwen/') &&
       !currentModels.has(id) &&
+      !watchlistIds.has(id) &&
       (id.includes('qwen3') || id.includes('qwen3.5'))
     );
 
     if (newAnthropicModels.length > 0) {
-      findings.push(`🆕 Nieuwe Anthropic modellen op OpenRouter: ${newAnthropicModels.slice(0, 3).join(', ')}`);
+      findings.push(`🆕 Nieuwe Anthropic modellen (nieuwer dan v${currentMaxVersion}): ${newAnthropicModels.slice(0, 3).join(', ')}`);
     }
 
     if (newQwenModels.length > 0) {
@@ -186,6 +192,22 @@ export class DailyEvaluator {
     }
 
     return findings;
+  }
+
+  private getMaxVersionInUse(currentModels: Set<string>): number {
+    let max = 0;
+    for (const model of currentModels) {
+      const v = this.extractVersion(model);
+      if (v !== null && v > max) { max = v; }
+    }
+    return max;
+  }
+
+  private extractVersion(modelId: string): number | null {
+    // Match patterns like 4.5, 4.6, 3.5 in model IDs
+    const match = modelId.match(/(\d+)\.(\d+)/);
+    if (!match) { return null; }
+    return parseFloat(`${match[1]}.${match[2]}`);
   }
 
   private updateWatchlist(findings: string[]): void {
