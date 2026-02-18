@@ -65,6 +65,13 @@ export const MODEL_ROUTING = {
     cost: 15.0,
     maxTokens: 1000000,
     description: 'Opus 4.6 via Roo Code orchestrator (subtasks)'
+  },
+  // Multimodal routing for vision-language models
+  multimodal: {
+    model: 'qwen/qwen3-vl-32b-instruct',
+    cost: 0.45,
+    maxTokens: 32768,
+    description: 'Qwen3 Vision-Language 32B (images + text)'
   }
 };
 
@@ -109,7 +116,7 @@ export const CHINESE_MODELS = {
   }
 };
 
-export type Intent = 'simple' | 'code_gen' | 'debug' | 'architecture' | 'architecture_screening' | 'architecture_screening_alt' | 'architecture_premium' | 'roo_code_gen' | 'roo_architect' | 'roo_debug' | 'roo_premium';
+export type Intent = 'simple' | 'code_gen' | 'debug' | 'architecture' | 'architecture_screening' | 'architecture_screening_alt' | 'architecture_premium' | 'roo_code_gen' | 'roo_architect' | 'roo_debug' | 'roo_premium' | 'multimodal';
 export type BattleGroup = 'frontier' | 'fast' | 'hybrid';
 
 export interface ModelConfig {

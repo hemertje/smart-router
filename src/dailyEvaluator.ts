@@ -17,6 +17,7 @@ const WATCHLIST_MODELS = [
   { id: 'inclusionAI/Ming-Flash-Omni-2.0', name: 'Ming-Flash-Omni-2.0', targetIntent: 'multimodal' },
   { id: 'qwen/qwen3-max-thinking', name: 'Qwen3 Max Thinking', targetIntent: 'architecture_premium' },
   { id: 'qwen/qwen3-coder-next', name: 'Qwen3 Coder Next', targetIntent: 'code_gen' },
+  { id: 'qwen/qwen3-vl-8b-thinking', name: 'Qwen3 VL 8B Thinking', targetIntent: 'multimodal' },
 ];
 
 export class DailyEvaluator {

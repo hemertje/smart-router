@@ -183,7 +183,8 @@ export class EnhancedIntentClassifier {
       roo_code_gen: 0,            // Roo Code delegation routes
       roo_architect: 0,
       roo_debug: 0,
-      roo_premium: 0
+      roo_premium: 0,
+      multimodal: 0              // Vision-language models
     };
 
     // Find best intent
