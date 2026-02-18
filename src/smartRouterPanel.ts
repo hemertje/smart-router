@@ -117,7 +117,7 @@ export class SmartRouterPanel {
     try {
       const openrouter = new OpenRouterClient(apiKey);
       
-      // Use multimodal intent for image analysis
+      // Use multimodal model for image analysis
       const messages: OpenRouterMessage[] = [
         { 
           role: 'system', 
@@ -132,6 +132,10 @@ export class SmartRouterPanel {
         }
       ];
 
+      // Force multimodal model for image analysis
+      const multimodalModel = 'qwen/qwen3-vl-32b-instruct';
+      console.log(`[Smart Router] Using multimodal model for image analysis: ${multimodalModel}`);
+
       // Set timeout for 30 seconds
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => reject(new Error('Image analysis timeout')), 30000);
@@ -139,7 +143,7 @@ export class SmartRouterPanel {
 
       // Race between analysis and timeout
       const result = await Promise.race([
-        openrouter.complete('qwen/qwen3-vl-32b-instruct', messages, {
+        openrouter.complete(multimodalModel, messages, {
           max_tokens: 1500, // Reduced for faster response
           temperature: 0.3
         }),
