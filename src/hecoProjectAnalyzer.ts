@@ -45,8 +45,20 @@ export class HECOProjectAnalyzer {
       throw new Error(`HECO project niet gevonden op: ${this.hecoPath}`);
     }
 
-    const SKIP_DIRS = new Set(['node_modules', '.git', '.venv', '.vscode', 'screenshots', 'outputs', '.claude', '.claude-backup']);
-    const RELEVANT_EXTENSIONS = new Set(['.json', '.js', '.ts', '.py', '.yaml', '.yml', '.md', '.txt', '.env']);
+    // Directories volledig overslaan - geen relevante productiebestanden
+    const SKIP_DIRS = new Set([
+      'node_modules', '.git', '.venv', '.vscode', 'screenshots',
+      'outputs', '.claude', '.claude-backup', '.windsurf', '.github',
+      'archief',       // flows/archief/ = oude versies, niet analyseren
+      'src',           // src/monitor/ en src/optimizer/ = verouderde versies
+      'v0.1.0',        // oude versie map
+      'vervallen',     // vervallen docs
+      'templates',
+      'skills',
+      'data',
+      'css'
+    ]);
+    const RELEVANT_EXTENSIONS = new Set(['.json', '.js', '.ts', '.py', '.yaml', '.yml', '.md', '.txt']);
 
     const scanDirectory = (dir: string, relativePath: string = ''): void => {
       const items = fs.readdirSync(dir);
@@ -64,16 +76,19 @@ export class HECOProjectAnalyzer {
           const ext = path.extname(item).toLowerCase();
           if (!RELEVANT_EXTENSIONS.has(ext)) continue;
 
-          const fileType = this.determineFileType(item, itemRelativePath);
+          const classification = this.classifyFile(item, itemRelativePath, stats.size);
+          if (classification.skip) continue;
+
           const content = this.readSafely(fullPath, stats.size);
           
           structure.push({
             name: item,
-            type: fileType,
+            type: classification.type,
+            component: classification.component,
+            status: classification.status,  // 'active' | 'archive' | 'specification' | 'script'
             path: fullPath,
             sizeMB: Math.round(stats.size / 1024 / 10) / 100,
             skipped: content === undefined,
-            component: this.detectComponent(itemRelativePath),
             content: content
           });
         }
@@ -84,18 +99,105 @@ export class HECOProjectAnalyzer {
     return structure;
   }
 
-  private determineFileType(fileName: string, relativePath: string): string {
+  private classifyFile(fileName: string, relativePath: string, size: number): {
+    type: string; component: string; status: string; skip: boolean;
+  } {
+    const rp = relativePath.replace(/\\/g, '/').toLowerCase();
     const ext = path.extname(fileName).toLowerCase();
-    const dir = path.dirname(relativePath).toLowerCase();
-    
-    if (dir.includes('flows') || fileName.includes('.json')) return 'flow';
-    if (dir.includes('config') || fileName.includes('.config')) return 'config';
-    if (dir.includes('dashboard') || fileName.includes('dashboard')) return 'dashboard';
-    if (dir.includes('docs') || ext === '.md') return 'documentation';
-    if (dir.includes('website') || dir.includes('web')) return 'website';
-    if (ext === '.js' || ext === '.ts' || ext === '.py') return 'script';
-    
-    return 'config';
+    const base = fileName.toLowerCase();
+
+    // === HECO MONITOR ===
+    // Actieve productieversie: heco-monitor-v0.8.4.json (hoogste v0.8.x in flows/)
+    if (base === 'heco-monitor-v0.8.4.json') {
+      return { type: 'flow', component: 'HECO Monitor', status: 'active', skip: false };
+    }
+    // Oudere monitor versies in flows/ root = archief
+    if (rp.startsWith('flows/') && base.startsWith('heco-monitor-v') && base.endsWith('.json')) {
+      return { type: 'flow', component: 'HECO Monitor', status: 'archive', skip: false };
+    }
+
+    // === HECO OPTIMIZER ===
+    // Actieve productieversie: heco-optimizer-v1.2.0.json (hoogste v1.x in flows/)
+    if (base === 'heco-optimizer-v1.2.0.json') {
+      return { type: 'flow', component: 'HECO Optimizer', status: 'active', skip: false };
+    }
+    // Oudere optimizer versies in flows/ root = archief
+    if (rp.startsWith('flows/') && base.startsWith('heco-optimizer-v') && base.endsWith('.json')) {
+      return { type: 'flow', component: 'HECO Optimizer', status: 'archive', skip: false };
+    }
+
+    // === GEDEELDE FLOWS (actief) ===
+    if (base === 'heco-header-v0.2.5-flow.json') {
+      return { type: 'flow', component: 'HECO Header', status: 'active', skip: false };
+    }
+    if (base === 'heco-knmi-subflow.json') {
+      return { type: 'flow', component: 'HECO KNMI', status: 'active', skip: false };
+    }
+    if (base === 'heco-cop-chart.json') {
+      return { type: 'flow', component: 'HECO Shared', status: 'active', skip: false };
+    }
+    if (base === 'heco-validation-modules.json') {
+      return { type: 'flow', component: 'HECO Shared', status: 'active', skip: false };
+    }
+
+    // === GECOMBINEERDE / COMPLETE FLOWS ===
+    if (base.startsWith('heco-complete-') || base.startsWith('heco-single-tab') || base.startsWith('heco-v0.2.5')) {
+      return { type: 'flow', component: 'HECO Combined', status: 'archive', skip: false };
+    }
+    if (base.startsWith('heco-overview-') || base.startsWith('heco-settings-') || base.startsWith('heco-header-')) {
+      return { type: 'flow', component: 'HECO Shared', status: 'archive', skip: false };
+    }
+
+    // === DOCS / SPECIFICATIES ===
+    if (rp.startsWith('docs/') && ext === '.md') {
+      // Monitor specificaties
+      if (base.includes('monitor')) {
+        return { type: 'specification', component: 'HECO Monitor', status: 'specification', skip: false };
+      }
+      // Optimizer specificaties
+      if (base.includes('optimizer')) {
+        return { type: 'specification', component: 'HECO Optimizer', status: 'specification', skip: false };
+      }
+      // Algemene specs
+      return { type: 'specification', component: 'HECO General', status: 'specification', skip: false };
+    }
+    // Python scripts in docs
+    if (rp.startsWith('docs/') && (ext === '.py' || ext === '.js')) {
+      return { type: 'script', component: 'HECO General', status: 'script', skip: false };
+    }
+    // Grote PDF bestanden in docs overslaan
+    if (rp.startsWith('docs/') && size > 500 * 1024) {
+      return { type: 'documentation', component: 'HECO General', status: 'specification', skip: true };
+    }
+
+    // === SCRIPTS ===
+    if (rp.startsWith('scripts/')) {
+      if (base.includes('monitor')) return { type: 'script', component: 'HECO Monitor', status: 'script', skip: false };
+      if (base.includes('optimizer')) return { type: 'script', component: 'HECO Optimizer', status: 'script', skip: false };
+      return { type: 'script', component: 'HECO General', status: 'script', skip: false };
+    }
+
+    // === ROOT BESTANDEN ===
+    if (!rp.includes('/')) {
+      // Grote root flows (flows (26.1.x beta).json ~3MB) overslaan
+      if (ext === '.json' && size > 500 * 1024) {
+        return { type: 'flow', component: 'HECO General', status: 'archive', skip: true };
+      }
+      if (ext === '.md' || ext === '.txt') {
+        return { type: 'documentation', component: 'HECO General', status: 'specification', skip: false };
+      }
+      if (ext === '.js') {
+        return { type: 'script', component: 'HECO General', status: 'script', skip: false };
+      }
+    }
+
+    // === MEMORY BANK ===
+    if (rp.startsWith('memory-bank/')) {
+      return { type: 'documentation', component: 'HECO General', status: 'specification', skip: false };
+    }
+
+    // Alles anders overslaan
+    return { type: 'config', component: 'HECO General', status: 'other', skip: true };
   }
 
   private readSafely(filePath: string, size?: number): string | undefined {
@@ -111,18 +213,6 @@ export class HECOProjectAnalyzer {
     }
   }
 
-  private detectComponent(relativePath: string): string {
-    const p = relativePath.toLowerCase();
-    if (p.includes('monitor')) return 'HECO Monitor';
-    if (p.includes('optimizer')) return 'HECO Optimizer';
-    if (p.includes('overview')) return 'HECO Overview';
-    if (p.includes('settings')) return 'HECO Settings';
-    if (p.includes('header')) return 'HECO Header';
-    if (p.includes('knmi')) return 'HECO KNMI';
-    if (p.includes('src/monitor')) return 'HECO Monitor';
-    if (p.includes('src/optimizer')) return 'HECO Optimizer';
-    return 'HECO General';
-  }
 
   private async analyzeIssues(structure: any[]): Promise<any[]> {
     const issues: any[] = [];

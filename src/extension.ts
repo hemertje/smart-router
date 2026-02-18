@@ -915,29 +915,55 @@ function generateHECOReportHtml(analysis: any): string {
 
 <div class="card">
   <h3>📁 Project Structuur (${analysis.structure.length} bestanden)</h3>
+  <p style="font-size:11px;color:var(--vscode-descriptionForeground)">
+    🟢 actief &nbsp;|&nbsp; 🟡 archief &nbsp;|&nbsp; 📄 specificatie &nbsp;|&nbsp; 🔧 script
+  </p>
   ${(() => {
+    const STATUS_ICON: Record<string, string> = {
+      active: '🟢',
+      archive: '🟡',
+      specification: '📄',
+      script: '🔧',
+      other: '⚪'
+    };
+    const COMPONENT_ORDER = [
+      'HECO Monitor', 'HECO Optimizer', 'HECO Header', 'HECO KNMI',
+      'HECO Shared', 'HECO Combined', 'HECO General'
+    ];
     const groups: Record<string, any[]> = {};
     for (const f of analysis.structure) {
       const c = f.component || 'HECO General';
       if (!groups[c]) groups[c] = [];
       groups[c].push(f);
     }
-    return Object.entries(groups).map(([comp, files]) => `
-      <details style="margin-bottom:8px">
-        <summary style="cursor:pointer;font-weight:bold;padding:4px 0">
-          📦 ${comp} (${files.length} bestanden)
+    const sortedKeys = [
+      ...COMPONENT_ORDER.filter(k => groups[k]),
+      ...Object.keys(groups).filter(k => !COMPONENT_ORDER.includes(k))
+    ];
+    return sortedKeys.map(comp => {
+      const files = groups[comp];
+      const activeCount = files.filter((f: any) => f.status === 'active').length;
+      const specCount = files.filter((f: any) => f.status === 'specification').length;
+      return `
+      <details style="margin-bottom:8px" ${comp.includes('Monitor') || comp.includes('Optimizer') ? 'open' : ''}>
+        <summary style="cursor:pointer;font-weight:bold;padding:6px 0;border-bottom:1px solid var(--vscode-panel-border)">
+          📦 ${comp}
+          <span style="font-weight:normal;font-size:11px;color:var(--vscode-descriptionForeground)">
+            &nbsp;(${files.length} bestanden${activeCount ? ' · 🟢 ' + activeCount + ' actief' : ''}${specCount ? ' · 📄 ' + specCount + ' specs' : ''})
+          </span>
         </summary>
-        <div class="file-list" style="margin-top:4px">
+        <div style="margin-top:4px">
           ${files.map((f: any) => `
-            <div class="file-item" style="opacity:${f.skipped ? '0.5' : '1'}">
-              <strong>${f.name}</strong>
-              <span style="color:var(--vscode-descriptionForeground);font-size:10px"> ${f.type} · ${f.sizeMB}MB${f.skipped ? ' · ⚠️ te groot (overgeslagen)' : ''}</span><br>
-              <small style="color:var(--vscode-descriptionForeground)">${f.path}</small>
+            <div class="file-item" style="opacity:${f.skipped ? '0.5' : '1'};border-left:3px solid ${f.status === 'active' ? 'lime' : f.status === 'specification' ? 'var(--vscode-textLink-foreground)' : 'var(--vscode-panel-border)'}">
+              <span style="font-size:13px">${STATUS_ICON[f.status] || '⚪'}</span>
+              <strong style="margin-left:4px">${f.name}</strong>
+              <span style="color:var(--vscode-descriptionForeground);font-size:10px"> · ${f.type} · ${f.sizeMB}MB${f.skipped ? ' · ⚠️ te groot' : ''}</span><br>
+              <small style="color:var(--vscode-descriptionForeground);margin-left:20px">${f.path}</small>
             </div>
           `).join('')}
         </div>
       </details>
-    `).join('');
+    `}).join('');
   })()}
 </div>
 
