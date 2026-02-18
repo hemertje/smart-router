@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "smart-router",
   "displayName": "Smart Router",
   "description": "Automatic AI model routing based on intent classification for VS Code",

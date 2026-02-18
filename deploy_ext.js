@@ -50,9 +50,11 @@ if (fs.existsSync(proxyFromEnv)) {
   copyDir(proxyFromEnv, path.join(dst, 'node_modules', 'proxy-from-env'));
 }
 
-// Copy package.json
+// Copy package.json zonder BOM (BOM breekt VS Code extensie loading)
 console.log('Copying package.json...');
-fs.copyFileSync(path.join(src, 'package.json'), path.join(dst, 'package.json'));
+let pkgContent = fs.readFileSync(path.join(src, 'package.json'), 'utf8');
+if (pkgContent.charCodeAt(0) === 0xFEFF) pkgContent = pkgContent.slice(1); // strip BOM
+fs.writeFileSync(path.join(dst, 'package.json'), pkgContent, 'utf8');
 
 console.log('DONE - Extension deployed to', dst);
 console.log('Files in out/:', fs.readdirSync(path.join(dst, 'out')).length);
