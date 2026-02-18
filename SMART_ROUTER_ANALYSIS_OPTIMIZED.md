@@ -109,14 +109,45 @@ Zie `WATCHLIST.md` voor volledige details.
 
 ---
 
-## 🔧 Deploy workflow
+## �️ VS Code Werkwijze
+
+### Dagelijkse workflow
+
+| Taak | Actie |
+|---|---|
+| Chat met AI | `Ctrl+Shift+P` → **Smart Router: Open Chat Panel** |
+| Systeem check | `Ctrl+Shift+P` → **Smart Router: Validate System** |
+| Roo Code status | `Ctrl+Shift+P` → **Smart Router: Show Roo Code Integration Status** |
+| Kosten bekijken | `Ctrl+Shift+P` → **Smart Router: Show Model Costs** |
+| Taak delegeren | `Ctrl+Shift+P` → **Smart Router: Delegate Task to Roo Code** |
+| Watchlist checken | Open `WATCHLIST.md` → bronnen dagelijks nalopen |
+
+### Na elke code wijziging
 
 ```bash
 npx tsc -p ./
 node deploy_ext.js
 cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-router-2.7.0\node_modules"
-# Reload Window in VS Code
 ```
+
+Dan in VS Code: `Ctrl+Shift+P` → **Developer: Reload Window**
+
+### Nieuwe model toevoegen (uit WATCHLIST)
+
+1. Verifieer ID op [openrouter.ai/models](https://openrouter.ai/models)
+2. Update `src/models.ts` — voeg intent toe of update bestaande
+3. Update `src/rooCodeBridge.ts` — voeg toe aan `ROO_CODE_MODELS` indien relevant
+4. Compileer + deploy (zie boven)
+5. Voeg toe aan **Beschikbaar** tabel in `WATCHLIST.md`
+6. Git commit + push
+
+### ⚠️ @smart in VS Code Chat
+
+`@smart` werkt **niet** zonder GitHub Copilot — VS Code Chat API vereist een language model provider.
+
+**Gebruik in plaats daarvan:** `Ctrl+Shift+P` → **Smart Router: Open Chat Panel**
+
+Dit panel werkt direct via OpenRouter zonder Copilot.
 
 ---
 
