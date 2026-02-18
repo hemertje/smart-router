@@ -523,9 +523,15 @@ export class HECOProjectAnalyzer {
     };
 
     try {
-      // Stap 1: haal dashboard UI op — dit is wat de gebruiker ziet
-      const dashboardUrl = `${this.hecoUrl}/ui`;
-      const dashRes = await httpGet(dashboardUrl);
+      // Stap 1: haal dashboard UI op — probeer /endpoint/ui eerst (HECO specifiek), dan /ui als fallback
+      let dashboardUrl = `${this.hecoUrl}/endpoint/ui`;
+      let dashRes = await httpGet(dashboardUrl);
+
+      // Fallback naar /ui als /endpoint/ui niet werkt
+      if (dashRes.status >= 400) {
+        dashboardUrl = `${this.hecoUrl}/ui`;
+        dashRes = await httpGet(dashboardUrl);
+      }
 
       if (dashRes.status >= 500) {
         return { status: 'offline', url: this.hecoUrl, lastUpdate, error: `Dashboard HTTP ${dashRes.status}` };
