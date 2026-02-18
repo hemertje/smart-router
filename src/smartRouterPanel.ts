@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { OpenRouterClient } from './openrouter';
+import { OpenRouterClient, OpenRouterMessage } from './openrouter';
 import { IntentClassifier } from './classifier';
 import { SettingsManager } from './settings';
 
@@ -43,6 +43,8 @@ export class SmartRouterPanel {
       async (message) => {
         if (message.command === 'send') {
           await this._handleMessage(message.text);
+        } else if (message.command === 'analyzeImage') {
+          await this._handleImageAnalysis(message.imageData, message.prompt);
         }
       },
       null,
@@ -93,6 +95,54 @@ export class SmartRouterPanel {
       this._panel.webview.postMessage({
         command: 'response',
         text: `❌ **Fout:** ${e.message}\n\nControleer je OpenRouter API key in VS Code settings.`
+      });
+    }
+  }
+
+  private async _handleImageAnalysis(imageData: string, prompt: string) {
+    const settings = SettingsManager.getSettings();
+    const apiKey = settings.openrouterApiKey;
+
+    if (!apiKey) {
+      this._panel.webview.postMessage({
+        command: 'response',
+        text: '⚠️ **OpenRouter API key niet geconfigureerd.**\n\nGa naar VS Code Settings → zoek op `smartRouter.openrouterApiKey` en voer je API key in.'
+      });
+      return;
+    }
+
+    try {
+      const openrouter = new OpenRouterClient(apiKey);
+      
+      // Use multimodal intent for image analysis
+      const messages: OpenRouterMessage[] = [
+        { 
+          role: 'system', 
+          content: 'You are a helpful AI assistant specialized in analyzing screenshots and code. Provide detailed analysis and suggestions for improvements.' 
+        },
+        { 
+          role: 'user', 
+          content: [
+            { type: 'text', text: prompt || 'Analyseer deze screenshot en identificeer problemen en suggesties voor verbetering.' },
+            { type: 'image_url', image_url: { url: imageData } }
+          ]
+        }
+      ];
+
+      this._panel.webview.postMessage({ command: 'thinking' });
+
+      // Use multimodal model for image analysis
+      const result = await openrouter.complete('qwen/qwen3-vl-32b-instruct', messages, {
+        max_tokens: 2000,
+        temperature: 0.3
+      });
+
+      const responseText = result.choices[0]?.message?.content || 'Geen response ontvangen.';
+      this._panel.webview.postMessage({ command: 'response', text: responseText });
+    } catch (e: any) {
+      this._panel.webview.postMessage({
+        command: 'response',
+        text: `❌ **Fout bij image analysis:** ${e.message}\n\nControleer je OpenRouter API key in VS Code settings.`
       });
     }
   }
@@ -212,6 +262,50 @@ export class SmartRouterPanel {
   }
   #send:hover { background: var(--vscode-button-hoverBackground); }
   #send:disabled { opacity: 0.5; cursor: not-allowed; }
+  #image-upload-area {
+    border: 2px dashed var(--vscode-input-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  #image-upload-area:hover {
+    border-color: var(--vscode-focusBorder);
+  }
+  #upload-prompt {
+    color: var(--vscode-descriptionForeground);
+    font-size: 13px;
+  }
+  #upload-prompt a {
+    color: var(--vscode-textLink-foreground);
+    text-decoration: underline;
+  }
+  #image-prompt {
+    display: flex;
+    gap: 8px;
+  }
+  #analyze-btn, #cancel-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  #analyze-btn {
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+  }
+  #analyze-btn:hover {
+    background: var(--vscode-button-hoverBackground);
+  }
+  #cancel-btn {
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+  }
+  #cancel-btn:hover {
+    background: var(--vscode-button-secondaryHoverBackground);
+  }
   code { 
     background: var(--vscode-textCodeBlock-background);
     padding: 1px 4px;
@@ -233,6 +327,20 @@ export class SmartRouterPanel {
   <div class="message assistant">👋 Hallo! Ik ben Smart Router. Stel een vraag of geef een taak en ik selecteer automatisch het beste AI model via OpenRouter.</div>
 </div>
 <div id="input-area">
+  <div id="image-upload-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+    <input type="file" id="image-input" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
+    <div id="upload-prompt">
+      📷 Sleep een screenshot hier of <a href="#" onclick="document.getElementById('image-input').click(); return false;">klik om te selecteren</a>
+    </div>
+    <div id="image-preview" style="display:none">
+      <img id="preview-img" style="max-width:200px;max-height:150px;border-radius:4px;margin-bottom:8px">
+      <div id="image-prompt">
+        <input type="text" id="prompt-input" placeholder="Wat wil je weten over deze screenshot?" style="width:100%;padding:8px;margin-bottom:8px;border:1px solid var(--vscode-input-border);background:var(--vscode-input-background);color:var(--vscode-input-foreground);border-radius:4px">
+        <button id="analyze-btn" onclick="analyzeImage()">Analyseer</button>
+        <button id="cancel-btn" onclick="cancelImage()">Annuleren</button>
+      </div>
+    </div>
+  </div>
   <textarea id="input" placeholder="Typ je vraag hier... (Enter = verstuur, Shift+Enter = nieuwe regel)" rows="1"></textarea>
   <button id="send">Verstuur</button>
 </div>
@@ -276,6 +384,71 @@ export class SmartRouterPanel {
     inputEl.style.height = 'auto';
     inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
   });
+
+  // Image upload functionality
+  let selectedImageData = null;
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('image-upload-area').style.borderColor = 'var(--vscode-focusBorder)';
+  }
+
+  function handleDragLeave(e) {
+    e.preventDefault();
+    document.getElementById('image-upload-area').style.borderColor = 'var(--vscode-input-border)';
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('image-upload-area').style.borderColor = 'var(--vscode-input-border)';
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0 && files[0].type.startsWith('image/')) {
+      handleImageFile(files[0]);
+    }
+  }
+
+  function handleImageSelect(e) {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      handleImageFile(file);
+    }
+  }
+
+  function handleImageFile(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      selectedImageData = e.target.result;
+      document.getElementById('preview-img').src = selectedImageData;
+      document.getElementById('upload-prompt').style.display = 'none';
+      document.getElementById('image-preview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function analyzeImage() {
+    if (!selectedImageData) return;
+    
+    const prompt = document.getElementById('prompt-input').value.trim();
+    addMessage('📷 Analyseren screenshot...', 'user');
+    
+    vscode.postMessage({ 
+      command: 'analyzeImage', 
+      imageData: selectedImageData,
+      prompt: prompt 
+    });
+    
+    cancelImage();
+  }
+
+  function cancelImage() {
+    selectedImageData = null;
+    document.getElementById('preview-img').src = '';
+    document.getElementById('prompt-input').value = '';
+    document.getElementById('upload-prompt').style.display = 'block';
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('image-input').value = '';
+  }
 
   window.addEventListener('message', (event) => {
     const msg = event.data;

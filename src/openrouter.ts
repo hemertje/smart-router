@@ -1,6 +1,11 @@
 import * as https from 'https';
 import { ModelConfig, Intent } from './models';
 
+export interface OpenRouterMessage {
+  role: string;
+  content: string | Array<{ type: string; text?: string; image_url?: { url: string } }>;
+}
+
 export interface OpenRouterResponse {
   choices: Array<{
     message: {
@@ -68,7 +73,7 @@ export class OpenRouterClient {
 
   async complete(
     model: string,
-    messages: Array<{ role: string; content: string }>,
+    messages: Array<OpenRouterMessage>,
     options: {
       max_tokens?: number;
       temperature?: number;
