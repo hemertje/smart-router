@@ -21,6 +21,7 @@ import { PredictiveCostEngine } from './predictiveCost';
 import { RealTimePerformanceMonitor } from './performanceMonitor';
 import { RooCodeBridge } from './rooCodeBridge';
 import { SmartRouterPanel } from './smartRouterPanel';
+import { DailyEvaluator } from './dailyEvaluator';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Smart Router extension is now active!');
@@ -746,6 +747,14 @@ ${result.analysis}
     SmartRouterPanel.createOrShow(context.extensionUri);
   });
 
+  // Daily evaluator - runs automatically once per day at startup
+  const dailyEvaluator = new DailyEvaluator(context);
+  setTimeout(() => dailyEvaluator.runIfNeeded(), 8000);
+
+  const runDailyEvalCommand = vscode.commands.registerCommand('smart.runDailyEval', () => {
+    dailyEvaluator.runNow();
+  });
+
   const toggleRooCodeCommand = vscode.commands.registerCommand('smart.toggleRooCode', async () => {
     const current = SettingsManager.getSettings().rooCodeIntegration;
     await SettingsManager.updateSetting('rooCodeIntegration', !current);
@@ -772,7 +781,8 @@ ${result.analysis}
     showRooCodeStatusCommand,
     delegateToRooCodeCommand,
     toggleRooCodeCommand,
-    openChatCommand
+    openChatCommand,
+    runDailyEvalCommand
   );
   
   // Add status bar to subscriptions for cleanup

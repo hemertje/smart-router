@@ -115,6 +115,11 @@
         "category": "Smart Router"
       },
       {
+        "command": "smart.runDailyEval",
+        "title": "Run Daily Evaluation Now",
+        "category": "Smart Router"
+      },
+      {
         "command": "smart.showRooCodeStatus",
         "title": "Show Roo Code Integration Status",
         "category": "Smart Router"
