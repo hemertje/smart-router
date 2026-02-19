@@ -1,6 +1,6 @@
 # 🚀 Smart Router - Werkplan & Status
 
-*Laatst bijgewerkt: 18 februari 2026*
+*Laatst bijgewerkt: 19 februari 2026*
 
 ---
 
@@ -62,6 +62,7 @@
 
 | Datum | Versie | Wijziging |
 |---|---|---|
+| 19 feb 2026 | v2.7.0 | HECO debugging sessie — zie leermomenten sectie |
 | 18 feb 2026 | v2.7.0 | Roo Code integratie, Chat Panel, model ID fixes |
 | 18 feb 2026 | v2.7.0 | Claude Sonnet 4.6 1M context (Anthropic release) |
 | 18 feb 2026 | v2.7.0 | Qwen3.5 397B flagship routing |
@@ -161,6 +162,64 @@ Dit panel werkt direct via OpenRouter zonder Copilot.
 | Cline | 1.67M | Roo Code integratie + cost tracking |
 | liteLLM | 1.43M | VS Code native + webview panel |
 | BLACKBOXAI | 1.28M | OpenRouter multi-model routing |
+
+---
+
+## 🧠 Leermomenten — 19 februari 2026 (HECO debugging sessie)
+
+### Context
+Lange debugging sessie op HECO Node-RED flows (Monitor + Optimizer). Cascade als pair programmer via Windsurf. Resultaat: Monitor v0.8.7 + Optimizer v1.2.6, beide 100% validator compliant.
+
+### Cascade werkprotocol verbeteringen
+
+**Wat structureel fout ging:**
+
+| Fout | Impact | Fix |
+|---|---|---|
+| Geen wire-graph reachability check | 7 versies nodig i.p.v. 2 | BFS check na elke flow wijziging |
+| Originele flow aangenomen als correct | Missers zaten al in v1.2.0 | Altijd baseline validatie draaien |
+| Spec docs niet gelezen bij sessiestart | Fixes niet conform requirements | Begin met `user-requirements.json` lezen |
+| Validator pas aan het einde ontdekt | Tibber tekst fout al in v1.2.2 | `validate-all.js` na elke versie |
+
+**Nieuw verplicht protocol bij HECO sessies:**
+```
+BEGIN: lees user-requirements.json + draai validate-all.js baseline
+FIX:   schrijf node fix_vX.Y.Z.js → draai → valideer → commit → verwijder script
+CHECK: wire-graph BFS reachability na elke structuurwijziging
+```
+
+### Cascade als Windsurf tool — observaties
+
+**Sterk:**
+- JSON manipulatie via Node.js scripts betrouwbaarder dan PowerShell string replacement
+- BFS wire-graph analyse in één node commando — snel en volledig
+- Validator als poortwachter werkt goed (139 checks Optimizer)
+
+**Zwak:**
+- Workspace scope beperking: kan niet zoeken buiten de twee actieve workspaces
+- PowerShell multiline string escaping is fragiel — vermijden voor JSON edits
+- Geen live Node-RED toegang — kan flows niet live testen, alleen JSON analyseren
+
+**Windsurf vs Claude Code:**
+- Windsurf/Cascade: beter voor iteratieve debugging, file manipulatie, git workflow
+- Claude Code: beter voor initiële flow generatie (heeft bash + volledige filesystem toegang)
+- Combinatie ideaal: Claude Code genereert → Cascade debugt en verfijnt
+
+### Toepassing op Smart Router development
+
+**Directe lessen voor v2.8.0:**
+- Schrijf een `validate-smart-router.js` script (analoog aan HECO's validate-all.js) voor automatische checks vóór deploy
+- Gebruik node.js scripts voor package.json/tsconfig manipulatie i.p.v. PowerShell
+- Voeg reachability check toe voor command registraties: zijn alle commands in `package.json` ook geregistreerd in `extension.ts`?
+
+**Deploy workflow update:**
+```bash
+# Voeg toe als stap 0:
+node scripts/validate-smart-router.js   # nog te bouwen
+npx tsc -p ./
+node deploy_ext.js
+# Reload Window
+```
 
 ---
 
