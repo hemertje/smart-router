@@ -1,6 +1,6 @@
 # 🚀 Smart Router - Werkplan & Status
 
-*Laatst bijgewerkt: 19 februari 2026*
+*Laatst bijgewerkt: 20 februari 2026*
 
 ---
 
@@ -62,7 +62,8 @@
 
 | Datum | Versie | Wijziging |
 |---|---|---|
-| 19 feb 2026 | v2.7.0 | HECO debugging sessie — zie leermomenten sectie |
+| 20 feb 2026 | v2.7.0 | HECO kwaliteitsslag — zie leermomenten sectie 20 feb |
+| 19 feb 2026 | v2.7.0 | HECO debugging sessie — zie leermomenten sectie 19 feb |
 | 18 feb 2026 | v2.7.0 | Roo Code integratie, Chat Panel, model ID fixes |
 | 18 feb 2026 | v2.7.0 | Claude Sonnet 4.6 1M context (Anthropic release) |
 | 18 feb 2026 | v2.7.0 | Qwen3.5 397B flagship routing |
@@ -162,6 +163,46 @@ Dit panel werkt direct via OpenRouter zonder Copilot.
 | Cline | 1.67M | Roo Code integratie + cost tracking |
 | liteLLM | 1.43M | VS Code native + webview panel |
 | BLACKBOXAI | 1.28M | OpenRouter multi-model routing |
+
+---
+
+## 🧠 Leermomenten — 20 februari 2026 (HECO kwaliteitsslag)
+
+### Context
+Volledige kwaliteitsslag op HECO tooling: WERKPLAN.md herschreven, selfcheck.js verbeterd, Monitor v0.8.9 gebouwd. Aanleiding: WERKPLAN liep weken achter en warnings werden geaccepteerd.
+
+### Kernlessen
+
+| Fout | Impact | Fix | Toepassing Smart Router |
+|---|---|---|---|
+| Documentatie bijwerken = 2 regels aanpassen | Plan liep weken achter op realiteit | `update-werkplan.js` automatisch in build | `validate-smart-router.js` moet ook docs-currency checken |
+| Elke warning is er 1 teveel | Verkeerde node ID weken geaccepteerd | 0 warnings als harde eis | Smart Router validator: exit 1 bij elke warning |
+| Hardcoded versienummers in validators | Validator faalde na elke versie-bump | `detectNewest()` auto-detect | Validator moet versie uit `package.json` lezen, niet hardcoden |
+| Naam van component weken verkeerd | ui_template noemde v0.8.4 terwijl flow v0.8.8 was | Build script fix | Commands in `package.json` moeten versie matchen met `extension.ts` |
+
+### Structurele fix: automatische documentatie
+
+HECO heeft nu `update-werkplan.js` — een module die vanuit elk build script als **laatste stap** automatisch het werkplan bijwerkt. Resultaat: documentatie is een output van het build proces, niet een handmatige stap.
+
+**Directe les voor Smart Router v2.8.0:**
+- Voeg `update-changelog.js` toe aan deploy workflow (analoog aan `update-werkplan.js`)
+- `PROJECT_README.md` changelog sectie automatisch bijwerken na elke deploy
+- `WATCHLIST.md` datum automatisch bijwerken na elke `DailyEvaluator` run
+
+**Deploy workflow update (v2.8.0):**
+
+```bash
+# Stap 0: Validate (nieuw)
+node scripts/validate-smart-router.js   # exit 1 bij elke warning
+# Stap 1: Compileer
+npx tsc -p ./
+# Stap 2: Deploy
+node deploy_ext.js
+# Stap 3: Documentatie bijwerken (nieuw — automatisch)
+node scripts/update-changelog.js        # PROJECT_README.md + WATCHLIST.md
+# Stap 4: Reload
+# Ctrl+Shift+P → Developer: Reload Window
+```
 
 ---
 
