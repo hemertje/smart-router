@@ -156,6 +156,108 @@ Dit panel werkt direct via OpenRouter zonder Copilot.
 
 ---
 
+## 🧪 End-to-End Test Protocol (VERPLICHT na elke deploy)
+
+> **Standaard in elke ultimate vibe coding omgeving.**
+> `npx tsc` + `deploy_ext.js` bevestigt alleen compilatie — NOOIT functionaliteit.
+> Zonder E2E test is elke versie `deployed_untested`, niet `verified`.
+
+### E2E Checklist — uitvoeren NA Reload Window
+
+```text
+[ ] 1. EXTENSIE ACTIVATIE
+       → VS Code Output → "Smart Router" channel aanwezig
+       → Geen activatie errors in Output channel
+       → smart.validateSystem → "ProactiveValidator: 0 issues"
+
+[ ] 2. ROUTING PIPELINE
+       → smart.openChat → Chat Panel opent (geen blank screen)
+       → Stuur test bericht "hello" → response ontvangen (niet timeout)
+       → Stuur "write a function" → model = qwen/qwen3-235b-a22b (code_gen)
+       → Stuur "debug this error" → model = minimax/minimax-m2.5 (debug)
+       → Stuur "design architecture" → model = qwen/qwen3-235b-a22b (architecture)
+
+[ ] 3. OPENROUTER CONNECTIE
+       → smart.showHealth → alle routing modellen "available"
+       → Geen "Language model unavailable" errors
+       → API key geldig (geen 401 responses in Output)
+
+[ ] 4. ROO CODE INTEGRATIE
+       → smart.showRooCodeStatus → "Roo Code v3.48.0 detected"
+       → smart.delegateToRooCode → geen crash
+       → ROO_CODE_MODELS lijst correct in Output
+
+[ ] 5. DAILY EVALUATOR
+       → smart.runDailyEval → Output toont evaluatie resultaat
+       → WATCHLIST.md datum bijgewerkt (als 1e run van de dag)
+       → Geen unhandled promise rejections in Output
+
+[ ] 6. COST TRACKING
+       → smart.showCosts → tabel met model kosten zichtbaar
+       → smart.showCostPredictions → prognose zichtbaar
+       → Geen NaN of undefined in kostentabel
+
+[ ] 7. COMMANDS VOLLEDIGHEID
+       → Ctrl+Shift+P → typ "Smart Router" → alle 19 commands zichtbaar
+       → Geen commands die crashen bij aanroepen
+
+[ ] 8. VERSIE CONSISTENTIE
+       → package.json version === extension.ts VERSION constante
+       → SMART_ROUTER_ANALYSIS_OPTIMIZED.md changelog bevat huidige versie
+       → WATCHLIST.md "Laatste update" = vandaag (na DailyEvaluator)
+
+[ ] 9. MODEL ID VALIDATIE
+       → validate-smart-router.js (zodra gebouwd) → 0 warnings
+       → Alle model IDs in models.ts gebruiken dot-notatie (4.6 niet 4-6)
+       → Geen model IDs die niet op OpenRouter bestaan
+
+[ ] 10. REGRESSIE — VORIGE VERSIE FEATURES
+        → Features uit vorige versie nog steeds werkend
+        → Geen nieuwe "Language model unavailable" errors
+        → Performance: response tijd < 30s voor standaard queries
+```
+
+**Resultaat:** alle 10 checks groen = versie mag naar changelog als `verified`.
+
+### E2E Integratie in deploy workflow
+
+```bash
+# Volledige deploy + test workflow:
+
+# Stap 0: Validate (statisch)
+node scripts/validate-smart-router.js   # exit 1 bij elke warning
+
+# Stap 1: Compileer
+npx tsc -p ./
+
+# Stap 2: Deploy
+node deploy_ext.js
+cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-router-2.7.0\node_modules"
+
+# Stap 3: Documentatie (automatisch)
+node scripts/update-changelog.js        # PROJECT_README.md + WATCHLIST.md
+
+# Stap 4: Reload
+# Ctrl+Shift+P → Developer: Reload Window
+
+# Stap 5: E2E test (handmatig — zie checklist hierboven)
+# Doorloop alle 10 checks
+# Pas na groen: git commit + push
+```
+
+### Wanneer E2E test verplicht is
+
+| Situatie | E2E verplicht? |
+|---|---|
+| Nieuwe model toegevoegd aan routing | ✅ Ja — check [2] routing pipeline |
+| DailyEvaluator logica gewijzigd | ✅ Ja — check [5] daily evaluator |
+| Nieuwe command geregistreerd | ✅ Ja — check [7] commands volledigheid |
+| Alleen documentatie bijgewerkt | ❌ Nee |
+| package.json versie bump | ✅ Ja — check [8] versie consistentie |
+| OpenRouter model ID gewijzigd | ✅ Ja — check [3] + [9] |
+
+---
+
 ## 📊 Competitive Intelligence
 
 | Concurrent | Usage | Smart Router voordeel |
