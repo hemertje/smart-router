@@ -325,7 +325,107 @@
 
 ---
 
-## �🔄 Integratie in Smart Router
+## 🌐 Development Platform: Windsurf
+
+### 📋 Platform Profiel
+
+**Naam:** Windsurf  
+**Platform:** https://windsurf.com/changelog  
+**Type:** AI development platform  
+**Focus:** IDE integration, model comparison, planning tools  
+**Features:** Arena Mode, Plan Mode, Cascade improvements
+
+### 🧠 Expertise Domeinen
+
+- **Arena Mode** - Side-by-side model comparison
+- **Plan Mode** - Advanced planning before coding
+- **Model Updates** - Real-time model releases and pricing
+- **Platform Features** - Cascade improvements, enterprise features
+- **Wave Releases** - Major feature releases and updates
+
+### 🎯 Waarom Volgen?
+
+- ✅ **IDE Integration** - Directe impact op development workflow
+- ✅ **Model Comparison** - Arena Mode voor model performance testing
+- ✅ **Platform Updates** - Real-time feature releases
+- ✅ **Enterprise Features** - Team collaboration en tools
+- ✅ **Wave Releases** - Gestructureerde platform evolutie
+
+### 📊 Recentie Bijdragen (Feb 2026)
+
+#### **1. Wave 14: Arena Mode**
+- **Focus:** Side-by-side model comparison
+- **Inzicht:** Battle groups, personal & global leaderboards
+- **Impact:** Model performance validatie voor Smart Router
+
+#### **2. Model Updates**
+- **Focus:** Gemini 3.1 Pro, Claude Sonnet 4.6, GLM-5, Minimax M2.5
+- **Inzicht:** Limited-time promotional pricing en availability
+- **Impact:** Cost optimization en model selectie
+
+#### **3. Platform Features**
+- **Focus:** Cascade improvements, Linux ARM64, enterprise features
+- **Inzicht:** Platform stabiliteit en performance
+- **Impact:** Development workflow verbeteringen
+
+#### **4. Plan Mode**
+- **Focus:** Advanced planning before coding
+- **Inzicht:** Megaplan functionality voor comprehensive planning
+- **Impact:** Project planning en task management
+
+### 🔍 Monitoring Protocol
+
+#### **Dagelijkse Check:**
+- **Wave releases** - Nieuwe platform features en updates
+- **Model updates** - Nieuwe modellen en pricing
+- **Arena Mode** - Model comparison insights
+- **Platform improvements** - Performance en stabiliteit
+
+#### **Wekelijkse Analyse:**
+- **Feature adoption** - Nieuwe features en gebruikspatronen
+- **Model performance** - Arena mode resultaten en trends
+- **Platform roadmap** - Toekomstige ontwikkelingen
+- **Enterprise features** - Team collaboration tools
+
+#### **Maandelijks Review:**
+- **Platform evolutie** - Wave release impact
+- **Model ecosystem** - Beschikbaarheid en pricing trends
+- **Development workflow** - IDE integratie verbeteringen
+- **Competitive analysis** - Platform positionering
+
+### � Impact op Smart Router
+
+#### **Model Selection:**
+- **Arena Mode insights** - Real-world performance data
+- **Model updates** - Directe impact op routing keuzes
+- **Pricing trends** - Cost optimization mogelijkheden
+- **Platform features** - Development workflow integratie
+
+#### **Platform Integration:**
+- **IDE features** - Cascade improvements en hooks
+- **Enterprise tools** - Team collaboration mogelijkheden
+- **Wave releases** - Nieuwe functionaliteit integratie
+- **Performance data** - Platform stabiliteit en speed
+
+#### **Strategic Planning:**
+- **Plan Mode** - Project planning en task management
+- **Megaplan** - Comprehensive planning methodology
+- **Feature roadmap** - Lange-termijn platform planning
+- **Competitive insights** - Platform positionering
+
+### 🤝 Integration Strategy
+
+#### **Actiepunten:**
+- **Monitor** Windsurf changelog voor platform updates
+- **Track** Arena Mode resultaten voor model performance
+- **Analyze** Plan Mode features voor planning methodology
+- **Integreer** Wave releases in Smart Router development
+
+#### **Data Strategy:**
+- **Platform monitoring** - Real-time feature detection
+- **Model performance** - Arena mode resultaten en trends
+- **Feature integration** - Platform features in Smart Router
+- **Development workflow** - IDE integratie en verbeteringen
 
 ### **1. Daily Evaluator:**
 ```javascript

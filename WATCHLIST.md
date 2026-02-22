@@ -91,6 +91,7 @@
 - **https://www.perplexity.ai/discover** - Perplexity AI news aggregation
 - **https://openrouter.ai** - OpenRouter platform updates
 - **https://github.com/OpenRouterTeam** - OpenRouter GitHub releases
+- **https://windsurf.com/changelog** - Windsurf platform updates
 
 **Scanning Frequentie:**
 - **Dagelijks:** Nieuwe artikelen en releases
@@ -136,6 +137,7 @@
 
 | Datum | Actie | Model |
 |---|---|---|
+| 22-2-2026 | Windsurf changelog integration | 7 bevinding(en) |
 | 22-2-2026 | Complete external sources integration | 6 bevinding(en) |
 | 22-2-2026 | Domein scanning protocol toegevoegd | 4 bevinding(en) |
 | 22-2-2026 | Externe bronnen & experts toegevoegd | 2 bevinding(en) |
