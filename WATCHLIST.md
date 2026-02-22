@@ -91,7 +91,7 @@
 - **https://www.perplexity.ai/discover** - Perplexity AI news aggregation
 - **https://openrouter.ai** - OpenRouter platform updates
 - **https://github.com/OpenRouterTeam** - OpenRouter GitHub releases
-- **https://windsurf.com/changelog** - Windsurf platform updates
+- **https://windsurf.com/changelog** - Windsurf platform updates (market intelligence)
 
 **Scanning Frequentie:**
 - **Dagelijks:** Nieuwe artikelen en releases
