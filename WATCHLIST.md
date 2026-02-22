@@ -136,13 +136,15 @@
 
 | Datum | Actie | Model |
 |---|---|---|
-| 22 feb 2026 | Toegevoegd aan routing | `qwen/qwen3-max-thinking` (architecture_premium) |
-| 22 feb 2026 | Toegevoegd aan routing | `qwen/qwen3-coder-next` (code_gen) |
-| 22 feb 2026 | Toegevoegd aan routing | `qwen/qwen3-vl-8b-thinking` (multimodal) |
+| 22-2-2026 | Complete external sources integration | 6 bevinding(en) |
+| 22-2-2026 | Domein scanning protocol toegevoegd | 4 bevinding(en) |
+| 22-2-2026 | Externe bronnen & experts toegevoegd | 2 bevinding(en) |
+| 18-2-2026 | Claude Sonnet 4.6 features toegevoegd | 1 bevinding(en) |
+| 17-2-2026 | Alibaba Qwen3.5 extra modellen toegevoegd | 1 bevinding(en) |
+| 16-2-2026 | Ant Group Ling 2.5 serie toegevoegd | 1 bevinding(en) | 
 | 22 feb 2026 | Watchlist hits gevonden | 3 Qwen modellen nu beschikbaar |
 | 18 feb 2026 | Toegevoegd aan routing | `anthropic/claude-sonnet-4.6` (1M context) |
 | 18 feb 2026 | Toegevoegd aan routing | `anthropic/claude-opus-4.6` |
 | 18 feb 2026 | Geüpgraded | `qwen/qwen3.5-397b-a17b` (was plus-02-15) |
 | 18 feb 2026 | Model ID fix | Alle Anthropic IDs: koppelteken → punt notatie |
-| 18 feb 2026 | Watchlist aangemaakt | Ling-2.5-1T, Ring-2.5-1T, Ming-Flash-Omni-2.0 |
 | 18 feb 2026 | Validator fix | `/api/v1/models` lijst ipv per-model endpoint |
