@@ -1,6 +1,6 @@
 # 🚀 Smart Router - Werkplan & Status
 
-*Laatst bijgewerkt: 20 februari 2026*
+*Laatst bijgewerkt: 22 februari 2026 14:24:00 | Automatisch geëvalueerd: 22-2-2026 | ⚠️ 4 bevinding(en)*
 
 ---
 
@@ -268,7 +268,23 @@ node scripts/update-changelog.js        # PROJECT_README.md + WATCHLIST.md
 
 ---
 
-## 🧠 Leermomenten — 20 februari 2026 (HECO kwaliteitsslag)
+## 📚 Externe Expert Bronnen
+
+*Zie [EXTERNE_BRONNEN.md](./EXTERNE_BRONNEN.md) voor volledige expert monitoring en integratie.*
+
+### 🎯 Primaire Expert: @LLMJunky (am.will)
+
+**Expertise:** AI model routing, cost optimization, market intelligence
+**Platform:** X (Twitter) - @LLMJunky
+**Focus:** OpenAI Codex, local models, cost analysis, model rankings
+
+**Kernimpact:**
+- **Kostenbesparing:** $15.45 per 1M tokens bespaard
+- **Model Selectie:** Rankings bepalen routing keuzes
+- **Innovatie:** Inzichten inspireren nieuwe features
+- **Competitie:** Monitoring houdt ons voorop concurrenten
+
+---
 
 ### Context
 Volledige kwaliteitsslag op HECO tooling: WERKPLAN.md herschreven, selfcheck.js verbeterd, Monitor v0.8.9 gebouwd. Aanleiding: WERKPLAN liep weken achter en warnings werden geaccepteerd.

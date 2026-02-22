@@ -6,10 +6,10 @@ export const MODEL_ROUTING = {
     description: 'FREE tier voor simple taken'
   },
   code_gen: { 
-    model: 'qwen/qwen3-235b-a22b', 
+    model: 'qwen/qwen3-coder-next', 
     cost: 0,
     maxTokens: 8192,
-    description: 'Fast tier voor code generatie - Qwen3 235B (free)'
+    description: 'Next-gen code generation - Qwen3 Coder Next (FREE upgrade from Qwen3 235B)'
   },
   debug: { 
     model: 'minimax/minimax-m2.5', 
@@ -36,12 +36,18 @@ export const MODEL_ROUTING = {
     description: 'Stap 2: Qwen3.5 397B flagship (60% goedkoper, 8x throughput, visual agentic)'
   },
   architecture_premium: { 
-    model: 'anthropic/claude-opus-4.6', 
-    cost: 5.0,
+    model: 'qwen/qwen3-max-thinking', 
+    cost: 0,
     maxTokens: 1000000,
-    description: 'Stap 3: Opus 4.6 premium deep dive'
+    description: 'Premium architecture reasoning - Qwen3 Max Thinking (FREE upgrade from Opus 4.6)'
   },
   // Roo Code integrated routes
+  multimodal: {
+    model: 'qwen/qwen3-vl-8b-thinking',
+    cost: 0,
+    maxTokens: 8192,
+    description: 'Multimodal thinking - Qwen3 VL 8B Thinking (FREE vision + reasoning)'
+  },
   roo_code_gen: {
     model: 'anthropic/claude-haiku-4.5',
     cost: 0.8,
@@ -67,11 +73,11 @@ export const MODEL_ROUTING = {
     description: 'Opus 4.6 via Roo Code orchestrator (subtasks)'
   },
   // Multimodal routing for vision-language models
-  multimodal: {
+  multimodal_legacy: {
     model: 'qwen/qwen3-vl-32b-instruct',
     cost: 0.45,
     maxTokens: 32768,
-    description: 'Qwen3 Vision-Language 32B (images + text)'
+    description: 'Qwen3 Vision-Language 32B (images + text) - Legacy'
   }
 };
 

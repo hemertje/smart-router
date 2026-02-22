@@ -41,7 +41,8 @@
 ## 👀 Watchlist — Nog NIET op OpenRouter
 
 ### 🐜 Ant Group — Ling 2.5 serie (16 feb 2026)
-**Bron:** https://www.financialcontent.com/article/bizwire-2026-2-16-ant-group-releases-ling-25-1t-and-ring-25-1t-evolving-its-open-source-ai-model-family
+**Bron:** https://www.antgroup.com (hoofddomein scanning)
+**Focus:** Ling-2.5-1T, Ring-2.5-1T, Ming-Flash-Omni-2.0
 
 | Model | Highlight | Hugging Face | Target routing |
 |---|---|---|---|
@@ -54,8 +55,8 @@
 ---
 
 ### 🇨🇳 Alibaba Qwen3.5 — Extra modellen (17 feb 2026)
-**Bron:** https://www.cnbc.com/2026/02/17/china-alibaba-qwen-ai-agent-latest-model.html  
-**Bron:** https://www.globaldata.com/media/business-fundamentals/alibaba-qwen-3-5-release-dominates-influencer-discussions-as-open-source-performance-matches-frontier-models-reveals-globaldata/
+**Bron:** https://www.alibaba.com (hoofddomein scanning)
+**Focus:** Qwen3.5-Plus, Qwen3.5 Visual Agent
 
 | Model | Highlight | Target routing |
 |---|---|---|
@@ -67,7 +68,8 @@
 ---
 
 ### 🤖 Anthropic — Claude Sonnet 4.6 features (18 feb 2026)
-**Bron:** https://www.anthropic.com/news/claude-sonnet-4-6
+**Bron:** https://www.anthropic.com (hoofddomein scanning)
+**Focus:** Claude Sonnet 4.6, Opus 4.6, Haiku 4.5
 
 | Feature | Status | Smart Router actie |
 |---|---|---|
@@ -77,7 +79,49 @@
 
 ---
 
-## 🔮 Toekomstige Routing Intents (v2.8.0+)
+### 🔍 Domein Scanning Protocol
+
+**Actieve Domeinen:**
+- **https://www.antgroup.com** - Ant Group AI modellen
+- **https://www.alibaba.com** - Alibaba Qwen modellen  
+- **https://www.anthropic.com** - Anthropic Claude modellen
+- **https://openai.com** - OpenAI GPT modellen
+- **https://deepseek.ai** - Deepseek modellen
+- **https://qwen.ai** - Qwen modellen
+- **https://www.perplexity.ai/discover** - Perplexity AI news aggregation
+- **https://openrouter.ai** - OpenRouter platform updates
+- **https://github.com/OpenRouterTeam** - OpenRouter GitHub releases
+
+**Scanning Frequentie:**
+- **Dagelijks:** Nieuwe artikelen en releases
+- **Wekelijks:** Diepgaande analyses en updates
+- **Maandelijks:** Strategische trends en shifts
+
+**Monitoring Methode:**
+- **RSS feeds** waar beschikbaar
+- **News sections** op hoofddomeinen
+- **Blog posts** en announcements
+- **Press releases** en product updates
+- **AI aggregation** via Perplexity Discover
+- **Platform updates** via OpenRouter API
+- **GitHub releases** via OpenRouter repository
+
+## 📚 Externe Bronnen & Experts
+
+*Zie [EXTERNE_BRONNEN.md](./EXTERNE_BRONNEN.md) voor volledige expert monitoring en integratie.*
+
+### 🎯 Primaire Expert: @LLMJunky (am.will)
+
+**Expertise:** AI model routing, cost optimization, market intelligence
+**Platform:** X (Twitter) - @LLMJunky
+**Focus:** OpenAI Codex, local models, cost analysis, model rankings
+
+**Kernimpact:**
+- **Kostenbesparing:** $15.45 per 1M tokens bespaard
+- **Model Selectie:** Rankings bepalen routing keuzes
+- **Innovatie:** Inzichten inspireren nieuwe features
+
+---
 
 | Intent | Beschrijving | Kandidaat modellen |
 |---|---|---|
@@ -92,6 +136,10 @@
 
 | Datum | Actie | Model |
 |---|---|---|
+| 22 feb 2026 | Toegevoegd aan routing | `qwen/qwen3-max-thinking` (architecture_premium) |
+| 22 feb 2026 | Toegevoegd aan routing | `qwen/qwen3-coder-next` (code_gen) |
+| 22 feb 2026 | Toegevoegd aan routing | `qwen/qwen3-vl-8b-thinking` (multimodal) |
+| 22 feb 2026 | Watchlist hits gevonden | 3 Qwen modellen nu beschikbaar |
 | 18 feb 2026 | Toegevoegd aan routing | `anthropic/claude-sonnet-4.6` (1M context) |
 | 18 feb 2026 | Toegevoegd aan routing | `anthropic/claude-opus-4.6` |
 | 18 feb 2026 | Geüpgraded | `qwen/qwen3.5-397b-a17b` (was plus-02-15) |
