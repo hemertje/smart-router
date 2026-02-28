@@ -146,6 +146,27 @@ const AUTOMATIC_MONITORING = {
       FUNCTIONALITY: 'detailed implementation plans before coding',
       INTEGRATION: 'Cascade mode alongside Code and Ask'
     }
+  },
+  
+  // 🆕 Security Intelligence Monitoring
+  SECURITY_INTELLIGENCE: {
+    CLOUD_VULNERABILITIES: {
+      PROVIDERS: ['OpenRouter', 'Anthropic', 'OpenAI', 'Google'],
+      THREAT_LEVELS: ['critical', 'high', 'medium', 'low'],
+      IMPACT_ASSESSMENT: ['data_breach', 'service_disruption', 'api_compromise', 'privacy_leak']
+    },
+    CHECK_POINT_ALERTS: {
+      VULNERABILITY_COUNT: 3,
+      SEVERITY: 'critical',
+      IMPACT: 'AI infrastructure security',
+      MITIGATION: 'Enhanced monitoring and validation'
+    },
+    SECURITY_METRICS: {
+      API_KEY_ROTATION: '90_days',
+      ENCRYPTION_STRENGTH: 'AES-256',
+      AUDIT_FREQUENCY: 'daily',
+      INCIDENT_RESPONSE: 'immediate'
+    }
   }
 };
 
