@@ -751,12 +751,26 @@ ${result.analysis}
   // Daily evaluator - runs automatically once per day at startup
   const dailyEvaluator = new DailyEvaluator(context);
   setTimeout(() => dailyEvaluator.runIfNeeded(), 8000);
+  
+  // 🤖 Start automatic monitoring for prompting evolution
+  setTimeout(() => dailyEvaluator.startAutomaticMonitoring(), 10000);
 
   // HECO Project Analyzer
   const hecoAnalyzer = new HECOProjectAnalyzer(context);
 
   const runDailyEvalCommand = vscode.commands.registerCommand('smart.runDailyEval', () => {
     dailyEvaluator.runNow();
+  });
+
+  // 🤖 Automatic monitoring commands
+  const startMonitoringCommand = vscode.commands.registerCommand('smart.startMonitoring', () => {
+    dailyEvaluator.startAutomaticMonitoring();
+    vscode.window.showInformationMessage('🤖 Automatic monitoring started for prompting evolution');
+  });
+
+  const stopMonitoringCommand = vscode.commands.registerCommand('smart.stopMonitoring', () => {
+    dailyEvaluator.stopAutomaticMonitoring();
+    vscode.window.showInformationMessage('🤖 Automatic monitoring stopped');
   });
 
   const analyzeHECOCommand = vscode.commands.registerCommand('smart.analyzeHECO', async () => {
@@ -808,6 +822,8 @@ ${result.analysis}
     toggleRooCodeCommand,
     openChatCommand,
     runDailyEvalCommand,
+    startMonitoringCommand,
+    stopMonitoringCommand,
     analyzeHECOCommand
   );
   

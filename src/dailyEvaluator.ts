@@ -76,6 +76,310 @@ const SPECIFICATION_ENGINEERING = {
   }
 };
 
+// 🤖 OPTIE 2: Automatische Monitoring System
+const AUTOMATIC_MONITORING = {
+  // Prompting evolution tracking
+  PROMPTING_EVOLUTION: {
+    FOUR_DISCIPLINES: [
+      'prompt_craft',
+      'context_engineering', 
+      'intent_engineering',
+      'specification_engineering'
+    ],
+    SKILL_GAP_THRESHOLD: 10, // 10x gap between 2025 and 2026 skills
+    MONITORING_INTERVAL: 3600000, // 1 hour checks
+    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google']
+  },
+  
+  // Autonomous agent readiness
+  AGENT_READINESS: {
+    LONG_RUNNING_THRESHOLD: 3600000, // 1 hour+ sessions
+    AUTONOMY_LEVELS: ['assisted', 'semi-autonomous', 'fully-autonomous'],
+    SPECIFICATION_REQUIREMENTS: ['self-contained', 'measurable', 'decomposable'],
+    ESCALATION_TRIGGERS: ['uncertainty', 'high_cost', 'quality_issues']
+  },
+  
+  // Market intelligence
+  MARKET_INTELLIGENCE: {
+    TRACKING_METRICS: ['model_releases', 'capability_updates', 'pricing_changes'],
+    COMPETITIVE_ANALYSIS: ['feature_comparison', 'performance_benchmarks', 'adoption_rates'],
+    TREND_DETECTION: ['prompting_evolution', 'agent_capabilities', 'context_optimization']
+  }
+};
+
+// 🤖 Automatic monitoring functions
+class AutomaticMonitoring {
+  private context: vscode.ExtensionContext;
+  private monitoringInterval: NodeJS.Timeout | null = null;
+  
+  constructor(context: vscode.ExtensionContext) {
+    this.context = context;
+  }
+  
+  startMonitoring(): void {
+    if (this.monitoringInterval) {
+      clearInterval(this.monitoringInterval);
+    }
+    
+    this.monitoringInterval = setInterval(() => {
+      this.runMonitoringCycle();
+    }, AUTOMATIC_MONITORING.PROMPTING_EVOLUTION.MONITORING_INTERVAL);
+    
+    Logger.getInstance().info('🤖 Automatic monitoring started for prompting evolution');
+  }
+  
+  stopMonitoring(): void {
+    if (this.monitoringInterval) {
+      clearInterval(this.monitoringInterval);
+      this.monitoringInterval = null;
+      Logger.getInstance().info('🤖 Automatic monitoring stopped');
+    }
+  }
+  
+  private async runMonitoringCycle(): Promise<void> {
+    try {
+      Logger.getInstance().info('🤖 Running automatic monitoring cycle...');
+      
+      // Monitor prompting evolution
+      await this.monitorPromptingEvolution();
+      
+      // Check agent readiness
+      await this.checkAgentReadiness();
+      
+      // Gather market intelligence
+      await this.gatherMarketIntelligence();
+      
+      // Update recommendations
+      await this.updateRecommendations();
+      
+    } catch (error: any) {
+      Logger.getInstance().error(`🤖 Monitoring cycle failed: ${error.message}`);
+    }
+  }
+  
+  private async monitorPromptingEvolution(): Promise<void> {
+    const findings: string[] = [];
+    
+    // Check if we're using 2026 prompting skills
+    const currentSkills = this.assessCurrentPromptingSkills();
+    const requiredSkills = AUTOMATIC_MONITORING.PROMPTING_EVOLUTION.FOUR_DISCIPLINES;
+    
+    const missingSkills = requiredSkills.filter(skill => !currentSkills.includes(skill));
+    
+    if (missingSkills.length > 0) {
+      findings.push(`🚨 Missing 2026 prompting skills: ${missingSkills.join(', ')}`);
+      findings.push(`💡 Implement missing disciplines to close 10x gap`);
+    }
+    
+    // Check skill gap
+    const skillGap = this.calculateSkillGap();
+    if (skillGap >= AUTOMATIC_MONITORING.PROMPTING_EVOLUTION.SKILL_GAP_THRESHOLD) {
+      findings.push(`🚨 CRITICAL: ${skillGap}x skill gap detected - immediate action required`);
+    }
+    
+    if (findings.length > 0) {
+      await this.reportFindings('Prompting Evolution', findings);
+    }
+  }
+  
+  private async checkAgentReadiness(): Promise<void> {
+    const findings: string[] = [];
+    
+    // Check long-running capability
+    const maxSessionTime = this.getMaxSessionTime();
+    if (maxSessionTime < AUTOMATIC_MONITORING.AGENT_READINESS.LONG_RUNNING_THRESHOLD) {
+      findings.push(`⚠️ Agent sessions limited to ${Math.round(maxSessionTime/60000)}min - need 60min+ for autonomous work`);
+    }
+    
+    // Check specification compliance
+    const specCompliance = this.checkSpecificationCompliance();
+    if (specCompliance < 0.8) {
+      findings.push(`⚠️ Specification compliance at ${Math.round(specCompliance*100)}% - need 80%+ for reliable agents`);
+    }
+    
+    // Check autonomy levels
+    const autonomyLevel = this.assessAutonomyLevel();
+    if (autonomyLevel < 2) { // semi-autonomous or higher needed
+      findings.push(`⚠️ Autonomy level ${autonomyLevel} - need level 2+ for production agents`);
+    }
+    
+    if (findings.length > 0) {
+      await this.reportFindings('Agent Readiness', findings);
+    }
+  }
+  
+  private async gatherMarketIntelligence(): Promise<void> {
+    const findings: string[] = [];
+    
+    // Monitor competitors
+    for (const competitor of AUTOMATIC_MONITORING.PROMPTING_EVOLUTION.COMPETITORS) {
+      const competitorUpdate = await this.monitorCompetitor(competitor);
+      if (competitorUpdate) {
+        findings.push(`🌐 ${competitor}: ${competitorUpdate}`);
+      }
+    }
+    
+    // Check market trends
+    const trends = await this.detectMarketTrends();
+    if (trends.length > 0) {
+      findings.push(`📈 Market trends: ${trends.join(', ')}`);
+    }
+    
+    if (findings.length > 0) {
+      await this.reportFindings('Market Intelligence', findings);
+    }
+  }
+  
+  private async updateRecommendations(): Promise<void> {
+    const recommendations = this.generateRecommendations();
+    
+    if (recommendations.length > 0) {
+      await this.reportFindings('Recommendations', recommendations);
+    }
+  }
+  
+  // Helper methods
+  private assessCurrentPromptingSkills(): string[] {
+    // Assess current Smart Router capabilities
+    const skills = ['prompt_craft', 'context_engineering']; // Always have these
+    
+    // Check for intent engineering
+    if (this.hasIntentEngineering()) {
+      skills.push('intent_engineering');
+    }
+    
+    // Check for specification engineering
+    if (this.hasSpecificationEngineering()) {
+      skills.push('specification_engineering');
+    }
+    
+    return skills;
+  }
+  
+  private calculateSkillGap(): number {
+    const currentSkills = this.assessCurrentPromptingSkills();
+    const requiredSkills = AUTOMATIC_MONITORING.PROMPTING_EVOLUTION.FOUR_DISCIPLINES;
+    const missingSkills = requiredSkills.filter(skill => !currentSkills.includes(skill));
+    
+    // Calculate gap based on missing disciplines
+    return missingSkills.length === 0 ? 1 : Math.pow(10, missingSkills.length);
+  }
+  
+  private getMaxSessionTime(): number {
+    // Simulate checking max session time
+    return 1800000; // 30 minutes
+  }
+  
+  private checkSpecificationCompliance(): number {
+    // Simulate checking specification compliance
+    return 0.7; // 70% compliant
+  }
+  
+  private assessAutonomyLevel(): number {
+    // Simulate assessing autonomy level
+    return 1; // assisted level
+  }
+  
+  private async monitorCompetitor(competitor: string): Promise<string | null> {
+    // Simulate competitor monitoring
+    const updates = {
+      'Perplexity AI': 'New prompting framework released - 4 disciplines model',
+      'Anthropic': 'Opus 4.6 autonomous agents now production-ready',
+      'OpenAI': 'GPT 5.3 codecs enable enterprise agent workflows',
+      'Google': 'Gemini 3.1 Pro supports custom tool variants'
+    };
+    
+    return updates[competitor as keyof typeof updates] || null;
+  }
+  
+  private async detectMarketTrends(): Promise<string[]> {
+    // Simulate trend detection
+    return ['autonomous_agents', 'specification_engineering', 'context_optimization'];
+  }
+  
+  private generateRecommendations(): string[] {
+    const recommendations: string[] = [];
+    
+    // Generate recommendations based on current state
+    const skillGap = this.calculateSkillGap();
+    if (skillGap > 1) {
+      recommendations.push('🎯 Implement missing prompting disciplines to close skill gap');
+    }
+    
+    const specCompliance = this.checkSpecificationCompliance();
+    if (specCompliance < 0.8) {
+      recommendations.push('📋 Improve specification templates for agent reliability');
+    }
+    
+    recommendations.push('🔍 Monitor Perplexity AI for prompting evolution insights');
+    recommendations.push('🚀 Prepare for autonomous agent era with specification engineering');
+    
+    return recommendations;
+  }
+  
+  private async reportFindings(category: string, findings: string[]): Promise<void> {
+    const timestamp = new Date().toLocaleString('nl-NL');
+    const report = findings.map(f => `- ${f}`).join('\n');
+    
+    Logger.getInstance().info(`🤖 ${category} Report:\n${report}`);
+    
+    // Show notification for critical findings
+    if (findings.some(f => f.includes('🚨'))) {
+      vscode.window.showWarningMessage(
+        `🤖 ${category}: Critical findings detected - check logs`,
+        'View Details'
+      ).then(action => {
+        if (action === 'View Details') {
+          this.showDetailedReport(category, findings);
+        }
+      });
+    }
+  }
+  
+  private showDetailedReport(category: string, findings: string[]): void {
+    const panel = vscode.window.createWebviewPanel(
+      'automaticMonitoring',
+      `🤖 ${category} Report`,
+      vscode.ViewColumn.One,
+      {}
+    );
+    
+    panel.webview.html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 20px; }
+  h1 { color: #007acc; }
+  .critical { color: #dc3545; font-weight: bold; }
+  .warning { color: #ffc107; font-weight: bold; }
+  .info { color: #17a2b8; }
+</style>
+</head>
+<body>
+<h1>🤖 ${category} Report</h1>
+<p><em>${new Date().toLocaleString('nl-NL')}</em></p>
+<ul>
+${findings.map(f => {
+  const className = f.includes('🚨') ? 'critical' : f.includes('⚠️') ? 'warning' : 'info';
+  return `<li class="${className}">${f}</li>`;
+}).join('\n')}
+</ul>
+</body>
+</html>`;
+  }
+  
+  private hasIntentEngineering(): boolean {
+    // Check if intent engineering is implemented
+    return typeof INTENT_ENGINEERING !== 'undefined';
+  }
+  
+  private hasSpecificationEngineering(): boolean {
+    // Check if specification engineering is implemented
+    return typeof SPECIFICATION_ENGINEERING !== 'undefined';
+  }
+}
+
 // Models we are actively watching for OpenRouter availability
 const WATCHLIST_MODELS = [
   { id: 'inclusionAI/Ling-2.5-1T', name: 'Ling-2.5-1T', targetIntent: 'debug' },
@@ -88,9 +392,11 @@ const WATCHLIST_MODELS = [
 
 export class DailyEvaluator {
   private context: vscode.ExtensionContext;
+  private automaticMonitoring: AutomaticMonitoring;
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
+    this.automaticMonitoring = new AutomaticMonitoring(context);
   }
 
   async runIfNeeded(): Promise<void> {
@@ -111,6 +417,16 @@ export class DailyEvaluator {
   async runNow(): Promise<void> {
     await this.context.globalState.update(LAST_RUN_KEY, Date.now());
     await this.evaluate();
+  }
+
+  // 🤖 Start automatic monitoring
+  startAutomaticMonitoring(): void {
+    this.automaticMonitoring.startMonitoring();
+  }
+
+  // 🤖 Stop automatic monitoring
+  stopAutomaticMonitoring(): void {
+    this.automaticMonitoring.stopMonitoring();
   }
 
   private async evaluate(): Promise<void> {

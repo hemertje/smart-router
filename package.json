@@ -34,6 +34,8 @@
       { "command": "smart.showPerformance", "title": "Show Performance Dashboard", "category": "Smart Router" },
       { "command": "smart.openChat", "title": "Open Chat Panel", "category": "Smart Router" },
       { "command": "smart.runDailyEval", "title": "Run Daily Evaluation Now", "category": "Smart Router" },
+      { "command": "smart.startMonitoring", "title": "Start Automatic Monitoring", "category": "Smart Router" },
+      { "command": "smart.stopMonitoring", "title": "Stop Automatic Monitoring", "category": "Smart Router" },
       { "command": "smart.showRooCodeStatus", "title": "Show Roo Code Integration Status", "category": "Smart Router" },
       { "command": "smart.delegateToRooCode", "title": "Delegate Task to Roo Code", "category": "Smart Router" },
       { "command": "smart.toggleRooCode", "title": "Toggle Roo Code Integration", "category": "Smart Router" },
