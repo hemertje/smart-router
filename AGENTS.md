@@ -2,6 +2,8 @@
 
 > Dit bestand wordt automatisch geladen door Windsurf/Cascade als projectcontext.
 > Lees dit bij elke sessie zodat je volledige context hebt van het project.
+> 
+> **🆕 AGENT SKILLS INTEGRATION**: Smart Router gebruikt nu Agent Skills open standard met .agents/skills directory
 
 ---
 
@@ -12,6 +14,36 @@
 **Locatie:** `C:\Dev\smart-router-v2.0.0\`
 **GitHub:** https://github.com/universal-vibe/smart-router
 **Deploy target:** `C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-router-2.7.0\`
+
+---
+
+## 🆕 Agent Skills Integration
+
+### Skills Directory Structure
+```
+.agents/skills/
+├── model-routing/SKILL.md     # Optimal model selection based on task complexity
+├── cost-optimization/SKILL.md  # Cost analysis and budget management strategies  
+├── context-engineering/SKILL.md # Phil Schmid's context engineering principles
+└── [future skills...]          # Extensible skill system
+```
+
+### Skills Loading System
+- **Progressive Disclosure**: Discovery (~100 tokens) → Activation (<5000 tokens) → Execution
+- **On-Demand Loading**: Skills loaded only when relevant to task
+- **Prompt Bloat Solution**: Reduces context from 5000 to 200 tokens for discovery
+- **Smart Matching**: Keyword-based relevance scoring for task-skill matching
+
+### Available Skills
+1. **model-routing**: Routes requests to optimal AI models based on complexity and cost
+2. **cost-optimization**: Analyzes spending patterns and implements cost-saving strategies
+3. **context-engineering**: Implements Phil Schmid's framework for magical product results
+
+### Skills Manager Integration
+- **File**: `src/skillsManager.ts`
+- **Discovery Phase**: Get skill names and descriptions (~100 tokens per skill)
+- **Activation Phase**: Load full SKILL.md content when task matches
+- **Execution Phase**: Agent follows skill instructions with relevant tools
 
 ---
 
@@ -48,11 +80,13 @@ cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-r
 | `src/openrouter.ts` | OpenRouter API client |
 | `src/proactiveValidator.ts` | Systeem health check bij startup |
 | `src/dailyEvaluator.ts` | Dagelijkse automatische model monitoring |
+| `src/skillsManager.ts` | 🆕 Agent Skills loading en management |
 | `src/smartRouterPanel.ts` | Webview chat panel (geen Copilot nodig) |
 | `src/rooCodeBridge.ts` | Roo Code integratie |
 | `src/logger.ts` | Logger singleton — gebruik `Logger.getInstance().info()` |
 | `SMART_ROUTER_ANALYSIS_OPTIMIZED.md` | Volledig werkplan + roadmap |
 | `WATCHLIST.md` | Dagelijkse monitoring van nieuwe AI modellen |
+| `.agents/skills/` | 🆕 Agent Skills directory met SKILL.md files |
 
 ---
 
@@ -91,6 +125,7 @@ cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-r
 3. **Versiefilter:** DailyEvaluator rapporteert alleen modellen nieuwer dan huidige max (4.6)
 4. **Na elke sessie:** git commit + push naar GitHub
 5. **WATCHLIST.md:** dagelijks checken op nieuwe modellen
+6. **🆕 Skills:** Gebruik Agent Skills voor modulaire, herbruikbare capabilities
 
 ---
 
@@ -100,6 +135,7 @@ cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-r
 - Nieuwe routing intents: `computer_use`, `reasoning`, `ultra_long`, `multimodal`
 - Agent Marketplace
 - Dynamic model updates op basis van OpenRouter rankings
+- **🆕 Advanced Agent Skills**: Security monitoring, market intelligence, autonomous agents
 
 ### Watchlist prioriteit
 1. `inclusionAI/Ling-2.5-1T` → `debug` routing (75% goedkoper)
@@ -109,7 +145,7 @@ cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-r
 
 ---
 
-## Changelog vandaag (18 feb 2026)
+## Changelog vandaag (28 feb 2026)
 
 - ✅ Chat Panel zonder Copilot (`smart.openChat`)
 - ✅ Model IDs dot-notatie fix (4.6)
@@ -119,3 +155,8 @@ cmd /c "rmdir /s /q C:\Users\Gebruiker\.vscode\extensions\universal-vibe.smart-r
 - ✅ Auto git commit na wijzigingen
 - ✅ Versiefilter: alleen modellen nieuwer dan 4.6 rapporteren
 - ✅ 3 unavailable models vervangen (glm-4-32b, gpt-5.3-codex, gemini-3-flash)
+- 🆕 **Agent Skills Integration**: LM-Kit open standard met .agents/skills directory
+- 🆕 **Skills Manager**: On-demand loading met progressive disclosure
+- 🆕 **Prompt Bloat Solution**: 200→5000 tokens reduction
+- 🆕 **Three Core Skills**: model-routing, cost-optimization, context-engineering
+- 🆕 **Collaboration Ready**: External skill files voor non-developer access
