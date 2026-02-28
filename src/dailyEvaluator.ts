@@ -35,6 +35,47 @@ function safetyCheck(operation: string, path?: string): boolean {
   return true;
 }
 
+// 🎯 INTENT ENGINEERING - Post February 2026 Framework
+const INTENT_ENGINEERING = {
+  // Organizational goals alignment
+  COST_EFFICIENCY: { priority: 1, weight: 0.4 },
+  QUALITY_OUTPUT: { priority: 2, weight: 0.3 },
+  SPEED_PERFORMANCE: { priority: 3, weight: 0.2 },
+  INNOVATION_ADOPTION: { priority: 4, weight: 0.1 },
+  
+  // Decision boundaries
+  MAX_COST_PER_REQUEST: 0.50,
+  MIN_QUALITY_THRESHOLD: 0.8,
+  MAX_RESPONSE_TIME: 30000, // 30 seconds
+  
+  // Escalation triggers
+  ESCALATE_ON: {
+    UNCERTAIN_INTENT: true,
+    HIGH_COST_OPERATION: true,
+    QUALITY_BELOW_THRESHOLD: true,
+    NO_SUITABLE_MODEL: true
+  }
+};
+
+// 🎯 SPECIFICATION ENGINEERING - Autonomous Agent Ready
+const SPECIFICATION_ENGINEERING = {
+  // Self-contained problem statements
+  PROBLEM_TEMPLATE: {
+    CONTEXT: "Full context provided",
+    CONSTRAINTS: "Explicit constraints defined",
+    ACCEPTANCE_CRITERIA: "Measurable success criteria",
+    DECOMPOSITION: "Breakable into independent tasks"
+  },
+  
+  // Evaluation design
+  EVALUATION_METRICS: {
+    COST_EFFICIENCY: "cost_per_token vs quality_score",
+    RESPONSE_TIME: "ms_to_first_token",
+    USER_SATISFACTION: "feedback_rating",
+    TASK_COMPLETION: "acceptance_criteria_met"
+  }
+};
+
 // Models we are actively watching for OpenRouter availability
 const WATCHLIST_MODELS = [
   { id: 'inclusionAI/Ling-2.5-1T', name: 'Ling-2.5-1T', targetIntent: 'debug' },
