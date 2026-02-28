@@ -107,7 +107,7 @@ const AUTOMATIC_MONITORING = {
     ],
     SKILL_GAP_THRESHOLD: 10, // 10x gap between 2025 and 2026 skills
     MONITORING_INTERVAL: 3600000, // 1 hour checks
-    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf', 'Claude Code', 'LM-Kit', 'NVIDIA']
+    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf', 'Claude Code', 'LM-Kit', 'NVIDIA', 'IronCurtain']
   },
   
   // Autonomous agent readiness
@@ -250,6 +250,33 @@ const AUTOMATIC_MONITORING = {
       COST_REDUCTION: 'Leverage free access for cost-sensitive tasks',
       PERFORMANCE_BENEFITS: 'NVIDIA GPU acceleration advantages'
     }
+  },
+  
+  // 🆕 IronCurtain AI Agent Security Intelligence
+  IRON_CURTAIN_SECURITY: {
+    SECURITY_FRAMEWORK: {
+      PROJECT: 'IronCurtain - Open source secure AI assistant',
+      CREATOR: 'Niels Provos - longtime security engineer',
+      CONCEPT: 'Policy-based AI agent containment and control'
+    },
+    ARCHITECTURE: {
+      ISOLATION: 'Virtual machine execution environment',
+      POLICY_SYSTEM: 'Plain English constitution → LLM conversion → Enforceable rules',
+      MEDIATION: 'Model Context Protocol server for controlled access',
+      AUDIT_LOG: 'Complete policy decision tracking over time'
+    },
+    SECURITY_PRINCIPLES: {
+      DETERMINISTIC_CONTROL: 'Convert stochastic LLM behavior to predictable outcomes',
+      ACCESS_CONTROL: 'Capabilities outside LLM reach (e.g., file deletion restrictions)',
+      POLICY_EVOLUTION: 'Refine constitution based on edge cases and human input',
+      CONTAINMENT: 'Isolated execution prevents rogue agent behavior'
+    },
+    SMART_ROUTER_IMPLICATIONS: {
+      AGENT_SECURITY: 'Apply IronCurtain principles to Smart Router agent capabilities',
+      POLICY_GOVERNANCE: 'Implement plain English security policies for routing decisions',
+      CONTAINMENT_STRATEGY: 'Virtual isolation for cost optimization and security monitoring',
+      AUDIT_TRAIL: 'Complete logging of routing decisions and policy violations'
+    }
   }
 };
 
@@ -385,7 +412,8 @@ class AutomaticMonitoring {
       'Check Point': 'Critical cloud vulnerabilities disclosed - 3 CVEs affecting AI infrastructure security',
       'Claude Code': 'Advanced skills pattern for autonomous agents - .agents/skills directory structure with declarative skill definitions',
       'LM-Kit': 'Agent Skills open standard published - SKILL.md files solve prompt bloat and inconsistent behavior issues',
-      'NVIDIA': 'Free access to AI resources announced - potential cost optimization opportunities for Smart Router routing'
+      'NVIDIA': 'Free access to AI resources announced - potential cost optimization opportunities for Smart Router routing',
+      'IronCurtain': 'Open source secure AI assistant launched - policy-based agent containment with virtual machine isolation and plain English governance'
     };
     
     return updates[competitor as keyof typeof updates] || null;
@@ -393,7 +421,7 @@ class AutomaticMonitoring {
 
   private async detectMarketTrends(): Promise<string[]> {
     // Simulate trend detection
-    return ['autonomous_agents', 'specification_engineering', 'context_optimization', 'arena_mode_comparison', 'plan_mode_implementation', 'cloud_security_vulnerabilities', 'agent_skills_patterns', 'agent_skills_standard', 'nvidia_free_access'];
+    return ['autonomous_agents', 'specification_engineering', 'context_optimization', 'arena_mode_comparison', 'plan_mode_implementation', 'cloud_security_vulnerabilities', 'agent_skills_patterns', 'agent_skills_standard', 'nvidia_free_access', 'iron_curtain_security'];
   }
 
   private generateRecommendations(): string[] {
@@ -445,6 +473,13 @@ class AutomaticMonitoring {
     recommendations.push('🔍 Monitor NVIDIA models for potential integration into routing table');
     recommendations.push('💰 Evaluate free tier benefits for cost-sensitive routing decisions');
     recommendations.push('⚡ Assess NVIDIA GPU acceleration advantages for performance optimization');
+    
+    // 🆕 IronCurtain security-specific recommendations
+    recommendations.push('🛡️ Implement IronCurtain-style policy-based agent containment for Smart Router security');
+    recommendations.push('📋 Apply plain English governance policies for routing decision control');
+    recommendations.push('🔒 Consider virtual isolation for cost optimization and security monitoring');
+    recommendations.push('📊 Implement complete audit trail for routing decisions and policy violations');
+    recommendations.push('🎯 Convert stochastic LLM behavior to predictable deterministic outcomes');
     
     return recommendations;
   }
