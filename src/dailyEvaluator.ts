@@ -107,7 +107,7 @@ const AUTOMATIC_MONITORING = {
     ],
     SKILL_GAP_THRESHOLD: 10, // 10x gap between 2025 and 2026 skills
     MONITORING_INTERVAL: 3600000, // 1 hour checks
-    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google']
+    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf']
   },
   
   // Autonomous agent readiness
@@ -123,6 +123,29 @@ const AUTOMATIC_MONITORING = {
     TRACKING_METRICS: ['model_releases', 'capability_updates', 'pricing_changes'],
     COMPETITIVE_ANALYSIS: ['feature_comparison', 'performance_benchmarks', 'adoption_rates'],
     TREND_DETECTION: ['prompting_evolution', 'agent_capabilities', 'context_optimization']
+  },
+  
+  // 🆕 Windsurf Arena Mode Intelligence
+  WINDSURF_INTELLIGENCE: {
+    ARENA_MODE: {
+      BATTLE_GROUPS: ['frontier', 'fast', 'hybrid'],
+      COMPARISON_METHOD: 'side-by-side with hidden identities',
+      LEADERBOARDS: ['personal', 'global'],
+      PRICING_MODEL: 'credits-based with promotional pricing'
+    },
+    NEW_MODELS: {
+      GEMINI_31_PRO: { low_thinking: 0.5, high_thinking: 1.0 },
+      CLAUDE_SONNET_46: { no_thinking: 2.0, with_thinking: 3.0 },
+      GLM_5: { promotional: 0.75 },
+      MINIMAX_M25: { promotional: 0.25 },
+      GPT_53_CODEX_SPARK: { arena_mode: true },
+      CLAUDE_OPUS_46_FAST: { speed_multiplier: 2.5, no_thinking: 10, with_thinking: 12 }
+    },
+    PLAN_MODE: {
+      TRIGGER: 'megaplan',
+      FUNCTIONALITY: 'detailed implementation plans before coding',
+      INTEGRATION: 'Cascade mode alongside Code and Ask'
+    }
   }
 };
 
@@ -233,41 +256,10 @@ class AutomaticMonitoring {
     
     if (this.hasRetrievedInfo()) score += 0.20;
     else missingComponents.push('RETRIEVED_INFO');
-    
-    if (this.hasAvailableTools()) score += 0.15;
-    else missingComponents.push('AVAILABLE_TOOLS');
-    
-    if (this.hasStructuredOutput()) score += 0.05;
-    else missingComponents.push('STRUCTURED_OUTPUT');
-    
-    // Generate recommendations
-    if (score < 0.5) {
-      recommendations.push('🚨 CRITICAL: Context engineering foundation missing - implement basic components');
-    } else if (score < 0.8) {
-      recommendations.push('⚠️ WARNING: Context quality below threshold - optimize missing components');
-    } else {
-      recommendations.push('✅ GOOD: Context engineering quality acceptable - focus on optimization');
-    }
-    
-    // Specific recommendations based on Phil Schmid's principles
-    if (!this.isDynamicContext()) {
-      recommendations.push('🔄 Make context dynamic, not static templates');
-    }
-    
-    if (!this.isRightFormat()) {
-      recommendations.push('📝 Improve format - concise summaries > raw data dumps');
-    }
-    
-    if (!this.isRightTiming()) {
-      recommendations.push('⏰ Provide information at the right time, not all at once');
-    }
-    
-    return { score, missingComponents, recommendations };
   }
   
-  // Helper methods for context assessment
-  private hasInstructions(): boolean {
-    return true; // Smart Router has system prompts
+  if (!this.isRightFormat()) {
+    recommendations.push('📝 Improve format - concise summaries > raw data dumps');
   }
   
   private hasUserPrompt(): boolean {
