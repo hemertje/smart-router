@@ -107,7 +107,7 @@ const AUTOMATIC_MONITORING = {
     ],
     SKILL_GAP_THRESHOLD: 10, // 10x gap between 2025 and 2026 skills
     MONITORING_INTERVAL: 3600000, // 1 hour checks
-    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf']
+    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf', 'Claude Code']
   },
   
   // Autonomous agent readiness
@@ -166,6 +166,34 @@ const AUTOMATIC_MONITORING = {
       ENCRYPTION_STRENGTH: 'AES-256',
       AUDIT_FREQUENCY: 'daily',
       INCIDENT_RESPONSE: 'immediate'
+    }
+  },
+  
+  // 🆕 Claude Code Skills Pattern Intelligence
+  CLAUDE_CODE_INTELLIGENCE: {
+    SKILLS_PATTERN: {
+      STRUCTURE: '.agents/skills directory',
+      DEFINITION: 'Skill patterns for autonomous agents',
+      IMPLEMENTATION: 'Declarative skill definitions',
+      INTEGRATION: 'Smart Router specification enhancement'
+    },
+    AGENT_CAPABILITIES: {
+      CODE_GENERATION: 'Advanced code synthesis',
+      DEBUGGING: 'Systematic issue resolution',
+      REFACTORING: 'Code optimization patterns',
+      DOCUMENTATION: 'Automatic documentation generation',
+      TESTING: 'Comprehensive test generation'
+    },
+    SKILL_CATEGORIES: {
+      TECHNICAL: ['programming', 'debugging', 'architecture'],
+      ANALYTICAL: ['problem_solving', 'code_review', 'optimization'],
+      COMMUNICATION: ['documentation', 'explanation', 'collaboration']
+    },
+    INTEGRATION_OPPORTUNITIES: {
+      SPECIFICATION_ENHANCEMENT: 'Skill-based specifications',
+      AGENT_READINESS: 'Skills pattern validation',
+      CONTEXT_ENGINEERING: 'Skill-aware context generation',
+      AUTONOMY_ASSESSMENT: 'Skill capability scoring'
     }
   }
 };
