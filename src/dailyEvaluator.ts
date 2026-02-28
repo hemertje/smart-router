@@ -107,7 +107,7 @@ const AUTOMATIC_MONITORING = {
     ],
     SKILL_GAP_THRESHOLD: 10, // 10x gap between 2025 and 2026 skills
     MONITORING_INTERVAL: 3600000, // 1 hour checks
-    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf', 'Claude Code']
+    COMPETITORS: ['Perplexity AI', 'Anthropic', 'OpenAI', 'Google', 'Windsurf', 'Claude Code', 'LM-Kit']
   },
   
   // Autonomous agent readiness
@@ -194,6 +194,41 @@ const AUTOMATIC_MONITORING = {
       AGENT_READINESS: 'Skills pattern validation',
       CONTEXT_ENGINEERING: 'Skill-aware context generation',
       AUTONOMY_ASSESSMENT: 'Skill capability scoring'
+    }
+  },
+  
+  // 🆕 LM-Kit Agent Skills Standard Intelligence
+  LMKIT_AGENT_SKILLS: {
+    OPEN_STANDARD: {
+      DEVELOPER: 'Anthropic',
+      INTRODUCED: '2025-10-16',
+      PUBLISHED: '2025-12-18',
+      SPECIFICATION: 'agentskills.io',
+      STRUCTURE: 'SKILL.md files in self-contained directories'
+    },
+    SKILL_MD_STRUCTURE: {
+      YAML_FRONTMATTER: 'name, description, version, metadata',
+      MARKDOWN_BODY: 'Instructions, output format, rules, examples',
+      TOKEN_GUIDELINES: '500-2,000 tokens for instructions',
+      NAMING_CONVENTION: 'lowercase-with-hyphens, max 64 characters'
+    },
+    PROBLEMS_SOLVED: {
+      PROMPT_BLOAT: 'System prompts growing from 200 to 5,000 tokens',
+      INCONSISTENT_BEHAVIOR: 'Different formats and criteria',
+      CODE_EMBEDDED_PROMPTS: 'Non-reusable, non-reviewable prompts',
+      KNOWLEDGE_REUSE: 'Copy-paste problems across projects'
+    },
+    INTEGRATION_BENEFITS: {
+      MODULARITY: 'Load skills on-demand, unload when done',
+      REUSABILITY: 'Portable artifacts outside code',
+      CONSISTENCY: 'Standardized format and behavior',
+      COLLABORATION: 'Non-developers can review and improve'
+    },
+    VERSUS_OTHER_CONCEPTS: {
+      MCP: 'MCP gives abilities, skills teach how to use them',
+      TOOL_USE: 'Skills operate at higher abstraction level',
+      SYSTEM_PROMPTS: 'Skills are on-demand vs always present',
+      SUBAGENTS: 'Skills are lighter vs new execution context'
     }
   }
 };
@@ -315,95 +350,77 @@ class AutomaticMonitoring {
     return true; // Always has user prompts
   }
   
-  private hasStateHistory(): boolean {
-    return true; // Context cache provides state history
-  }
-  
   private hasLongTermMemory(): boolean {
     return true; // Context cache acts as long-term memory
   }
-  
-  private hasRetrievedInfo(): boolean {
-    return true; // RAG capabilities implemented
-  }
-  
-  private hasAvailableTools(): boolean {
-    return true; // Tool definitions available
-  }
-  
-  private hasStructuredOutput(): boolean {
-    return true; // Structured output formats defined
-  }
-  
-  private isDynamicContext(): boolean {
-    return true; // Context is dynamically generated
-  }
-  
-  private isRightFormat(): boolean {
-    return true; // Context is properly formatted
-  }
-  
-  private isRightTiming(): boolean {
-    return true; // Information provided at right time
-  }
-  
-  private async checkAgentReadiness(): Promise<void> {
-    const findings: string[] = [];
+
+  private async monitorCompetitor(competitor: string): Promise<string | null> {
+    // Simulate competitor monitoring
+    const updates = {
+      'Perplexity AI': 'New prompting framework released - 4 disciplines model',
+      'Anthropic': 'Opus 4.6 autonomous agents now production-ready',
+      'OpenAI': 'GPT 5.3 codecs enable enterprise agent workflows',
+      'Google': 'Gemini 3.1 Pro supports custom tool variants',
+      'Windsurf': 'Wave 14: Arena Mode with side-by-side model comparison and Plan Mode for detailed implementation planning',
+      'Check Point': 'Critical cloud vulnerabilities disclosed - 3 CVEs affecting AI infrastructure security',
+      'Claude Code': 'Advanced skills pattern for autonomous agents - .agents/skills directory structure with declarative skill definitions',
+      'LM-Kit': 'Agent Skills open standard published - SKILL.md files solve prompt bloat and inconsistent behavior issues'
+    };
     
-    // Check long-running capability
-    const maxSessionTime = this.getMaxSessionTime();
-    if (maxSessionTime < AUTOMATIC_MONITORING.AGENT_READINESS.LONG_RUNNING_THRESHOLD) {
-      findings.push(`⚠️ Agent sessions limited to ${Math.round(maxSessionTime/60000)}min - need 60min+ for autonomous work`);
+    return updates[competitor as keyof typeof updates] || null;
+  }
+
+  private async detectMarketTrends(): Promise<string[]> {
+    // Simulate trend detection
+    return ['autonomous_agents', 'specification_engineering', 'context_optimization', 'arena_mode_comparison', 'plan_mode_implementation', 'cloud_security_vulnerabilities', 'agent_skills_patterns', 'agent_skills_standard'];
+  }
+
+  private generateRecommendations(): string[] {
+    const recommendations: string[] = [];
+    
+    // Generate recommendations based on current state
+    const skillGap = this.calculateSkillGap();
+    if (skillGap > 1) {
+      recommendations.push('Implement missing prompting disciplines to close skill gap');
     }
     
-    // Check specification compliance
     const specCompliance = this.checkSpecificationCompliance();
     if (specCompliance < 0.8) {
-      findings.push(`⚠️ Specification compliance at ${Math.round(specCompliance*100)}% - need 80%+ for reliable agents`);
+      recommendations.push('Improve specification templates for agent reliability');
     }
     
-    // Check autonomy levels
-    const autonomyLevel = this.assessAutonomyLevel();
-    if (autonomyLevel < 2) { // semi-autonomous or higher needed
-      findings.push(`⚠️ Autonomy level ${autonomyLevel} - need level 2+ for production agents`);
-    }
+    recommendations.push('Monitor Perplexity AI for prompting evolution insights');
+    recommendations.push('Prepare for autonomous agent era with specification engineering');
     
-    if (findings.length > 0) {
-      await this.reportFindings('Agent Readiness', findings);
-    }
+    // Windsurf-specific recommendations
+    recommendations.push('Consider implementing Plan Mode for detailed implementation planning');
+    recommendations.push('Arena Mode validation: Smart Router vs Windsurf comparison capabilities');
+    recommendations.push('Pricing optimization: Windsurf promotional models vs Smart Router cost efficiency');
+    recommendations.push('Model integration: Consider Gemini 3.1 Pro and Claude Sonnet 4.6 for routing');
+    
+    // Security-specific recommendations
+    recommendations.push('CRITICAL: Review API key security in light of Check Point vulnerabilities');
+    recommendations.push('Implement enhanced monitoring for cloud provider security');
+    recommendations.push('Audit OpenRouter API key rotation and encryption practices');
+    recommendations.push('Set up immediate alerts for security incidents affecting AI providers');
+    
+    // Claude Code skills pattern recommendations
+    recommendations.push('Implement .agents/skills directory structure for skill-based specifications');
+    recommendations.push('Adopt Claude Code declarative skill definitions for agent capabilities');
+    recommendations.push('Enhance specification engineering with skill pattern integration');
+    recommendations.push('Develop skill-aware context generation for autonomous agents');
+    recommendations.push('Create skill capability scoring system for autonomy assessment');
+    
+    // LM-Kit Agent Skills standard recommendations
+    recommendations.push('Adopt LM-Kit Agent Skills open standard for modular agent capabilities');
+    recommendations.push('Implement SKILL.md files with YAML frontmatter and Markdown instructions');
+    recommendations.push('Solve prompt bloat: 200→5,000 tokens with on-demand skill loading');
+    recommendations.push('Replace embedded prompts with portable, reusable skill artifacts');
+    recommendations.push('Enable non-developer collaboration with external skill files');
+    recommendations.push('Standardize agent behavior across projects with consistent skill format');
+    
+    return recommendations;
   }
-  
-  private async gatherMarketIntelligence(): Promise<void> {
-    const findings: string[] = [];
-    
-    // Monitor competitors
-    for (const competitor of AUTOMATIC_MONITORING.PROMPTING_EVOLUTION.COMPETITORS) {
-      const competitorUpdate = await this.monitorCompetitor(competitor);
-      if (competitorUpdate) {
-        findings.push(`🌐 ${competitor}: ${competitorUpdate}`);
-      }
-    }
-    
-    // Check market trends
-    const trends = await this.detectMarketTrends();
-    if (trends.length > 0) {
-      findings.push(`📈 Market trends: ${trends.join(', ')}`);
-    }
-    
-    if (findings.length > 0) {
-      await this.reportFindings('Market Intelligence', findings);
-    }
-  }
-  
-  private async updateRecommendations(): Promise<void> {
-    const recommendations = this.generateRecommendations();
-    
-    if (recommendations.length > 0) {
-      await this.reportFindings('Recommendations', recommendations);
-    }
-  }
-  
-  // Helper methods
   private assessCurrentPromptingSkills(): string[] {
     // Assess current Smart Router capabilities
     const skills = ['prompt_craft', 'context_engineering']; // Always have these
