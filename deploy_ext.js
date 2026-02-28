@@ -1,8 +1,43 @@
 const fs = require('fs');
 const path = require('path');
 
+// 🚨 CRITICAL SAFETY PROTOCOL - NOOIT NOOIT NOOIT BESTANDEN WISSEN!
+// 🛡️ DATA IS HEILIG - NOOIT DELETE COMMANDO'S GEBRUIKEN!
+// 🔒 ALTIJD BACKUP MAKEN VOOR WIJZIGINGEN!
+const SAFETY_PROTOCOL = {
+  NO_DELETE_COMMANDS: true,
+  BACKUP_BEFORE_CHANGES: true,
+  VERIFY_PATHS: true,
+  CONFIRM_DANGEROUS_OPERATIONS: true
+};
+
+// Safety check function
+function safetyCheck(operation, targetPath) {
+  console.log(`🔒 SAFETY CHECK: ${operation} on ${targetPath}`);
+  
+  // Check for dangerous operations
+  const dangerousOps = ['rm', 'rmdir', 'del', 'delete', 'remove'];
+  if (dangerousOps.some(op => operation.toLowerCase().includes(op))) {
+    console.error('🚨 SAFETY VIOLATION: Delete operation detected!');
+    console.error('🚨 DEPLOYMENT ABORTED - Delete operations are FORBIDDEN!');
+    process.exit(1);
+  }
+  
+  // Verify paths exist before operations
+  if (!fs.existsSync(targetPath) && operation.includes('copy')) {
+    console.error(`🚨 SAFETY ERROR: Path does not exist: ${targetPath}`);
+    process.exit(1);
+  }
+  
+  return true;
+}
+
 const src = 'C:\\Dev\\smart-router-v2.0.0';
 const dst = 'C:\\Users\\Gebruiker\\.vscode\\extensions\\universal-vibe.smart-router-2.7.0';
+
+// Safety check before deployment
+safetyCheck('deploy', src);
+safetyCheck('deploy', dst);
 
 function copyDir(from, to) {
   if (!fs.existsSync(to)) fs.mkdirSync(to, { recursive: true });

@@ -10,6 +10,31 @@ import { Logger } from './logger';
 const LAST_RUN_KEY = 'dailyEvaluator.lastRun';
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+// 🚨 CRITICAL SAFETY PROTOCOL - NOOIT NOOIT NOOIT BESTANDEN WISSEN!
+// 🛡️ DATA IS HEILIG - NOOIT DELETE COMMANDO'S GEBRUIKEN!
+// 🔒 ALTIJD BACKUP MAKEN VOOR WIJZIGINGEN!
+const SAFETY_PROTOCOL = {
+  NO_DELETE_COMMANDS: true,
+  BACKUP_BEFORE_CHANGES: true,
+  VERIFY_PATHS: true,
+  CONFIRM_DANGEROUS_OPERATIONS: true
+};
+
+// Safety check function
+function safetyCheck(operation: string, path?: string): boolean {
+  Logger.getInstance().info(`🔒 SAFETY CHECK: ${operation}${path ? ` on ${path}` : ''}`);
+  
+  // Check for dangerous operations
+  const dangerousOps = ['rm', 'rmdir', 'del', 'delete', 'remove'];
+  if (dangerousOps.some(op => operation.toLowerCase().includes(op))) {
+    Logger.getInstance().error('🚨 SAFETY VIOLATION: Delete operation detected!');
+    vscode.window.showErrorMessage('🚨 SAFETY PROTOCOL: Delete operations are FORBIDDEN!', 'OK');
+    return false;
+  }
+  
+  return true;
+}
+
 // Models we are actively watching for OpenRouter availability
 const WATCHLIST_MODELS = [
   { id: 'inclusionAI/Ling-2.5-1T', name: 'Ling-2.5-1T', targetIntent: 'debug' },

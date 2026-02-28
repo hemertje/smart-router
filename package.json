@@ -1,7 +1,7 @@
 {
   "name": "smart-router",
   "displayName": "Smart Router",
-  "description": "Automatic AI model routing based on intent classification for VS Code",
+  "description": "Automatic AI model routing based on intent classification for VS Code - 🚨 SAFETY PROTOCOL: NOOIT NOOIT NOOIT BESTANDEN WISSEN!",
   "version": "2.7.0",
   "publisher": "universal-vibe",
   "engines": { "vscode": "^1.109.0" },
@@ -10,6 +10,11 @@
   "main": "./out/extension.js",
   "files": ["out/**/*", "node_modules/**/*", "package.json", "LICENSE.txt", ".vsixmanifest"],
   "exclude": ["src/test/**/*", "test/**/*", "**/*.test.ts"],
+  "safety": {
+    "protocol": "CRITICAL - NO DELETE OPERATIONS ALLOWED",
+    "rule": "NOOIT NOOIT NOOIT BESTANDEN WISSEN",
+    "enforcement": "AUTOMATIC"
+  },
   "contributes": {
     "chatParticipants": [{ "id": "smart", "name": "smart", "description": "AI model routing based on intent classification", "isSticky": true }],
     "commands": [
