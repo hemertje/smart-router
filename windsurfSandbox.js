@@ -35,9 +35,12 @@ class WindsurfSandbox {
           'gpt-3.5-turbo', // Less secure
           'claude-instant-1' // Legacy
         ],
-        maxTokens: 100000,
-        maxCostPerRequest: 0.50,
-        maxDailyCost: 10.00
+        limits: {
+          maxTokens: 100000,
+          maxCostPerRequest: 0.10,  // Verlaagd naar $0.10
+          maxDailyCost: 2.00,       // Verlaagd naar $2
+          maxMonthlyCost: 30.00     // Nieuw: $30 per maand
+        }
       },
       securityPolicies: {
         fileSystemAccess: {
@@ -190,10 +193,12 @@ class WindsurfSandbox {
       'network.maxRequestsPerMinute': 60,
       
       // Cost controls
-      'cost.maxDailyBudget': 10.00,
-      'cost.maxCostPerRequest': 0.50,
+      'cost.maxDailyBudget': 2,        // Verlaagd naar $2 per dag
+      'cost.maxCostPerRequest': 0.10,  // Verlaagd naar $0.10 per request
+      'cost.maxMonthlyBudget': 30,     // Nieuw: $30 per maand
       'cost.warnOnHighCost': true,
       'cost.budgetAlerts': true,
+      'cost.monthlyAlert': true,       // Nieuw: maandelijkse alerts
       
       // Privacy settings
       'privacy.disableTelemetry': false,
@@ -548,7 +553,9 @@ Write-Host "💰 Cost controls: Enabled" -ForegroundColor Yellow
       },
       alerts: {
         dailyBudgetExceeded: true,
+        monthlyBudgetExceeded: true,
         highCostPerRequest: true,
+        costThresholdWarning: true,
         suspiciousCodeGeneration: true,
         unauthorizedAccessAttempts: true,
         modelUsageAnomalies: true
