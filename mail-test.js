@@ -68,7 +68,7 @@ class MailTester {
     </div>
 </body>
 </html>
-      });
+      `;
       
       console.log('✅ Test mail sent successfully!');
       console.log('📧 Check your inbox for the test email');
