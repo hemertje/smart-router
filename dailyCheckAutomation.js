@@ -11,8 +11,9 @@ const DynamicPersonalityAdaptation = require('./dynamicPersonalityAdaptation');
 const CrossDimensionalIntelligence = require('./crossDimensionalIntelligence');
 const AutonomousEvolutionEngine = require('./autonomousEvolutionEngine');
 const SecureSandboxEnvironment = require('./secureSandboxEnvironment');
+const SecureInternetSandbox = require('./secureInternetSandbox');
 
-// 🚀 Daily Check Automation - Complete Out-of-the-Box System with Security
+// 🚀 Daily Check Automation - Complete Out-of-the-Box System with Security & Internet
 class DailyCheckAutomation {
   constructor() {
     this.transporter = nodemailer.createTransporter({
@@ -26,6 +27,9 @@ class DailyCheckAutomation {
     // 🔒 Initialize secure sandbox environment FIRST
     this.sandbox = new SecureSandboxEnvironment();
     
+    // 🌐 Initialize secure internet sandbox
+    this.internetSandbox = new SecureInternetSandbox();
+    
     // 🧠 Initialize learning moments automation
     this.learningAutomation = new LearningMomentsAutomation();
     
@@ -38,7 +42,7 @@ class DailyCheckAutomation {
     // ⚡ Initialize instant action executor
     this.actionExecutor = new InstantActionExecutor();
     
-    // 🌐 Initialize hyper-intelligent aggregator
+    // 🌐 Initialize hyper-intelligent aggregator (with internet access!)
     this.intelligentAggregator = new HyperIntelligentAggregator();
     
     // 🧠 Initialize advanced learning matrix
@@ -56,7 +60,7 @@ class DailyCheckAutomation {
 
   // 📊 Voer complete daily check uit
   async runDailyCheck() {
-    console.log('🚀 Starting complete out-of-the-box daily check with security...');
+    console.log('🚀 Starting complete out-of-the-box daily check with security & internet...');
     
     try {
       // 🔒 0. Start sandbox environment
@@ -65,6 +69,14 @@ class DailyCheckAutomation {
         throw new Error('Failed to start secure sandbox environment');
       }
       console.log('🔒 Secure sandbox environment started');
+      
+      // 🌐 0.1. Start internet gateway
+      const gatewayStarted = await this.internetSandbox.startGateway();
+      if (!gatewayStarted) {
+        console.warn('⚠️ Internet gateway failed to start - continuing without external data');
+      } else {
+        console.log('🌐 Secure internet gateway started');
+      }
       
       // 1. Run monitoring cycle
       const monitoringResults = await this.runMonitoringCycle();
@@ -81,8 +93,8 @@ class DailyCheckAutomation {
       // ⚡ 5. Execute instant actions (IN SANDBOX)
       const actionResults = await this.runActionsInSandbox(monitoringResults, learningResults, predictiveResults, codeResults);
       
-      // 🌐 6. Run hyper-intelligent aggregation
-      const aggregationResults = await this.intelligentAggregator.runAggregationCycle();
+      // 🌐 6. Run hyper-intelligent aggregation (WITH INTERNET ACCESS!)
+      const aggregationResults = await this.runAggregationWithInternet();
       
       // 🧠 7. Run advanced learning matrix
       const learningMatrixResults = await this.learningMatrix.runAdvancedLearning(monitoringResults);
@@ -103,15 +115,16 @@ class DailyCheckAutomation {
       await this.sendDailyReport(summary);
       
       // 13. Log success
-      console.log('✅ Complete out-of-the-box daily check finished successfully with security');
+      console.log('✅ Complete out-of-the-box daily check finished successfully with security & internet');
       console.log(`🔒 Sandbox status: ${this.sandbox.getSandboxStatus().running ? 'RUNNING' : 'STOPPED'}`);
+      console.log(`🌐 Gateway status: ${this.internetSandbox.getGatewayStatus().running ? 'RUNNING' : 'STOPPED'}`);
       console.log(`🧠 Processed ${learningResults.learningMoments} learning moments`);
       console.log(`✅ Validated ${learningResults.validatedMoments} moments`);
       console.log(`🚀 Applied ${learningResults.improvementsApplied} improvements`);
       console.log(`🔮 Generated ${predictiveResults.length} future predictions`);
       console.log(`🤖 Generated ${codeResults.length} autonomous code updates (in sandbox)`);
       console.log(`⚡ Executed ${actionResults.length} instant actions (in sandbox)`);
-      console.log(`🌐 Aggregated ${aggregationResults.raw} items into ${aggregationResults.relevant} relevant insights`);
+      console.log(`🌐 Aggregated ${aggregationResults.raw} items into ${aggregationResults.relevant} relevant insights (WITH INTERNET!)`);
       console.log(`🧠 Analyzed ${learningMatrixResults.dimensions} dimensions with ${learningMatrixResults.patterns} patterns`);
       console.log(`🎭 Adapted personality with ${personalityResults.adjustments} adjustments`);
       console.log(`🌈 Cross-dimensional analysis with ${crossDimensionalResults.crossPatterns} patterns`);
@@ -128,7 +141,8 @@ class DailyCheckAutomation {
         personality: personalityResults,
         crossDimensional: crossDimensionalResults,
         evolution: evolutionResults,
-        sandbox: this.sandbox.getSandboxStatus()
+        sandbox: this.sandbox.getSandboxStatus(),
+        internet: this.internetSandbox.getGatewayStatus()
       };
     } catch (error) {
       console.error('❌ Complete daily check failed:', error);
@@ -138,9 +152,56 @@ class DailyCheckAutomation {
       
       throw error;
     } finally {
-      // Always stop sandbox
+      // Always stop services
       await this.sandbox.stopSandbox();
+      await this.internetSandbox.stopGateway();
       console.log('🔒 Sandbox environment stopped');
+      console.log('🌐 Internet gateway stopped');
+    }
+  }
+
+  // 🌐 Run aggregation with internet access
+  async runAggregationWithInternet() {
+    console.log('🌐 Running hyper-intelligent aggregation with internet access...');
+    
+    try {
+      // Check if internet gateway is running
+      if (!this.internetSandbox.getGatewayStatus().running) {
+        console.warn('⚠️ Internet gateway not running - using fallback mode');
+        return await this.intelligentAggregator.runAggregationCycle();
+      }
+      
+      // Run aggregation with enhanced internet capabilities
+      const aggregationCode = `
+// Hyper-Intelligent Aggregation with Internet Access
+const HyperIntelligentAggregator = require('./hyperIntelligentAggregator');
+const SecureInternetSandbox = require('./secureInternetSandbox');
+
+const aggregator = new HyperIntelligentAggregator();
+const internetSandbox = new SecureInternetSandbox();
+
+// Enhanced aggregation with internet access
+const results = await aggregator.runAggregationWithInternet({
+  internetAccess: true,
+  secureRequests: true,
+  allowedDomains: internetSandbox.getAllowedDomains(),
+  proxyUrl: 'http://localhost:8080/proxy/'
+});
+
+console.log(JSON.stringify(results));
+`;
+      
+      const sandboxResult = await this.sandbox.runInSandbox(aggregationCode);
+      
+      if (sandboxResult.success) {
+        return JSON.parse(sandboxResult.result.output);
+      } else {
+        throw new Error(`Sandbox aggregation failed: ${sandboxResult.error}`);
+      }
+    } catch (error) {
+      console.error('❌ Internet aggregation error:', error);
+      console.log('🔄 Falling back to offline aggregation...');
+      return await this.intelligentAggregator.runAggregationCycle();
     }
   }
 
