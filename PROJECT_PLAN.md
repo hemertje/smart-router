@@ -302,12 +302,14 @@ node simple-mail-test.js
 - **🌍 Revolutie Status** - Complete revolution update
 - **🎯 Strategische Aanbevelingen** - Actieadvies in lekentaal
 
-### **📧 Email Stijl:**
-- **✅ Geen bullets** - Verhalende samenvattingen
-- **📝 Lekentaal** - Duidelijke, begrijpelijke taal
-- **🎯 Per sectie** - Korte, overzichtelijke paragrafen
-- **💡 Highlights** - Belangrijke punten uitgelicht
-- **🔍 Context** - Waarom het belangrijk is
+### **📧 Email Stijl - 3-3-3 RULE:**
+- **⚡ 3 seconden scan** - Directe waarde bovenaan
+- **🎯 3 highlights** - Belangrijkste resultaten
+- **� 3 metrics** - Essentiële KPI's
+- **🔮 1 next up** - Belangrijkste voorspelling
+- **📞 Optional details** - Complete analyse beschikbaar
+- **� Mobile-first** - Perfect op telefoon en tablet
+- **🎨 Professional look** - Moderne, strakke uitstraling
 
 ---
 
