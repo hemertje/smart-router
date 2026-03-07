@@ -70,19 +70,20 @@ Smart Router is nu een **volledig autonoom, multi-dimensioneel, zelf-lerend, per
 
 ## 💰 **REALISTIC COST CONTROLS**
 
-### **🎯 Betaalbare AI:**
+### **🎯 Betaalbare AI voor Beide Tools:**
 ```
-✅ Dagelijks limiet: $2 (was $10)
-✅ Per request: $0.10 (was $0.50)
-✅ Maandelijks limiet: $30 (was $300!)
-✅ Jaarlijkse besparing: $3,285!
+✅ Dagelijks limiet: $0.33 (was $10)
+✅ Per request: $0.05-0.10 (afhankelijk van tool)
+✅ Maandelijks limiet: $10 (was $300!)
+✅ Jaarlijkse besparing: $3,530!
 ```
 
-### **🔑 API Key Setup:**
-- **🎁 Gratis tier:** $5 credits bij Anthropic & OpenAI
-- **💡 Normaal gebruik:** $1-2 per dag
-- **🚀 Power usage:** $2-3 per dag
-- **📊 Cost monitoring:** Real-time tracking
+### **🎁 Gratis Tier Usage:**
+- **🎁 Anthropic Claude:** $5 gratis credits (Windsurf)
+- **🎁 OpenAI GPT:** $5 gratis credits (Windsurf)
+- **🎁 GitHub Copilot:** $10 gratis credits (VS Code)
+- **💡 Normaal gebruik:** Blijft binnen gratis credits
+- **🚀 Power usage:** Mogelijk kleine kosten
 
 ---
 

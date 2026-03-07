@@ -147,6 +147,11 @@ class UniversalVSCodeSandbox {
       'telemetry.enableTelemetry': false,
       'telemetry.enableCrashReporter': false,
       
+      // Cost controls for VS Code
+      'github.copilot.maxDailyCost': 0.33,
+      'github.copilot.maxMonthlyCost': 10.00,
+      'github.copilot.costPerRequest': 0.05,
+      
       // Security settings
       'security.workspace.trust.emptyWindow': 'open',
       'security.workspace.trust.enabled': true,
@@ -211,7 +216,13 @@ class UniversalVSCodeSandbox {
         {
           path: 'C:\\Dev',
           recursive: true,
-          trustLevel: 'trusted'
+          trustLevel: 'trusted',
+          costControls: {
+            maxTokens: 50000,
+            maxCostPerRequest: 0.05,  // VS Code is lichter
+            maxDailyCost: 0.33,       // $0.33 per dag (~$10/maand)
+            maxMonthlyCost: 10.00     // $10 per maand (gratis extensies!)
+          }
         }
       ],
       untrustedFolders: [
