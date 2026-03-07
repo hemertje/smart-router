@@ -38,8 +38,8 @@ class WindsurfSandbox {
         limits: {
           maxTokens: 100000,
           maxCostPerRequest: 0.10,  // Verlaagd naar $0.10
-          maxDailyCost: 2.00,       // Verlaagd naar $2
-          maxMonthlyCost: 30.00     // Nieuw: $30 per maand
+          maxDailyCost: 0.33,       // $0.33 per dag (~$10/maand)
+          maxMonthlyCost: 10.00     // Terug naar $10 per maand (gratis modellen!)
         }
       },
       securityPolicies: {
@@ -193,9 +193,9 @@ class WindsurfSandbox {
       'network.maxRequestsPerMinute': 60,
       
       // Cost controls
-      'cost.maxDailyBudget': 2,        // Verlaagd naar $2 per dag
+      'cost.maxDailyBudget': 0.33,      // $0.33 per dag (~$10/maand)
       'cost.maxCostPerRequest': 0.10,  // Verlaagd naar $0.10 per request
-      'cost.maxMonthlyBudget': 30,     // Nieuw: $30 per maand
+      'cost.maxMonthlyBudget': 10,     // Terug naar $10 per maand (gratis modellen!)
       'cost.warnOnHighCost': true,
       'cost.budgetAlerts': true,
       'cost.monthlyAlert': true,       // Nieuw: maandelijkse alerts
