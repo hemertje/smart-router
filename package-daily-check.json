@@ -1,0 +1,70 @@
+{
+  "name": "smart-router-daily-check",
+  "version": "1.0.0",
+  "description": "Secure Daily Check Automation with Complete Out-of-the-Box Intelligence",
+  "main": "dailyCheckAutomation.js",
+  "scripts": {
+    "start": "node dailyCheckAutomation.js",
+    "daily-check": "node dailyCheckAutomation.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sandbox:init": "node -e \"const SecureSandboxEnvironment = require('./secureSandboxEnvironment'); new SecureSandboxEnvironment();\"",
+    "sandbox:start": "cd sandbox && docker-compose up -d",
+    "sandbox:stop": "cd sandbox && docker-compose down",
+    "sandbox:status": "cd sandbox && docker-compose ps",
+    "backup:create": "cd sandbox && ./backup.sh",
+    "backup:rollback": "cd sandbox && ./rollback.sh",
+    "setup": "npm install && npm run sandbox:init",
+    "dev": "npm run sandbox:start && npm start",
+    "secure-daily-check": "npm run sandbox:start && npm run daily-check && npm run sandbox:stop"
+  },
+  "keywords": [
+    "ai",
+    "routing",
+    "intelligence",
+    "automation",
+    "predictive",
+    "autonomous",
+    "security",
+    "sandbox",
+    "evolution",
+    "learning",
+    "multi-dimensional",
+    "daily-check"
+  ],
+  "author": "Smart Router Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "nodemailer": "^6.9.0",
+    "dotenv": "^16.0.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hemertje/smart-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hemertje/smart-router/issues"
+  },
+  "homepage": "https://github.com/hemertje/smart-router#readme",
+  "sandbox": {
+    "enabled": true,
+    "docker": true,
+    "isolation": "high",
+    "security": "strict"
+  },
+  "security": {
+    "sandbox_required": true,
+    "code_validation": true,
+    "auto_rollback": true,
+    "monitoring": true
+  }
+}

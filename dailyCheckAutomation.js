@@ -10,8 +10,9 @@ const AdvancedLearningMatrix = require('./advancedLearningMatrix');
 const DynamicPersonalityAdaptation = require('./dynamicPersonalityAdaptation');
 const CrossDimensionalIntelligence = require('./crossDimensionalIntelligence');
 const AutonomousEvolutionEngine = require('./autonomousEvolutionEngine');
+const SecureSandboxEnvironment = require('./secureSandboxEnvironment');
 
-// 🚀 Daily Check Automation - Complete Out-of-the-Box System
+// 🚀 Daily Check Automation - Complete Out-of-the-Box System with Security
 class DailyCheckAutomation {
   constructor() {
     this.transporter = nodemailer.createTransporter({
@@ -21,6 +22,9 @@ class DailyCheckAutomation {
         pass: process.env.SMTP_PASS  // Environment variable
       }
     });
+    
+    // 🔒 Initialize secure sandbox environment FIRST
+    this.sandbox = new SecureSandboxEnvironment();
     
     // 🧠 Initialize learning moments automation
     this.learningAutomation = new LearningMomentsAutomation();
@@ -52,9 +56,16 @@ class DailyCheckAutomation {
 
   // 📊 Voer complete daily check uit
   async runDailyCheck() {
-    console.log('🚀 Starting complete out-of-the-box daily check...');
+    console.log('🚀 Starting complete out-of-the-box daily check with security...');
     
     try {
+      // 🔒 0. Start sandbox environment
+      const sandboxStarted = await this.sandbox.startSandbox();
+      if (!sandboxStarted) {
+        throw new Error('Failed to start secure sandbox environment');
+      }
+      console.log('🔒 Secure sandbox environment started');
+      
       // 1. Run monitoring cycle
       const monitoringResults = await this.runMonitoringCycle();
       
@@ -64,11 +75,11 @@ class DailyCheckAutomation {
       // 🔮 3. Generate predictive intelligence
       const predictiveResults = await this.predictiveEngine.predictFuture('48h');
       
-      // 🤖 4. Generate autonomous code
-      const codeResults = await this.codeGenerator.generateAutonomousCode(learningResults, predictiveResults);
+      // 🤖 4. Generate autonomous code (IN SANDBOX)
+      const codeResults = await this.runCodeGenerationInSandbox(learningResults, predictiveResults);
       
-      // ⚡ 5. Execute instant actions
-      const actionResults = await this.actionExecutor.executeInstantActions(monitoringResults, learningResults, predictiveResults, codeResults);
+      // ⚡ 5. Execute instant actions (IN SANDBOX)
+      const actionResults = await this.runActionsInSandbox(monitoringResults, learningResults, predictiveResults, codeResults);
       
       // 🌐 6. Run hyper-intelligent aggregation
       const aggregationResults = await this.intelligentAggregator.runAggregationCycle();
@@ -82,8 +93,8 @@ class DailyCheckAutomation {
       // 🌈 9. Run cross-dimensional intelligence
       const crossDimensionalResults = await this.crossDimensional.runCrossDimensionalAnalysis(monitoringResults);
       
-      // 🧬 10. Run autonomous evolution engine
-      const evolutionResults = await this.evolutionEngine.runAutonomousEvolution(monitoringResults, learningResults, monitoringResults);
+      // 🧬 10. Run autonomous evolution engine (IN SANDBOX)
+      const evolutionResults = await this.runEvolutionInSandbox(monitoringResults, learningResults, monitoringResults);
       
       // 11. Generate summary with ALL insights
       const summary = this.generateDailySummary(monitoringResults, learningResults, predictiveResults, codeResults, actionResults, aggregationResults, learningMatrixResults, personalityResults, crossDimensionalResults, evolutionResults);
@@ -92,18 +103,19 @@ class DailyCheckAutomation {
       await this.sendDailyReport(summary);
       
       // 13. Log success
-      console.log('✅ Complete out-of-the-box daily check finished successfully');
+      console.log('✅ Complete out-of-the-box daily check finished successfully with security');
+      console.log(`🔒 Sandbox status: ${this.sandbox.getSandboxStatus().running ? 'RUNNING' : 'STOPPED'}`);
       console.log(`🧠 Processed ${learningResults.learningMoments} learning moments`);
       console.log(`✅ Validated ${learningResults.validatedMoments} moments`);
       console.log(`🚀 Applied ${learningResults.improvementsApplied} improvements`);
       console.log(`🔮 Generated ${predictiveResults.length} future predictions`);
-      console.log(`🤖 Generated ${codeResults.length} autonomous code updates`);
-      console.log(`⚡ Executed ${actionResults.length} instant actions`);
+      console.log(`🤖 Generated ${codeResults.length} autonomous code updates (in sandbox)`);
+      console.log(`⚡ Executed ${actionResults.length} instant actions (in sandbox)`);
       console.log(`🌐 Aggregated ${aggregationResults.raw} items into ${aggregationResults.relevant} relevant insights`);
       console.log(`🧠 Analyzed ${learningMatrixResults.dimensions} dimensions with ${learningMatrixResults.patterns} patterns`);
       console.log(`🎭 Adapted personality with ${personalityResults.adjustments} adjustments`);
       console.log(`🌈 Cross-dimensional analysis with ${crossDimensionalResults.crossPatterns} patterns`);
-      console.log(`🧬 Evolution with ${evolutionResults.variations} variations and ${evolutionResults.selected} selections`);
+      console.log(`🧬 Evolution with ${evolutionResults.variations} variations and ${evolutionResults.selected} selections (in sandbox)`);
       
       return { 
         ...summary, 
@@ -115,11 +127,119 @@ class DailyCheckAutomation {
         learningMatrix: learningMatrixResults,
         personality: personalityResults,
         crossDimensional: crossDimensionalResults,
-        evolution: evolutionResults
+        evolution: evolutionResults,
+        sandbox: this.sandbox.getSandboxStatus()
       };
     } catch (error) {
       console.error('❌ Complete daily check failed:', error);
+      
+      // Emergency sandbox rollback
+      await this.sandbox.emergencyRollback();
+      
       throw error;
+    } finally {
+      // Always stop sandbox
+      await this.sandbox.stopSandbox();
+      console.log('🔒 Sandbox environment stopped');
+    }
+  }
+
+  // 🤖 Run code generation in sandbox
+  async runCodeGenerationInSandbox(learningResults, predictiveResults) {
+    console.log('🤖 Running code generation in secure sandbox...');
+    
+    try {
+      const codeGenerationCode = `
+// Autonomous Code Generation in Sandbox
+const AutonomousCodeGenerator = require('./autonomousCodeGenerator');
+const generator = new AutonomousCodeGenerator();
+
+// Generate code safely
+const results = await generator.generateAutonomousCode(
+  ${JSON.stringify(learningResults)}, 
+  ${JSON.stringify(predictiveResults)}
+);
+
+console.log(JSON.stringify(results));
+`;
+      
+      const sandboxResult = await this.sandbox.runInSandbox(codeGenerationCode);
+      
+      if (sandboxResult.success) {
+        return JSON.parse(sandboxResult.result.output);
+      } else {
+        throw new Error(`Sandbox code generation failed: ${sandboxResult.error}`);
+      }
+    } catch (error) {
+      console.error('❌ Sandbox code generation error:', error);
+      return [];
+    }
+  }
+
+  // ⚡ Run actions in sandbox
+  async runActionsInSandbox(monitoringResults, learningResults, predictiveResults, codeResults) {
+    console.log('⚡ Running instant actions in secure sandbox...');
+    
+    try {
+      const actionExecutionCode = `
+// Instant Action Execution in Sandbox
+const InstantActionExecutor = require('./instantActionExecutor');
+const executor = new InstantActionExecutor();
+
+// Execute actions safely
+const results = await executor.executeInstantActions(
+  ${JSON.stringify(monitoringResults)}, 
+  ${JSON.stringify(learningResults)}, 
+  ${JSON.stringify(predictiveResults)}, 
+  ${JSON.stringify(codeResults)}
+);
+
+console.log(JSON.stringify(results));
+`;
+      
+      const sandboxResult = await this.sandbox.runInSandbox(actionExecutionCode);
+      
+      if (sandboxResult.success) {
+        return JSON.parse(sandboxResult.result.output);
+      } else {
+        throw new Error(`Sandbox action execution failed: ${sandboxResult.error}`);
+      }
+    } catch (error) {
+      console.error('❌ Sandbox action execution error:', error);
+      return [];
+    }
+  }
+
+  // 🧬 Run evolution in sandbox
+  async runEvolutionInSandbox(currentState, performance, environment) {
+    console.log('🧬 Running evolution engine in secure sandbox...');
+    
+    try {
+      const evolutionCode = `
+// Autonomous Evolution in Sandbox
+const AutonomousEvolutionEngine = require('./autonomousEvolutionEngine');
+const engine = new AutonomousEvolutionEngine();
+
+// Run evolution safely
+const results = await engine.runAutonomousEvolution(
+  ${JSON.stringify(currentState)}, 
+  ${JSON.stringify(performance)}, 
+  ${JSON.stringify(environment)}
+);
+
+console.log(JSON.stringify(results));
+`;
+      
+      const sandboxResult = await this.sandbox.runInSandbox(evolutionCode);
+      
+      if (sandboxResult.success) {
+        return JSON.parse(sandboxResult.result.output);
+      } else {
+        throw new Error(`Sandbox evolution failed: ${sandboxResult.error}`);
+      }
+    } catch (error) {
+      console.error('❌ Sandbox evolution error:', error);
+      return { variations: 0, selected: 0, validationScore: 0, fitnessImprovement: 0, evolvedTraits: [], topMutations: [] };
     }
   }
 
