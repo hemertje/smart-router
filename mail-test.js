@@ -37,7 +37,7 @@ class MailTester {
       // Send test mail
       const testMail = await transporter.sendMail({
         from: config.smtp.auth.user,
-        to: config.notifications.dailyReport.recipients[0],
+        to: "jeroenvanhemert@gmail.com",
         subject: '🚀 Smart Router Mail Test - Configuration Working!',
         html: `
 <!DOCTYPE html>
