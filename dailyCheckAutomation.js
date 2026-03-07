@@ -4,6 +4,7 @@ const path = require('path');
 const LearningMomentsAutomation = require('./learningMomentsAutomation');
 const PredictiveIntelligenceEngine = require('./predictiveIntelligenceEngine');
 const AutonomousCodeGenerator = require('./autonomousCodeGenerator');
+const InstantActionExecutor = require('./instantActionExecutor');
 
 // 🚀 Daily Check Automation - Proactieve Monitoring
 class DailyCheckAutomation {
@@ -24,6 +25,9 @@ class DailyCheckAutomation {
     
     // 🤖 Initialize autonomous code generator
     this.codeGenerator = new AutonomousCodeGenerator();
+    
+    // ⚡ Initialize instant action executor
+    this.actionExecutor = new InstantActionExecutor();
   }
 
   // 📊 Voer complete daily check uit
@@ -40,24 +44,28 @@ class DailyCheckAutomation {
       // 🔮 3. Generate predictive intelligence
       const predictiveResults = await this.predictiveEngine.predictFuture('48h');
       
-      // 🤖 4. Generate autonomous code (NEW!)
+      // 🤖 4. Generate autonomous code
       const codeResults = await this.codeGenerator.generateAutonomousCode(learningResults, predictiveResults);
       
-      // 5. Generate summary with all insights
-      const summary = this.generateDailySummary(monitoringResults, learningResults, predictiveResults, codeResults);
+      // ⚡ 5. Execute instant actions (NEW!)
+      const actionResults = await this.actionExecutor.executeInstantActions(monitoringResults, learningResults, predictiveResults, codeResults);
       
-      // 6. Send email
+      // 6. Generate summary with all insights
+      const summary = this.generateDailySummary(monitoringResults, learningResults, predictiveResults, codeResults, actionResults);
+      
+      // 7. Send email
       await this.sendDailyReport(summary);
       
-      // 7. Log success
+      // 8. Log success
       console.log('✅ Daily check completed successfully');
       console.log(`🧠 Processed ${learningResults.learningMoments} learning moments`);
       console.log(`✅ Validated ${learningResults.validatedMoments} moments`);
       console.log(`🚀 Applied ${learningResults.improvementsApplied} improvements`);
       console.log(`🔮 Generated ${predictiveResults.length} future predictions`);
       console.log(`🤖 Generated ${codeResults.length} autonomous code updates`);
+      console.log(`⚡ Executed ${actionResults.length} instant actions`);
       
-      return { ...summary, learning: learningResults, predictive: predictiveResults, code: codeResults };
+      return { ...summary, learning: learningResults, predictive: predictiveResults, code: codeResults, actions: actionResults };
     } catch (error) {
       console.error('❌ Daily check failed:', error);
       throw error;
@@ -150,7 +158,7 @@ class DailyCheckAutomation {
   }
 
   // 📊 Genereer dagelijkse samenvatting
-  generateDailySummary(results, learningResults = null, predictiveResults = null, codeResults = null) {
+  generateDailySummary(results, learningResults = null, predictiveResults = null, codeResults = null, actionResults = null) {
     const summary = {
       date: new Date().toLocaleDateString('nl-NL'),
       timestamp: results.timestamp,
@@ -194,7 +202,7 @@ class DailyCheckAutomation {
         nextWeekOutlook: this.generateNextWeekOutlook(predictiveResults)
       } : null,
       
-      // 🤖 Autonomous Code Generation (NEW!)
+      // 🤖 Autonomous Code Generation
       autonomousCode: codeResults ? {
         totalGenerated: codeResults.length,
         deployedCode: codeResults.filter(c => c.status === 'deployed'),
@@ -203,6 +211,18 @@ class DailyCheckAutomation {
         averageImpact: this.calculateAverageCodeImpact(codeResults),
         selfImprovementRate: this.calculateSelfImprovementRate(codeResults),
         codeEvolutionScore: this.calculateCodeEvolutionScore(codeResults)
+      } : null,
+      
+      // ⚡ Instant Action Execution (NEW!)
+      instantActions: actionResults ? {
+        totalExecuted: actionResults.length,
+        verifiedActions: actionResults.filter(a => a.status === 'verified'),
+        actionTypes: this.getActionTypeDistribution(actionResults),
+        topActions: actionResults.slice(0, 3),
+        averageUrgency: this.calculateAverageUrgency(actionResults),
+        averageImpact: this.calculateAverageActionImpact(actionResults),
+        instantResponseRate: this.calculateInstantResponseRate(actionResults),
+        realTimeExecutionScore: this.calculateRealTimeExecutionScore(actionResults)
       } : null,
       
       // 🚀 Action Items
@@ -434,6 +454,63 @@ class DailyCheckAutomation {
         </div>
         ` : ''}
 
+        ${summary.instantActions ? `
+        <div class="section">
+            <h2>⚡ Instant Action Execution - Real-Time Response</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #28a745;">${summary.instantActions.totalExecuted}</div>
+                    <div style="color: #6c757d;">Actions Executed</div>
+                </div>
+                <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #17a2b8;">${summary.instantActions.verifiedActions.length}</div>
+                    <div style="color: #6c757d;">Verified</div>
+                </div>
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #ffc107;">${Math.round(summary.instantActions.instantResponseRate * 100)}%</div>
+                    <div style="color: #6c757d;">Instant Response</div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>⚡ Top Instant Actions</h4>
+                ${summary.instantActions.topActions.map(action => `
+                    <div style="margin: 8px 0; padding: 8px; background: white; border-left: 3px solid #fd7e14;">
+                        <strong>${action.description}</strong>
+                        <div style="font-size: 0.9em; color: #6c757d;">
+                            Type: ${action.type} | Priority: ${action.priority} | Urgency: ${Math.round(action.urgency * 100)}% | Status: ${action.status}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="background: #e2e3e5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>📊 Action Type Distribution</h4>
+                ${Object.entries(summary.instantActions.actionTypes).map(([type, count]) => `
+                    <div style="margin: 5px 0;">
+                        <strong>${type}:</strong> ${count} actions
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>🚀 Real-Time Execution Score</h4>
+                <div style="background: white; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                    <strong>Execution Score:</strong> ${Math.round(summary.instantActions.realTimeExecutionScore * 100)}%
+                    <div style="font-size: 0.9em; color: #6c757d;">System responds instantly to real-time events</div>
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>⚡ Instant Response System Status</h4>
+                <div style="background: white; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                    <strong>Status:</strong> ${summary.instantActions.verifiedActions.length > 0 ? '⚡ INSTANTLY RESPONDING' : '🔄 READY FOR ACTION'}
+                    <div style="font-size: 0.9em; color: #6c757d;">The system executes actions instantly in real-time</div>
+                </div>
+            </div>
+        </div>
+        ` : ''}
+
         <div class="section">
             <h2>🔥 Top Concurrent Updates</h2>
             ${summary.topCompetitorUpdates.map(update => `
@@ -630,6 +707,48 @@ class DailyCheckAutomation {
     const evolutionScore = (selfImprovementRate * 0.4) + (averageImpact * 0.4) + (codeVariety * 0.2);
     
     return Math.min(1.0, evolutionScore);
+  }
+
+  // ⚡ Instant Action Execution Helper Methods (NEW!)
+  getActionTypeDistribution(actionResults) {
+    const distribution = {};
+    
+    actionResults.forEach(action => {
+      const type = action.type || 'unknown';
+      distribution[type] = (distribution[type] || 0) + 1;
+    });
+    
+    return distribution;
+  }
+
+  calculateAverageUrgency(actionResults) {
+    if (actionResults.length === 0) return 0;
+    const totalUrgency = actionResults.reduce((sum, action) => sum + (action.urgency || 0), 0);
+    return totalUrgency / actionResults.length;
+  }
+
+  calculateAverageActionImpact(actionResults) {
+    if (actionResults.length === 0) return 0;
+    const totalImpact = actionResults.reduce((sum, action) => sum + (action.impact || 0), 0);
+    return totalImpact / actionResults.length;
+  }
+
+  calculateInstantResponseRate(actionResults) {
+    const instantActions = actionResults.filter(action => action.executionTime === 'immediate');
+    if (actionResults.length === 0) return 0;
+    return instantActions.length / actionResults.length;
+  }
+
+  calculateRealTimeExecutionScore(actionResults) {
+    // Calculate how well the system responds in real-time
+    const instantResponseRate = this.calculateInstantResponseRate(actionResults);
+    const averageUrgency = this.calculateAverageUrgency(actionResults);
+    const verifiedRate = actionResults.filter(a => a.status === 'verified').length / actionResults.length;
+    
+    // Combine factors for real-time execution score
+    const executionScore = (instantResponseRate * 0.4) + (averageUrgency * 0.3) + (verifiedRate * 0.3);
+    
+    return Math.min(1.0, executionScore);
   }
 
   async assessIntelligenceGaps() {
