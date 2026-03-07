@@ -1,0 +1,33 @@
+{
+  "project_name": "smart-router-v2.0.0",
+  "project_path": "C:\\Dev\\smart-router-v2.0.0",
+  "allowed_paths": [
+    "C:\\Dev\\smart-router-v2.0.0",
+    "C:\\Dev\\smart-router-v2.0.0\\node_modules",
+    "C:\\Dev\\smart-router-v2.0.0\\temp",
+    "C:\\Dev\\smart-router-v2.0.0\\cache"
+  ],
+  "resource_limits": {
+    "max_memory": "512MB",
+    "max_cpu": "25%",
+    "max_disk_space": "1GB"
+  },
+  "network_access": {
+    "allowed_domains": [
+      "techcrunch.com",
+      "wired.com",
+      "theverge.com",
+      "arstechnica.com",
+      "arxiv.org",
+      "huggingface.co",
+      "openai.com",
+      "anthropic.com",
+      "github.com",
+      "stackoverflow.com",
+      "npmjs.org",
+      "yahoo.com",
+      "finance.yahoo.com"
+    ],
+    "max_requests_per_minute": 30
+  }
+}

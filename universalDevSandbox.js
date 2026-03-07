@@ -66,8 +66,11 @@ class UniversalDevSandbox {
       // 7. Initialize VS Code sandbox
       this.initializeVSCodeSandbox();
       
-      // 8. 🆕 Initialize Windsurf sandbox
+      // 8. Initialize Windsurf sandbox
       this.initializeWindsurfSandbox();
+      
+      // 9. 🆕 Initialize automatic sandbox launcher
+      this.initializeAutoLauncher();
       
       console.log('✅ C:\\Dev universele sandbox initialized');
       console.log(`📁 Ontdekte projecten: ${this.projects.size}`);
@@ -75,6 +78,7 @@ class UniversalDevSandbox {
       console.log(`🔒 Security level: maximum`);
       console.log(`💻 VS Code sandbox: enabled`);
       console.log(`🌊 Windsurf sandbox: enabled`);
+      console.log(`🚀 Auto launcher: enabled`);
       
     } catch (error) {
       console.error('❌ Failed to initialize universal sandbox:', error);
@@ -98,7 +102,23 @@ class UniversalDevSandbox {
     }
   }
 
-  // � Initialize VS Code sandbox
+  // 🚀 Initialize automatic sandbox launcher
+  initializeAutoLauncher() {
+    console.log('🚀 Initializing automatic sandbox launcher...');
+    
+    try {
+      // Import automatic launcher
+      const AutomaticSandboxLauncher = require('./automaticSandboxLauncher');
+      this.autoLauncher = new AutomaticSandboxLauncher();
+      
+      console.log('✅ Automatic sandbox launcher initialized');
+    } catch (error) {
+      console.warn('⚠️ Auto launcher initialization failed:', error.message);
+      console.log('🔄 Continuing without auto launcher...');
+    }
+  }
+
+  // 💻 Initialize VS Code sandbox
   initializeVSCodeSandbox() {
     console.log('💻 Initializing VS Code sandbox...');
     
@@ -431,6 +451,7 @@ class UniversalDevSandbox {
       monitoring: 'active',
       vscode_sandbox: this.vscodeSandbox ? 'enabled' : 'disabled',
       windsurf_sandbox: this.windsurfSandbox ? 'enabled' : 'disabled',
+      auto_launcher: this.autoLauncher ? 'enabled' : 'disabled',
       projects: Array.from(this.projects.entries()).map(([name, info]) => ({
         name: name,
         type: info.type,
@@ -450,6 +471,11 @@ class UniversalDevSandbox {
     if (this.windsurfSandbox) {
       status.windsurf_status = this.windsurfSandbox.getSandboxStatus();
       status.windsurf_security = this.windsurfSandbox.validateWindsurfSecurity();
+    }
+    
+    // Add auto launcher status if available
+    if (this.autoLauncher) {
+      status.auto_launcher_status = this.autoLauncher.getLauncherStatus();
     }
     
     return status;
