@@ -63,14 +63,18 @@ class UniversalDevSandbox {
       // 6. Create monitoring
       this.setupUniversalMonitoring();
       
-      // 7. 🆕 Initialize VS Code sandbox
+      // 7. Initialize VS Code sandbox
       this.initializeVSCodeSandbox();
+      
+      // 8. 🆕 Initialize Windsurf sandbox
+      this.initializeWindsurfSandbox();
       
       console.log('✅ C:\\Dev universele sandbox initialized');
       console.log(`📁 Ontdekte projecten: ${this.projects.size}`);
       console.log(`🌐 Internet gateway: enabled`);
       console.log(`🔒 Security level: maximum`);
       console.log(`💻 VS Code sandbox: enabled`);
+      console.log(`🌊 Windsurf sandbox: enabled`);
       
     } catch (error) {
       console.error('❌ Failed to initialize universal sandbox:', error);
@@ -78,7 +82,23 @@ class UniversalDevSandbox {
     }
   }
 
-  // 💻 Initialize VS Code sandbox
+  // 🌊 Initialize Windsurf sandbox
+  initializeWindsurfSandbox() {
+    console.log('🌊 Initializing Windsurf sandbox...');
+    
+    try {
+      // Import Windsurf sandbox
+      const WindsurfSandbox = require('./windsurfSandbox');
+      this.windsurfSandbox = new WindsurfSandbox();
+      
+      console.log('✅ Windsurf sandbox initialized');
+    } catch (error) {
+      console.warn('⚠️ Windsurf sandbox initialization failed:', error.message);
+      console.log('🔄 Continuing without Windsurf sandbox...');
+    }
+  }
+
+  // � Initialize VS Code sandbox
   initializeVSCodeSandbox() {
     console.log('💻 Initializing VS Code sandbox...');
     
@@ -94,7 +114,7 @@ class UniversalDevSandbox {
     }
   }
 
-  // 🔍 Validate sandbox structuur
+  // �� Validate sandbox structuur
   validateSandboxStructure() {
     console.log('🔍 Validating C:\\Dev sandbox structure...');
     
@@ -410,6 +430,7 @@ class UniversalDevSandbox {
       internet_gateway: 'enabled',
       monitoring: 'active',
       vscode_sandbox: this.vscodeSandbox ? 'enabled' : 'disabled',
+      windsurf_sandbox: this.windsurfSandbox ? 'enabled' : 'disabled',
       projects: Array.from(this.projects.entries()).map(([name, info]) => ({
         name: name,
         type: info.type,
@@ -423,6 +444,12 @@ class UniversalDevSandbox {
     if (this.vscodeSandbox) {
       status.vscode_status = this.vscodeSandbox.getSandboxStatus();
       status.vscode_security = this.vscodeSandbox.validateSandboxSecurity();
+    }
+    
+    // Add Windsurf status if available
+    if (this.windsurfSandbox) {
+      status.windsurf_status = this.windsurfSandbox.getSandboxStatus();
+      status.windsurf_security = this.windsurfSandbox.validateWindsurfSecurity();
     }
     
     return status;
