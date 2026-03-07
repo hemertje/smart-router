@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 const LearningMomentsAutomation = require('./learningMomentsAutomation');
+const PredictiveIntelligenceEngine = require('./predictiveIntelligenceEngine');
 
 // 🚀 Daily Check Automation - Proactieve Monitoring
 class DailyCheckAutomation {
@@ -16,6 +17,9 @@ class DailyCheckAutomation {
     
     // 🧠 Initialize learning moments automation
     this.learningAutomation = new LearningMomentsAutomation();
+    
+    // 🔮 Initialize predictive intelligence engine
+    this.predictiveEngine = new PredictiveIntelligenceEngine();
   }
 
   // 📊 Voer complete daily check uit
@@ -29,19 +33,23 @@ class DailyCheckAutomation {
       // 🧠 2. Process learning moments automatically
       const learningResults = await this.learningAutomation.processLearningMoments(monitoringResults);
       
-      // 3. Generate summary with learning insights
-      const summary = this.generateDailySummary(monitoringResults, learningResults);
+      // 🔮 3. Generate predictive intelligence (NEW!)
+      const predictiveResults = await this.predictiveEngine.predictFuture('48h');
       
-      // 4. Send email
+      // 4. Generate summary with all insights
+      const summary = this.generateDailySummary(monitoringResults, learningResults, predictiveResults);
+      
+      // 5. Send email
       await this.sendDailyReport(summary);
       
-      // 5. Log success
+      // 6. Log success
       console.log('✅ Daily check completed successfully');
       console.log(`🧠 Processed ${learningResults.learningMoments} learning moments`);
       console.log(`✅ Validated ${learningResults.validatedMoments} moments`);
       console.log(`🚀 Applied ${learningResults.improvementsApplied} improvements`);
+      console.log(`🔮 Generated ${predictiveResults.length} future predictions`);
       
-      return { ...summary, learning: learningResults };
+      return { ...summary, learning: learningResults, predictive: predictiveResults };
     } catch (error) {
       console.error('❌ Daily check failed:', error);
       throw error;
@@ -134,7 +142,7 @@ class DailyCheckAutomation {
   }
 
   // 📊 Genereer dagelijkse samenvatting
-  generateDailySummary(results, learningResults = null) {
+  generateDailySummary(results, learningResults = null, predictiveResults = null) {
     const summary = {
       date: new Date().toLocaleDateString('nl-NL'),
       timestamp: results.timestamp,
@@ -156,7 +164,7 @@ class DailyCheckAutomation {
       efficiencyGain: results.performanceMetrics.efficiency,
       intelligenceCoverage: results.performanceMetrics.coverage,
       
-      // 🧠 Learning Moments (NEW!)
+      // 🧠 Learning Moments
       learningMoments: learningResults ? {
         total: learningResults.learningMoments,
         validated: learningResults.validatedMoments,
@@ -164,6 +172,18 @@ class DailyCheckAutomation {
         learningScore: learningResults.learningScore,
         topInsights: this.getTopLearningInsights(learningResults),
         validationResults: this.getValidationSummary(learningResults)
+      } : null,
+      
+      // 🔮 Predictive Intelligence (NEW!)
+      predictiveIntelligence: predictiveResults ? {
+        totalPredictions: predictiveResults.length,
+        topPredictions: predictiveResults.slice(0, 3),
+        competitorPredictions: predictiveResults.filter(p => p.type === 'competitor_prediction'),
+        trendPredictions: predictiveResults.filter(p => p.type === 'trend_prediction'),
+        timingPredictions: predictiveResults.filter(p => p.type === 'timing_prediction'),
+        averageConfidence: this.calculateAverageConfidence(predictiveResults),
+        highImpactPredictions: predictiveResults.filter(p => p.impact > 0.7),
+        nextWeekOutlook: this.generateNextWeekOutlook(predictiveResults)
       } : null,
       
       // 🚀 Action Items
@@ -283,6 +303,55 @@ class DailyCheckAutomation {
                     <div style="margin: 5px 0;">
                         <span style="color: ${result.passed ? '#28a745' : '#dc3545'};">${result.passed ? '✅' : '❌'}</span>
                         <strong>${check}:</strong> ${result.summary} (${Math.round(result.confidence * 100)}% confidence)
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+
+        ${summary.predictiveIntelligence ? `
+        <div class="section">
+            <h2>🔮 Predictive Intelligence - Future Outlook</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #28a745;">${summary.predictiveIntelligence.totalPredictions}</div>
+                    <div style="color: #6c757d;">Future Predictions</div>
+                </div>
+                <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #17a2b8;">${Math.round(summary.predictiveIntelligence.averageConfidence * 100)}%</div>
+                    <div style="color: #6c757d;">Avg Confidence</div>
+                </div>
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #ffc107;">${summary.predictiveIntelligence.highImpactPredictions.length}</div>
+                    <div style="color: #6c757d;">High Impact</div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>🔮 Top Future Predictions (Next 48h)</h4>
+                ${summary.predictiveIntelligence.topPredictions.map(prediction => `
+                    <div style="margin: 8px 0; padding: 8px; background: white; border-left: 3px solid #6f42c1;">
+                        <strong>${prediction.competitor || prediction.trend || 'Market'}:</strong> ${prediction.prediction}
+                        <div style="font-size: 0.9em; color: #6c757d;">
+                            Confidence: ${Math.round(prediction.confidence * 100)}% | Impact: ${Math.round(prediction.impact * 100)}% | Timeframe: ${prediction.timeframe}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="background: #e2e3e5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>📅 Next Week Outlook</h4>
+                <div style="background: white; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                    ${summary.predictiveIntelligence.nextWeekOutlook}
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>🎯 Strategic Recommendations Based on Predictions</h4>
+                ${summary.predictiveIntelligence.topPredictions.map(prediction => `
+                    <div style="margin: 5px 0;">
+                        <strong>Prepare for:</strong> ${prediction.prediction}
+                        <div style="font-size: 0.9em; color: #6c757d;">${prediction.recommendedActions ? prediction.recommendedActions.slice(0, 2).join(', ') : 'Monitor closely'}</div>
                     </div>
                 `).join('')}
             </div>
@@ -418,6 +487,37 @@ class DailyCheckAutomation {
       feasibility: { passed: true, confidence: 0.81, summary: 'Technical feasibility confirmed' },
       alignment: { passed: true, confidence: 0.88, summary: 'Excellent strategic alignment' }
     };
+  }
+
+  // 🔮 Predictive Intelligence Helper Methods (NEW!)
+  calculateAverageConfidence(predictions) {
+    if (predictions.length === 0) return 0;
+    const totalConfidence = predictions.reduce((sum, p) => sum + p.confidence, 0);
+    return totalConfidence / predictions.length;
+  }
+
+  generateNextWeekOutlook(predictions) {
+    const competitorPredictions = predictions.filter(p => p.type === 'competitor_prediction');
+    const trendPredictions = predictions.filter(p => p.type === 'trend_prediction');
+    
+    const outlook = [];
+    
+    if (competitorPredictions.length > 0) {
+      outlook.push(`🏢 Expect ${competitorPredictions.length} major competitor moves`);
+    }
+    
+    if (trendPredictions.length > 0) {
+      outlook.push(`📈 ${trendPredictions.length} key trends will accelerate`);
+    }
+    
+    const highImpact = predictions.filter(p => p.impact > 0.7);
+    if (highImpact.length > 0) {
+      outlook.push(`🎯 ${highImpact.length} high-impact events predicted`);
+    }
+    
+    outlook.push(`⚡ Overall: ${this.calculateAverageConfidence(predictions) > 0.7 ? 'High confidence week for strategic moves' : 'Moderate confidence - monitor closely'}`);
+    
+    return outlook.join(' | ');
   }
 
   async assessIntelligenceGaps() {
