@@ -63,14 +63,34 @@ class UniversalDevSandbox {
       // 6. Create monitoring
       this.setupUniversalMonitoring();
       
+      // 7. 🆕 Initialize VS Code sandbox
+      this.initializeVSCodeSandbox();
+      
       console.log('✅ C:\\Dev universele sandbox initialized');
       console.log(`📁 Ontdekte projecten: ${this.projects.size}`);
       console.log(`🌐 Internet gateway: enabled`);
       console.log(`🔒 Security level: maximum`);
+      console.log(`💻 VS Code sandbox: enabled`);
       
     } catch (error) {
       console.error('❌ Failed to initialize universal sandbox:', error);
       throw error;
+    }
+  }
+
+  // 💻 Initialize VS Code sandbox
+  initializeVSCodeSandbox() {
+    console.log('💻 Initializing VS Code sandbox...');
+    
+    try {
+      // Import VS Code sandbox
+      const UniversalVSCodeSandbox = require('./universalVSCodeSandbox');
+      this.vscodeSandbox = new UniversalVSCodeSandbox();
+      
+      console.log('✅ VS Code sandbox initialized');
+    } catch (error) {
+      console.warn('⚠️ VS Code sandbox initialization failed:', error.message);
+      console.log('🔄 Continuing without VS Code sandbox...');
     }
   }
 
@@ -382,13 +402,14 @@ class UniversalDevSandbox {
     const totalSize = Array.from(this.projects.values())
       .reduce((total, project) => total + project.size, 0);
     
-    return {
+    const status = {
       sandbox_path: this.devPath,
       total_projects: this.projects.size,
       total_size: totalSize,
       security_level: 'maximum',
       internet_gateway: 'enabled',
       monitoring: 'active',
+      vscode_sandbox: this.vscodeSandbox ? 'enabled' : 'disabled',
       projects: Array.from(this.projects.entries()).map(([name, info]) => ({
         name: name,
         type: info.type,
@@ -397,6 +418,14 @@ class UniversalDevSandbox {
         last_modified: new Date(info.lastModified).toISOString()
       }))
     };
+    
+    // Add VS Code status if available
+    if (this.vscodeSandbox) {
+      status.vscode_status = this.vscodeSandbox.getSandboxStatus();
+      status.vscode_security = this.vscodeSandbox.validateSandboxSecurity();
+    }
+    
+    return status;
   }
 
   // 🌐 Make secure request (for any project in C:\Dev)
