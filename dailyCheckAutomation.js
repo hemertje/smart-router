@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const LearningMomentsAutomation = require('./learningMomentsAutomation');
 const PredictiveIntelligenceEngine = require('./predictiveIntelligenceEngine');
+const AutonomousCodeGenerator = require('./autonomousCodeGenerator');
 
 // 🚀 Daily Check Automation - Proactieve Monitoring
 class DailyCheckAutomation {
@@ -20,6 +21,9 @@ class DailyCheckAutomation {
     
     // 🔮 Initialize predictive intelligence engine
     this.predictiveEngine = new PredictiveIntelligenceEngine();
+    
+    // 🤖 Initialize autonomous code generator
+    this.codeGenerator = new AutonomousCodeGenerator();
   }
 
   // 📊 Voer complete daily check uit
@@ -33,23 +37,27 @@ class DailyCheckAutomation {
       // 🧠 2. Process learning moments automatically
       const learningResults = await this.learningAutomation.processLearningMoments(monitoringResults);
       
-      // 🔮 3. Generate predictive intelligence (NEW!)
+      // 🔮 3. Generate predictive intelligence
       const predictiveResults = await this.predictiveEngine.predictFuture('48h');
       
-      // 4. Generate summary with all insights
-      const summary = this.generateDailySummary(monitoringResults, learningResults, predictiveResults);
+      // 🤖 4. Generate autonomous code (NEW!)
+      const codeResults = await this.codeGenerator.generateAutonomousCode(learningResults, predictiveResults);
       
-      // 5. Send email
+      // 5. Generate summary with all insights
+      const summary = this.generateDailySummary(monitoringResults, learningResults, predictiveResults, codeResults);
+      
+      // 6. Send email
       await this.sendDailyReport(summary);
       
-      // 6. Log success
+      // 7. Log success
       console.log('✅ Daily check completed successfully');
       console.log(`🧠 Processed ${learningResults.learningMoments} learning moments`);
       console.log(`✅ Validated ${learningResults.validatedMoments} moments`);
       console.log(`🚀 Applied ${learningResults.improvementsApplied} improvements`);
       console.log(`🔮 Generated ${predictiveResults.length} future predictions`);
+      console.log(`🤖 Generated ${codeResults.length} autonomous code updates`);
       
-      return { ...summary, learning: learningResults, predictive: predictiveResults };
+      return { ...summary, learning: learningResults, predictive: predictiveResults, code: codeResults };
     } catch (error) {
       console.error('❌ Daily check failed:', error);
       throw error;
@@ -142,7 +150,7 @@ class DailyCheckAutomation {
   }
 
   // 📊 Genereer dagelijkse samenvatting
-  generateDailySummary(results, learningResults = null, predictiveResults = null) {
+  generateDailySummary(results, learningResults = null, predictiveResults = null, codeResults = null) {
     const summary = {
       date: new Date().toLocaleDateString('nl-NL'),
       timestamp: results.timestamp,
@@ -174,7 +182,7 @@ class DailyCheckAutomation {
         validationResults: this.getValidationSummary(learningResults)
       } : null,
       
-      // 🔮 Predictive Intelligence (NEW!)
+      // 🔮 Predictive Intelligence
       predictiveIntelligence: predictiveResults ? {
         totalPredictions: predictiveResults.length,
         topPredictions: predictiveResults.slice(0, 3),
@@ -184,6 +192,17 @@ class DailyCheckAutomation {
         averageConfidence: this.calculateAverageConfidence(predictiveResults),
         highImpactPredictions: predictiveResults.filter(p => p.impact > 0.7),
         nextWeekOutlook: this.generateNextWeekOutlook(predictiveResults)
+      } : null,
+      
+      // 🤖 Autonomous Code Generation (NEW!)
+      autonomousCode: codeResults ? {
+        totalGenerated: codeResults.length,
+        deployedCode: codeResults.filter(c => c.status === 'deployed'),
+        codeTypes: this.getCodeTypeDistribution(codeResults),
+        topGenerations: codeResults.slice(0, 3),
+        averageImpact: this.calculateAverageCodeImpact(codeResults),
+        selfImprovementRate: this.calculateSelfImprovementRate(codeResults),
+        codeEvolutionScore: this.calculateCodeEvolutionScore(codeResults)
       } : null,
       
       // 🚀 Action Items
@@ -358,6 +377,63 @@ class DailyCheckAutomation {
         </div>
         ` : ''}
 
+        ${summary.autonomousCode ? `
+        <div class="section">
+            <h2>🤖 Autonomous Code Generation - Self-Writing System</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #28a745;">${summary.autonomousCode.totalGenerated}</div>
+                    <div style="color: #6c757d;">Code Generated</div>
+                </div>
+                <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #17a2b8;">${summary.autonomousCode.deployedCode.length}</div>
+                    <div style="color: #6c757d;">Deployed</div>
+                </div>
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #ffc107;">${Math.round(summary.autonomousCode.selfImprovementRate * 100)}%</div>
+                    <div style="color: #6c757d;">Self-Improvement</div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>🤖 Top Autonomous Code Generations</h4>
+                ${summary.autonomousCode.topGenerations.map(code => `
+                    <div style="margin: 8px 0; padding: 8px; background: white; border-left: 3px solid #e83e8c;">
+                        <strong>${code.description}</strong>
+                        <div style="font-size: 0.9em; color: #6c757d;">
+                            Type: ${code.opportunity.type} | Impact: ${Math.round(code.opportunity.impact * 100)}% | Status: ${code.status}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="background: #e2e3e5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>📊 Code Type Distribution</h4>
+                ${Object.entries(summary.autonomousCode.codeTypes).map(([type, count]) => `
+                    <div style="margin: 5px 0;">
+                        <strong>${type}:</strong> ${count} generations
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>🧬 Code Evolution Score</h4>
+                <div style="background: white; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                    <strong>Evolution Score:</strong> ${Math.round(summary.autonomousCode.codeEvolutionScore * 100)}%
+                    <div style="font-size: 0.9em; color: #6c757d;">System is becoming more intelligent and autonomous</div>
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>⚡ Self-Writing System Status</h4>
+                <div style="background: white; padding: 10px; border-radius: 5px; margin: 5px 0;">
+                    <strong>Status:</strong> ${summary.autonomousCode.deployedCode.length > 0 ? '🤖 ACTIVELY SELF-IMPROVING' : '🔄 READY TO EVOLVE'}
+                    <div style="font-size: 0.9em; color: #6c757d;">The system is writing and improving its own code autonomously</div>
+                </div>
+            </div>
+        </div>
+        ` : ''}
+
         <div class="section">
             <h2>🔥 Top Concurrent Updates</h2>
             ${summary.topCompetitorUpdates.map(update => `
@@ -518,6 +594,42 @@ class DailyCheckAutomation {
     outlook.push(`⚡ Overall: ${this.calculateAverageConfidence(predictions) > 0.7 ? 'High confidence week for strategic moves' : 'Moderate confidence - monitor closely'}`);
     
     return outlook.join(' | ');
+  }
+
+  // 🤖 Autonomous Code Generation Helper Methods (NEW!)
+  getCodeTypeDistribution(codeResults) {
+    const distribution = {};
+    
+    codeResults.forEach(code => {
+      const type = code.opportunity.type || 'unknown';
+      distribution[type] = (distribution[type] || 0) + 1;
+    });
+    
+    return distribution;
+  }
+
+  calculateAverageCodeImpact(codeResults) {
+    if (codeResults.length === 0) return 0;
+    const totalImpact = codeResults.reduce((sum, code) => sum + (code.opportunity.impact || 0), 0);
+    return totalImpact / codeResults.length;
+  }
+
+  calculateSelfImprovementRate(codeResults) {
+    const deployedCode = codeResults.filter(c => c.status === 'deployed');
+    if (codeResults.length === 0) return 0;
+    return deployedCode.length / codeResults.length;
+  }
+
+  calculateCodeEvolutionScore(codeResults) {
+    // Calculate how much the system is evolving itself
+    const selfImprovementRate = this.calculateSelfImprovementRate(codeResults);
+    const averageImpact = this.calculateAverageCodeImpact(codeResults);
+    const codeVariety = Object.keys(this.getCodeTypeDistribution(codeResults)).length;
+    
+    // Combine factors for evolution score
+    const evolutionScore = (selfImprovementRate * 0.4) + (averageImpact * 0.4) + (codeVariety * 0.2);
+    
+    return Math.min(1.0, evolutionScore);
   }
 
   async assessIntelligenceGaps() {
