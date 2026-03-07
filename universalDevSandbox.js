@@ -69,8 +69,11 @@ class UniversalDevSandbox {
       // 8. Initialize Windsurf sandbox
       this.initializeWindsurfSandbox();
       
-      // 9. 🆕 Initialize automatic sandbox launcher
+      // 9. Initialize automatic sandbox launcher
       this.initializeAutoLauncher();
+      
+      // 10. 🆕 Initialize VS Code auto launcher
+      this.initializeVSCodeAutoLauncher();
       
       console.log('✅ C:\\Dev universele sandbox initialized');
       console.log(`📁 Ontdekte projecten: ${this.projects.size}`);
@@ -79,6 +82,7 @@ class UniversalDevSandbox {
       console.log(`💻 VS Code sandbox: enabled`);
       console.log(`🌊 Windsurf sandbox: enabled`);
       console.log(`🚀 Auto launcher: enabled`);
+      console.log(`💻 VS Code auto launcher: enabled`);
       
     } catch (error) {
       console.error('❌ Failed to initialize universal sandbox:', error);
@@ -115,6 +119,22 @@ class UniversalDevSandbox {
     } catch (error) {
       console.warn('⚠️ Auto launcher initialization failed:', error.message);
       console.log('🔄 Continuing without auto launcher...');
+    }
+  }
+
+  // 💻 Initialize VS Code auto launcher
+  initializeVSCodeAutoLauncher() {
+    console.log('💻 Initializing VS Code auto launcher...');
+    
+    try {
+      // Import VS Code auto launcher
+      const VSCodeAutoLauncher = require('./vsCodeAutoLauncher');
+      this.vscodeAutoLauncher = new VSCodeAutoLauncher();
+      
+      console.log('✅ VS Code auto launcher initialized');
+    } catch (error) {
+      console.warn('⚠️ VS Code auto launcher initialization failed:', error.message);
+      console.log('🔄 Continuing without VS Code auto launcher...');
     }
   }
 

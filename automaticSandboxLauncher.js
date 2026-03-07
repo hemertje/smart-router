@@ -166,64 +166,82 @@ echo 🔄 Restart Windows to activate auto-launcher
 
   // 📊 Create process monitor
   createProcessMonitor() {
-    console.log('📊 Creating process monitor...');
+    console.log('📊 Creating silent process monitor...');
     
     const monitorScript = `const fs = require('fs');
 const { spawn, exec } = require('child_process');
 
-class WindsurfMonitor {
+class SilentWindsurfMonitor {
   constructor() {
     this.isRunning = false;
     this.checkInterval = null;
-    this.startMonitoring();
+    this.sandboxActivated = false;
+    this.startSilentMonitoring();
   }
 
-  startMonitoring() {
-    console.log('📊 Starting Windsurf process monitor...');
-    
+  // 🔇 Start stille monitoring (geen console output)
+  startSilentMonitoring() {
     this.checkInterval = setInterval(() => {
-      this.checkWindsurfProcess();
-    }, 3000); // Check every 3 seconds
+      this.checkWindsurfProcessSilent();
+    }, 5000); // Check elke 5 seconden (minder frequent)
   }
 
-  checkWindsurfProcess() {
-    exec('tasklist /FI "IMAGENAME eq Windsurf.exe"', (error, stdout, stderr) => {
+  // 🔇 Stille Windsurf proces check
+  checkWindsurfProcessSilent() {
+    exec('tasklist /FI "IMAGENAME eq Windsurf.exe"', { 
+      windowsHide: true,  // Verberg console window
+      encoding: 'utf8'
+    }, (error, stdout, stderr) => {
       const isRunning = stdout.includes('Windsurf.exe');
       
       if (isRunning && !this.isRunning) {
-        console.log('🌊 Windsurf started - activating sandbox...');
-        this.activateSandbox();
+        this.activateSandboxSilent();
         this.isRunning = true;
       } else if (!isRunning && this.isRunning) {
-        console.log('⏹️ Windsurf stopped');
         this.isRunning = false;
       }
     });
   }
 
-  activateSandbox() {
-    // Ensure sandbox config is active
+  // 🔇 Stille sandbox activatie
+  activateSandboxSilent() {
     const configPath = 'C:\\\\Users\\\\' + process.env.USERNAME + '\\\\.windsurf\\\\settings.json';
     
-    if (!fs.existsSync(configPath)) {
-      console.log('🔒 Sandbox config not found - creating...');
-      const { spawn } = require('child_process');
-      spawn('node', ['universalDevSandbox.js'], { 
-        cwd: 'C:\\\\Dev',
-        detached: true,
-        stdio: 'ignore'
-      });
+    if (!fs.existsSync(configPath) || !this.sandboxActivated) {
+      this.runSandboxSetupSilent();
+      this.sandboxActivated = true;
+    }
+  }
+
+  // 🔇 Stille sandbox setup
+  runSandboxSetupSilent() {
+    const setupProcess = spawn('node', ['universalDevSandbox.js'], {
+      cwd: 'C:\\\\Dev\\\\smart-router-v2.0.0',
+      detached: true,
+      stdio: 'ignore',  // Geen console output
+      windowsHide: true  // Verberg console window
+    });
+    
+    setupProcess.unref();
+  }
+
+  // ⏹️ Stop monitoring
+  stopMonitoring() {
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
+      this.checkInterval = null;
     }
   }
 }
 
-new WindsurfMonitor();
+// 🔇 Start stille monitor
+new SilentWindsurfMonitor();
 `;
     
     const monitorPath = path.join(this.sandboxConfigPath, 'windsurf-monitor.js');
     fs.writeFileSync(monitorPath, monitorScript);
     
-    console.log('✅ Process monitor created');
+    console.log('✅ Silent process monitor created');
   }
 
   // 🌊 Create Windsurf wrapper
