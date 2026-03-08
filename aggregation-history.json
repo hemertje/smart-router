@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2026-03-08T17:34:26.054Z",
+    "insights": [],
+    "summary": {
+      "totalInsights": 0,
+      "types": {}
+    }
+  },
+  {
+    "timestamp": "2026-03-08T17:34:44.641Z",
+    "insights": [],
+    "summary": {
+      "totalInsights": 0,
+      "types": {}
+    }
+  },
+  {
+    "timestamp": "2026-03-08T17:34:58.473Z",
+    "insights": [],
+    "summary": {
+      "totalInsights": 0,
+      "types": {}
+    }
+  },
+  {
+    "timestamp": "2026-03-08T17:35:10.465Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      }
+    ],
+    "summary": {
+      "totalInsights": 1,
+      "types": {
+        "sentiment": 1
+      }
+    }
+  }
+]
