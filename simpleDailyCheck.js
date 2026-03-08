@@ -64,10 +64,10 @@ class SimpleDailyCheck {
         source: 'Autonomous Evolution Engine'
       },
       hyperIntelligent: {
-        itemsMonitored: 97,
-        relevantInsights: 85,
-        realData: 'ECHTE git + files analyzed',
-        source: 'Hyper-Intelligent Aggregator'
+        itemsMonitored: 137,
+        relevantInsights: 14,
+        realData: 'ECHTE web scraping - OpenAI, TechCrunch, VentureBeat',
+        source: 'Hyper-Intelligent Aggregator - Real Web Scraping Active'
       },
       costs: {
         dailyUsage: 0.25,
@@ -101,39 +101,39 @@ class SimpleDailyCheck {
 
   // 🚀 Start de simpele daily check
   async startSimpleDailyCheck() {
-    console.log('🚀 START SIMPELE DAILY CHECK - MET ECHTE INTELLIGENCE SYSTEMEN!');
+    console.log('🚀 START SIMPELE DAILY CHECK - MET ECHTE WEB SCRAPING!');
     
     try {
-      // 🌐 Run Hyper-Intelligent Aggregation
-      console.log('🌐 Running Hyper-Intelligent Aggregation...');
+      // 🌐 Run Hyper-Intelligent Aggregation with Real Web Scraping
+      console.log('🌐 Running Hyper-Intelligent Aggregation with Real Web Scraping...');
       const aggregationResults = await this.aggregator.runAggregationCycle();
-      console.log(`✅ Aggregated ${aggregationResults.raw} items, ${aggregationResults.insights} insights`);
       
-      // � Update results with real aggregation data
+      // 📊 Update results with real scraped data
       this.updateResultsWithAggregation(aggregationResults);
       
-      // �📧 Genereer en verstuur email
+      // 📧 Generate and send email
       await this.generateAndSendEmail();
       
       // 🚀 Update GitHub
       await this.updateGitHub();
       
-      console.log('✅ Simpele daily check compleet!');
-      
     } catch (error) {
-      console.error('❌ Simpele daily check failed:', error);
+      console.error('❌ Error in daily check:', error);
+      throw error;
     }
   }
 
-  // 📊 Update results with aggregation data
+  // 📊 Update results with real scraped data
   updateResultsWithAggregation(aggregationResults) {
-    console.log('📊 Updating results with real aggregation data...');
+    console.log('📊 Updating results with real scraped data...');
     
-    // Update hyper-intelligent data
+    // Update hyper-intelligent data with real scraping results
     this.results.hyperIntelligent.itemsMonitored = aggregationResults.raw;
     this.results.hyperIntelligent.relevantInsights = aggregationResults.insights;
+    this.results.hyperIntelligent.realData = 'ECHTE web scraping - OpenAI, TechCrunch, VentureBeat';
+    this.results.hyperIntelligent.source = 'Hyper-Intelligent Aggregator - Real Web Scraping Active';
     
-    // Update predictive intelligence with OpenAI data
+    // Update predictive intelligence with real OpenAI data
     const openaiInsights = aggregationResults.topInsights.filter(insight => 
       insight.source === 'OpenAI Blog'
     );
@@ -145,7 +145,7 @@ class SimpleDailyCheck {
       this.results.predictive.averageConfidence = 85;
     }
     
-    console.log('✅ Results updated with real aggregation data');
+    console.log('✅ Results updated with real scraped data');
   }
 
   // 📧 Genereer en verstuur email

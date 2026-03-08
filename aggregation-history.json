@@ -76,5 +76,27 @@
         "impact": 1
       }
     }
+  },
+  {
+    "timestamp": "2026-03-08T21:48:58.857Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
   }
 ]
