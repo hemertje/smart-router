@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-08T17:31:15.295Z",
+  "securityScore": 54,
+  "riskLevel": "critical",
+  "totalFindings": 1,
+  "patchesGenerated": 1,
+  "highSeverityIssues": 1,
+  "integrationStatus": "completed",
+  "lastScan": "2026-03-08T17:31:15.275Z",
+  "nextScan": "2026-03-09T17:31:15.295Z"
+}
