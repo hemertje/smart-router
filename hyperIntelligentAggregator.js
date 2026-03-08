@@ -64,21 +64,28 @@ class HyperIntelligentAggregator {
         name: 'VentureBeat AI',
         url: 'https://venturebeat.com/category/ai/',
         type: 'news',
-        relevance: 0.8,
+        relevance: 0.85,
         updateFrequency: 'hourly'
+      },
+      {
+        name: 'GodOfPrompt Updates',
+        url: 'https://www.godofprompt.ai/',
+        type: 'competitor',
+        relevance: 0.85,
+        updateFrequency: 'daily'
       },
       {
         name: 'AI News',
         url: 'https://artificialintelligence-news.com/',
         type: 'news',
-        relevance: 0.9,
+        relevance: 0.8,
         updateFrequency: 'daily'
       },
       {
-        name: 'MIT Technology Review AI',
+        name: 'MIT Technology Review',
         url: 'https://www.technologyreview.com/topic/artificial-intelligence/',
         type: 'news',
-        relevance: 0.95,
+        relevance: 0.85,
         updateFrequency: 'daily'
       }
     ];
@@ -157,6 +164,20 @@ class HyperIntelligentAggregator {
         updateFrequency: 'daily'
       },
       {
+        name: 'Hugging Face GitHub Releases',
+        url: 'https://api.github.com/repos/huggingface/transformers/releases',
+        type: 'github',
+        relevance: 0.80,
+        updateFrequency: 'daily'
+      },
+      {
+        name: 'LangChain GitHub Releases',
+        url: 'https://api.github.com/repos/langchain-ai/langchain/releases',
+        type: 'github',
+        relevance: 0.80,
+        updateFrequency: 'daily'
+      },
+      {
         name: 'Google AI API',
         url: 'https://ai.google.dev/',
         type: 'api',
@@ -167,7 +188,7 @@ class HyperIntelligentAggregator {
         name: 'GitHub AI Repositories',
         url: 'https://api.github.com/search/repositories?q=artificial+intelligence',
         type: 'api',
-        relevance: 0.8,
+        relevance: 0.85,
         updateFrequency: 'daily'
       }
     ];
@@ -768,7 +789,8 @@ class HyperIntelligentAggregator {
       features: [],
       bugFixes: [],
       improvements: [],
-      breakingChanges: []
+      breakingChanges: [],
+      criticalUpdates: []
     };
     
     const body = releaseBody || '';
@@ -798,9 +820,90 @@ class HyperIntelligentAggregator {
       if (lowerLine.includes('break:') || lowerLine.includes('breaking:') || lowerLine.includes('deprecated:')) {
         codeChanges.breakingChanges.push(line.trim());
       }
+      
+      // Critical updates
+      if (lowerLine.includes('critical') || lowerLine.includes('security') || lowerLine.includes('urgent')) {
+        codeChanges.criticalUpdates.push(line.trim());
+      }
     });
     
     return codeChanges;
+  }
+
+  // 🚨 Real-time Alert System
+  generateRealTimeAlerts(codeChanges, source) {
+    const alerts = [];
+    
+    // Critical alerts for breaking changes
+    if (codeChanges.breakingChanges.length > 0) {
+      alerts.push({
+        type: 'critical',
+        title: `🚨 Breaking Changes Detected in ${source}`,
+        message: `${codeChanges.breakingChanges.length} breaking changes found`,
+        changes: codeChanges.breakingChanges,
+        timestamp: new Date().toISOString(),
+        urgency: 'immediate'
+      });
+    }
+    
+    // Security alerts for critical updates
+    if (codeChanges.criticalUpdates.length > 0) {
+      alerts.push({
+        type: 'security',
+        title: `🔒 Critical Security Update in ${source}`,
+        message: `${codeChanges.criticalUpdates.length} critical updates found`,
+        changes: codeChanges.criticalUpdates,
+        timestamp: new Date().toISOString(),
+        urgency: 'high'
+      });
+    }
+    
+    // Feature alerts for new capabilities
+    if (codeChanges.features.length > 0) {
+      alerts.push({
+        type: 'feature',
+        title: `✨ New Features Released in ${source}`,
+        message: `${codeChanges.features.length} new features available`,
+        changes: codeChanges.features,
+        timestamp: new Date().toISOString(),
+        urgency: 'medium'
+      });
+    }
+    
+    return alerts;
+  }
+
+  // 📊 Enhanced Intelligence Extraction
+  async extractEnhancedIntelligence(relevantData) {
+    console.log('🧠 Extracting enhanced intelligence...');
+    
+    const intelligence = [];
+    const alerts = [];
+    
+    for (const item of relevantData) {
+      const intelligencePoint = await this.extractIntelligencePoint(item);
+      if (intelligencePoint) {
+        intelligence.push(intelligencePoint);
+      }
+      
+      // Generate real-time alerts for code changes
+      if (item.codeChanges) {
+        const itemAlerts = this.generateRealTimeAlerts(item.codeChanges, item.source);
+        alerts.push(...itemAlerts);
+      }
+    }
+    
+    return {
+      intelligence,
+      alerts,
+      summary: {
+        totalIntelligence: intelligence.length,
+        totalAlerts: alerts.length,
+        criticalAlerts: alerts.filter(a => a.type === 'critical').length,
+        securityAlerts: alerts.filter(a => a.type === 'security').length,
+        featureAlerts: alerts.filter(a => a.type === 'feature').length
+      }
+    };
   }
 
   // 🔍 Extract Features from Release Body
