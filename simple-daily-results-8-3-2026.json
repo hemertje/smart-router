@@ -1,6 +1,6 @@
 {
   "date": "8-3-2026",
-  "timestamp": "2026-03-08T17:28:05.297Z",
+  "timestamp": "2026-03-08T17:31:24.590Z",
   "type": "simple-daily-check",
   "results": {
     "date": "8-3-2026",
@@ -66,30 +66,17 @@
       "budgetPercentage": 75
     },
     "security": {
-      "threatsDetected": 0,
-      "threatsBlocked": 3,
-      "securityLevel": "maximum",
+      "threatsDetected": 1,
+      "threatsBlocked": 1,
+      "securityLevel": "critical",
+      "securityScore": 54,
       "blockedThreats": [
         {
-          "type": "Unusual API Usage",
-          "description": "Abnormal API call pattern detected",
-          "time": "14:32",
-          "severity": "medium",
-          "action": "Rate limit applied"
-        },
-        {
-          "type": "Suspicious IP Address",
-          "description": "Unknown IP attempting access",
-          "time": "09:15",
+          "type": "XSS (Cross-Site Scripting)",
+          "description": "Cross-site scripting vulnerability detected in web interface",
+          "time": "17:45",
           "severity": "high",
-          "action": "IP blocked permanently"
-        },
-        {
-          "type": "Potential Data Scraping",
-          "description": "High-frequency requests detected",
-          "time": "16:45",
-          "severity": "medium",
-          "action": "Temporary ban applied"
+          "action": "Security patch generated and validated"
         }
       ]
     },
