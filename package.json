@@ -1,22 +1,25 @@
 {
   "name": "smart-router",
-  "displayName": "Smart Router",
-  "description": "Automatic AI model routing based on intent classification for VS Code - 🚨 SAFETY PROTOCOL: NOOIT NOOIT NOOIT BESTANDEN WISSEN!",
+  "displayName": "Smart Router v2.7.0 - Real Web Scraping Edition",
+  "description": "Real-time intelligence system with JSDOM parsing, GitHub monitoring, and technical evidence extraction",
   "version": "2.7.0",
   "publisher": "universal-vibe",
   "engines": {
-    "vscode": "^1.109.0"
+    "vscode": "^1.85.0"
   },
   "categories": [
-    "Other",
     "Machine Learning",
-    "Snippets"
+    "Snippets",
+    "Other"
   ],
   "activationEvents": [
+    "onCommand:smart-router.start",
+    "onCommand:smart-router.dailyCheck",
+    "onCommand:smart-router.webScraping",
     "onStartupFinished",
     "onChatParticipant:smart"
   ],
-  "main": "./out/extension.js",
+  "main": "./src/extension.js",
   "files": [
     "out/**/*",
     "node_modules/**/*",
@@ -44,6 +47,18 @@
       }
     ],
     "commands": [
+      {
+        "command": "smart-router.start",
+        "title": "Start Smart Router v2.7.0"
+      },
+      {
+        "command": "smart-router.dailyCheck",
+        "title": "Run Daily Check with Real Web Scraping"
+      },
+      {
+        "command": "smart-router.webScraping",
+        "title": "Start Real Web Scraping Engine"
+      },
       {
         "command": "smart.showCosts",
         "title": "Show Model Costs",

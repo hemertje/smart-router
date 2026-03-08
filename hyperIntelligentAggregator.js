@@ -16,10 +16,10 @@ class HyperIntelligentAggregator {
     };
     this.aggregatedData = [];
     this.relevanceFilters = {
-      keywords: ['AI', 'machine learning', 'routing', 'smart', 'autonomous', 'intelligence', 'automation', 'codex', 'security', 'gpt', 'vision', 'embedding', 'api', 'model'],
+      keywords: ['AI', 'machine learning', 'routing', 'smart', 'autonomous', 'intelligence', 'automation', 'codex', 'security', 'gpt', 'vision', 'embedding', 'api', 'model', 'performance', 'optimization', 'algorithm', 'infrastructure', 'throughput'],
       competitors: ['OpenAI', 'Anthropic', 'Google', 'Microsoft', 'DeepSeek', 'Claude', 'NVIDIA'],
-      trends: ['multimodal', 'democratization', 'automation', 'efficiency', 'optimization', 'research preview', 'generally available', 'turbo', 'vision'],
-      impact: ['breakthrough', 'launch', 'acquisition', 'funding', 'research', 'innovation', 'introducing', 'available', 'updates']
+      trends: ['multimodal', 'democratization', 'automation', 'efficiency', 'optimization', 'research preview', 'generally available', 'turbo', 'vision', 'performance improvement', 'processing time', 'infrastructure upgrade'],
+      impact: ['breakthrough', 'launch', 'acquisition', 'funding', 'research', 'innovation', 'introducing', 'available', 'updates', 'improvement', 'boosts', 'significantly', 'reduces', 'enhances']
     };
     this.aggregationHistory = path.join(__dirname, 'aggregation-history.json');
     
@@ -133,6 +133,27 @@ class HyperIntelligentAggregator {
         url: 'https://api.anthropic.com/v1/models',
         type: 'api',
         relevance: 0.95,
+        updateFrequency: 'daily'
+      },
+      {
+        name: 'OpenRouter GitHub Releases',
+        url: 'https://api.github.com/repos/OpenRouterTeam/openrouter/releases',
+        type: 'github',
+        relevance: 0.90,
+        updateFrequency: 'daily'
+      },
+      {
+        name: 'Anthropic GitHub Releases',
+        url: 'https://api.github.com/repos/anthropics/anthropic-sdk-python/releases',
+        type: 'github',
+        relevance: 0.85,
+        updateFrequency: 'daily'
+      },
+      {
+        name: 'OpenAI GitHub Releases',
+        url: 'https://api.github.com/repos/openai/openai-python/releases',
+        type: 'github',
+        relevance: 0.85,
         updateFrequency: 'daily'
       },
       {
@@ -412,12 +433,199 @@ class HyperIntelligentAggregator {
           sentiment: this.analyzeSentiment(title + ' ' + content),
           engagement: Math.floor(Math.random() * 1000) + 100,
           source: source.name,
-          scrapedAt: new Date().toISOString()
+          scrapedAt: new Date().toISOString(),
+          codeChanges: this.extractCodeChangesFromContent(title + ' ' + content),
+          technicalDetails: this.extractTechnicalDetails(title + ' ' + content)
         });
       }
     });
     
     return articles;
+  }
+
+  // 🔍 Extract Code Changes from Content
+  extractCodeChangesFromContent(content) {
+    const codeChanges = {
+      apiChanges: [],
+      modelUpdates: [],
+      featureAdditions: [],
+      performanceImprovements: []
+    };
+    
+    const lowerContent = content.toLowerCase();
+    
+    // API Changes
+    if (lowerContent.includes('api') || lowerContent.includes('endpoint') || lowerContent.includes('sdk')) {
+      codeChanges.apiChanges.push(this.extractAPIChangeDetails(content));
+    }
+    
+    // Model Updates
+    if (lowerContent.includes('model') || lowerContent.includes('gpt') || lowerContent.includes('claude')) {
+      codeChanges.modelUpdates.push(this.extractModelUpdateDetails(content));
+    }
+    
+    // Feature Additions
+    if (lowerContent.includes('feature') || lowerContent.includes('new') || lowerContent.includes('added')) {
+      codeChanges.featureAdditions.push(this.extractFeatureDetails(content));
+    }
+    
+    // Performance Improvements
+    if (lowerContent.includes('performance') || lowerContent.includes('optimization') || lowerContent.includes('improvement')) {
+      codeChanges.performanceImprovements.push(this.extractPerformanceDetails(content));
+    }
+    
+    return codeChanges;
+  }
+
+  // 🔍 Extract Technical Details
+  extractTechnicalDetails(content) {
+    const technicalDetails = {
+      technologies: [],
+      metrics: [],
+      versions: [],
+      benchmarks: []
+    };
+    
+    const lowerContent = content.toLowerCase();
+    
+    // Extract technologies
+    const techPatterns = ['gpt-4', 'claude-3', 'python', 'javascript', 'api', 'sdk', 'model'];
+    techPatterns.forEach(tech => {
+      if (lowerContent.includes(tech)) {
+        technicalDetails.technologies.push(tech);
+      }
+    });
+    
+    // Extract metrics (percentages, numbers)
+    const metricPattern = /\d+%|\d+x|\d+ms|\d+gb/gi;
+    const metrics = content.match(metricPattern) || [];
+    technicalDetails.metrics = metrics;
+    
+    // Extract versions
+    const versionPattern = /v\d+\.\d+|\d+\.\d+\.\d+/gi;
+    const versions = content.match(versionPattern) || [];
+    technicalDetails.versions = versions;
+    
+    // Extract benchmarks
+    if (lowerContent.includes('benchmark') || lowerContent.includes('test') || lowerContent.includes('performance')) {
+      technicalDetails.benchmarks.push(this.extractBenchmarkDetails(content));
+    }
+    
+    return technicalDetails;
+  }
+
+  // 🔍 Extract API Change Details
+  extractAPIChangeDetails(content) {
+    const details = {
+      endpoint: '',
+      method: '',
+      version: '',
+      breakingChange: false
+    };
+    
+    const lowerContent = content.toLowerCase();
+    
+    // Detect breaking changes
+    details.breakingChange = lowerContent.includes('breaking') || lowerContent.includes('deprecated') || lowerContent.includes('removed');
+    
+    // Extract version info
+    const versionMatch = content.match(/v\d+\.\d+/i);
+    details.version = versionMatch ? versionMatch[0] : '';
+    
+    return details;
+  }
+
+  // 🔍 Extract Model Update Details
+  extractModelUpdateDetails(content) {
+    const details = {
+      modelName: '',
+      capabilities: [],
+      contextSize: '',
+      performance: ''
+    };
+    
+    const lowerContent = content.toLowerCase();
+    
+    // Extract model name
+    const modelPatterns = ['gpt-4', 'claude-3', 'sonnet', 'opus', 'haiku'];
+    modelPatterns.forEach(model => {
+      if (lowerContent.includes(model)) {
+        details.modelName = model;
+      }
+    });
+    
+    // Extract context size
+    const contextMatch = content.match(/\d+k?\s*context/i);
+    details.contextSize = contextMatch ? contextMatch[0] : '';
+    
+    return details;
+  }
+
+  // 🔍 Extract Feature Details
+  extractFeatureDetails(content) {
+    const details = {
+      featureName: '',
+      description: '',
+      impact: ''
+    };
+    
+    // Extract feature name (simplified)
+    const lines = content.split('.');
+    lines.forEach(line => {
+      const lowerLine = line.toLowerCase();
+      if (lowerLine.includes('new') || lowerLine.includes('feature') || lowerLine.includes('added')) {
+        details.featureName = line.trim();
+      }
+    });
+    
+    return details;
+  }
+
+  // 🔍 Extract Performance Details
+  extractPerformanceDetails(content) {
+    const details = {
+      improvementType: '',
+      metric: '',
+      value: '',
+      comparison: ''
+    };
+    
+    const lowerContent = content.toLowerCase();
+    
+    // Extract improvement type
+    if (lowerContent.includes('speed')) details.improvementType = 'speed';
+    else if (lowerContent.includes('accuracy')) details.improvementType = 'accuracy';
+    else if (lowerContent.includes('cost')) details.improvementType = 'cost';
+    else if (lowerContent.includes('performance')) details.improvementType = 'performance';
+    
+    // Extract metric value
+    const metricMatch = content.match(/\d+%|\d+x|\d+ms|\d+gb/gi);
+    details.metric = metricMatch ? metricMatch[0] : '';
+    
+    return details;
+  }
+
+  // 🔍 Extract Benchmark Details
+  extractBenchmarkDetails(content) {
+    const details = {
+      benchmarkName: '',
+      score: '',
+      comparison: '',
+      dataset: ''
+    };
+    
+    const lowerContent = content.toLowerCase();
+    
+    // Extract benchmark name
+    if (lowerContent.includes('mmlu')) details.benchmarkName = 'MMLU';
+    else if (lowerContent.includes('humanEval')) details.benchmarkName = 'HumanEval';
+    else if (lowerContent.includes('gsm8k')) details.benchmarkName = 'GSM8K';
+    
+    // Extract score
+    const scoreMatch = content.match(/\d+\.?\d*%|\d+\.?\d*\/\d+/gi);
+    details.score = scoreMatch ? scoreMatch[0] : '';
+    
+    return details;
   }
 
   // 🔌 Extract API Data
@@ -483,6 +691,36 @@ class HyperIntelligentAggregator {
             });
           });
         }
+      } else if (source.type === 'github') {
+        // Extract GitHub release data
+        const response = await axios.get(source.url, {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'User-Agent': 'Smart Router v2.7.0'
+          },
+          timeout: 5000
+        });
+        
+        if (response.data && Array.isArray(response.data)) {
+          response.data.forEach((release, index) => {
+            if (index >= 3) return;
+            
+            apiData.push({
+              id: this.generateId(),
+              title: `GitHub Release: ${release.name || release.tag_name}`,
+              content: this.extractGitHubReleaseContent(release),
+              url: release.html_url,
+              author: release.author?.login || 'GitHub',
+              publishedAt: release.published_at,
+              tags: ['github', 'release', 'code', 'update'],
+              sentiment: this.analyzeSentiment(release.name + ' ' + this.extractGitHubReleaseContent(release)),
+              engagement: release.assets?.length || 1,
+              source: source.name,
+              scrapedAt: new Date().toISOString(),
+              codeChanges: this.extractCodeChanges(release.body)
+            });
+          });
+        }
       }
       
     } catch (error) {
@@ -505,6 +743,109 @@ class HyperIntelligentAggregator {
     }
     
     return apiData;
+  }
+
+  // 🔍 Extract GitHub Release Content
+  extractGitHubReleaseContent(release) {
+    const content = release.body || '';
+    
+    // Extract key information from release body
+    const features = this.extractFeaturesFromBody(content);
+    const bugFixes = this.extractBugFixesFromBody(content);
+    const improvements = this.extractImprovementsFromBody(content);
+    
+    let summary = '';
+    if (features.length > 0) summary += `Features: ${features.join(', ')}. `;
+    if (bugFixes.length > 0) summary += `Bug fixes: ${bugFixes.join(', ')}. `;
+    if (improvements.length > 0) summary += `Improvements: ${improvements.join(', ')}. `;
+    
+    return summary || release.name || 'New release available';
+  }
+
+  // 🔍 Extract Code Changes from Release Body
+  extractCodeChanges(releaseBody) {
+    const codeChanges = {
+      features: [],
+      bugFixes: [],
+      improvements: [],
+      breakingChanges: []
+    };
+    
+    const body = releaseBody || '';
+    
+    // Look for code change patterns
+    const lines = body.split('\n');
+    
+    lines.forEach(line => {
+      const lowerLine = line.toLowerCase();
+      
+      // Features
+      if (lowerLine.includes('feat:') || lowerLine.includes('feature:') || lowerLine.includes('new:')) {
+        codeChanges.features.push(line.trim());
+      }
+      
+      // Bug fixes
+      if (lowerLine.includes('fix:') || lowerLine.includes('bug:') || lowerLine.includes('fixed:')) {
+        codeChanges.bugFixes.push(line.trim());
+      }
+      
+      // Improvements
+      if (lowerLine.includes('improv:') || lowerLine.includes('enhance:') || lowerLine.includes('better:')) {
+        codeChanges.improvements.push(line.trim());
+      }
+      
+      // Breaking changes
+      if (lowerLine.includes('break:') || lowerLine.includes('breaking:') || lowerLine.includes('deprecated:')) {
+        codeChanges.breakingChanges.push(line.trim());
+      }
+    });
+    
+    return codeChanges;
+  }
+
+  // 🔍 Extract Features from Release Body
+  extractFeaturesFromBody(body) {
+    const features = [];
+    const lines = body.split('\n');
+    
+    lines.forEach(line => {
+      const lowerLine = line.toLowerCase();
+      if (lowerLine.includes('feat:') || lowerLine.includes('feature:') || lowerLine.includes('new:')) {
+        features.push(line.replace(/^.*?(feat:|feature:|new:)/i, '').trim());
+      }
+    });
+    
+    return features.slice(0, 3); // Limit to top 3 features
+  }
+
+  // 🔍 Extract Bug Fixes from Release Body
+  extractBugFixesFromBody(body) {
+    const bugFixes = [];
+    const lines = body.split('\n');
+    
+    lines.forEach(line => {
+      const lowerLine = line.toLowerCase();
+      if (lowerLine.includes('fix:') || lowerLine.includes('bug:') || lowerLine.includes('fixed:')) {
+        bugFixes.push(line.replace(/^.*?(fix:|bug:|fixed:)/i, '').trim());
+      }
+    });
+    
+    return bugFixes.slice(0, 3); // Limit to top 3 bug fixes
+  }
+
+  // 🔍 Extract Improvements from Release Body
+  extractImprovementsFromBody(body) {
+    const improvements = [];
+    const lines = body.split('\n');
+    
+    lines.forEach(line => {
+      const lowerLine = line.toLowerCase();
+      if (lowerLine.includes('improv:') || lowerLine.includes('enhance:') || lowerLine.includes('better:')) {
+        improvements.push(line.replace(/^.*?(improv:|enhance:|better:)/i, '').trim());
+      }
+    });
+    
+    return improvements.slice(0, 3); // Limit to top 3 improvements
   }
 
   // 📱 Extract Social Data
@@ -590,7 +931,7 @@ class HyperIntelligentAggregator {
   }
 
   analyzeSentiment(text) {
-    const positiveWords = ['good', 'great', 'excellent', 'amazing', 'fantastic', 'wonderful', 'positive', 'success', 'breakthrough', 'innovation'];
+    const positiveWords = ['good', 'great', 'excellent', 'amazing', 'fantastic', 'wonderful', 'positive', 'success', 'breakthrough', 'innovation', 'improvement', 'optimization', 'boosts', 'significantly', 'reduces', 'enhances', 'performance', 'throughput'];
     const negativeWords = ['bad', 'terrible', 'awful', 'horrible', 'negative', 'failure', 'problem', 'issue', 'concern'];
     
     const lowerText = text.toLowerCase();
