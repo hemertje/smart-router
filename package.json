@@ -1,11 +1,15 @@
 {
   "name": "smart-router",
-  "displayName": "Smart Router v2.7.0 - Real Web Scraping Edition",
-  "description": "Real-time intelligence system with JSDOM parsing, GitHub monitoring, and technical evidence extraction",
-  "version": "2.7.0",
-  "publisher": "universal-vibe",
+  "displayName": "Smart Router v2.7.2 - Automated Dashboard Edition",
+  "description": "Automated real-time intelligence dashboard with VS Code/Windsurf integration, continuous GitHub monitoring, and silent background processing",
+  "version": "2.7.2",
+  "publisher": "jeroenvanhemert",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hemertje/smart-router.git"
+  },
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.74.0"
   },
   "categories": [
     "Machine Learning",
@@ -13,50 +17,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:smart-router.start",
-    "onCommand:smart-router.dailyCheck",
-    "onCommand:smart-router.webScraping",
-    "onStartupFinished",
-    "onChatParticipant:smart"
+    "onStartupFinished"
   ],
   "main": "./src/extension.js",
-  "files": [
-    "out/**/*",
-    "node_modules/**/*",
-    "package.json",
-    "LICENSE.txt",
-    ".vsixmanifest"
-  ],
-  "exclude": [
-    "src/test/**/*",
-    "test/**/*",
-    "**/*.test.ts"
-  ],
-  "safety": {
-    "protocol": "CRITICAL - NO DELETE OPERATIONS ALLOWED",
-    "rule": "NOOIT NOOIT NOOIT BESTANDEN WISSEN",
-    "enforcement": "AUTOMATIC"
-  },
   "contributes": {
-    "chatParticipants": [
-      {
-        "id": "smart",
-        "name": "smart",
-        "description": "AI model routing based on intent classification",
-        "isSticky": true
-      }
-    ],
     "commands": [
       {
-        "command": "smart-router.start",
-        "title": "Start Smart Router v2.7.0"
-      },
-      {
-        "command": "smart-router.dailyCheck",
-        "title": "Run Daily Check with Real Web Scraping"
-      },
-      {
-        "command": "smart-router.webScraping",
+        "command": "smartRouter.startDashboard",
+        "title": " Start Smart Router Dashboard",
         "title": "Start Real Web Scraping Engine"
       },
       {

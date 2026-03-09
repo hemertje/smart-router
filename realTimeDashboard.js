@@ -29,18 +29,14 @@ class RealTimeDashboard {
     this.initializeDashboard();
   }
 
-  // 🎯 Initialize dashboard
+  // Initialize dashboard - SILENT MODE
   initializeDashboard() {
-    console.log(colors.cyan('🚀 SMART ROUTER REAL-TIME DASHBOARD V2.7.1'));
-    console.log(colors.yellow('==================================='));
-    console.log('');
-    
     this.loadCurrentData();
     this.displayDashboard();
     this.startRealTimeMonitoring();
   }
 
-  // 📊 Load current data
+  // Load current data
   loadCurrentData() {
     try {
       // Load aggregation history
@@ -138,103 +134,97 @@ class RealTimeDashboard {
     console.log(colors.gray('─'.repeat(50)));
     console.log(`1. ${colors.cyan('Monitor breaking changes')}`);
     console.log(`2. ${colors.cyan('Track security updates')}`);
-    console.log(`3. ${colors.cyan('Analyze feature releases')}`);
-    console.log(`4. ${colors.cyan('Generate strategic insights')}`);
     console.log('');
   }
 
-  // 🔥 Start real-time monitoring
+  // Start real-time monitoring - SILENT MODE
   startRealTimeMonitoring() {
-    console.log(colors.orange('🔥 STARTING REAL-TIME MONITORING...'));
-    console.log(colors.gray('Press Ctrl+C to stop monitoring'));
-    console.log('');
-
     // Simulate real-time updates
     this.monitoringInterval = setInterval(() => {
       this.simulateRealTimeUpdate();
-    }, 5000); // Update every 5 seconds
+    }, 5000); // Every 5 seconds
 
-    // Handle graceful shutdown
+    // Handle graceful shutdown - SILENT
     process.on('SIGINT', () => {
-      console.log(colors.yellow('\n🛑 STOPPING MONITORING...'));
       clearInterval(this.monitoringInterval);
-      console.log(colors.green('✅ MONITORING STOPPED'));
       process.exit(0);
     });
   }
 
-  // 🔄 Simulate real-time update - NU MET ECHTE DATA!
+  // Update with actual data - ONDERWATER
   simulateRealTimeUpdate() {
-    // Load real data from aggregation results
-    this.loadRealAlerts();
+    // Load actual data from integration
+    this.loadActualData();
     
-    // Generate real alert based on actual data
-    const realAlert = this.generateRealAlertFromData();
+    // Generate alert from actual integration data
+    const actualAlert = this.generateAlertFromIntegration();
     
-    if (realAlert) {
+    if (actualAlert) {
       // Add to alerts
-      if (!this.alerts[realAlert.type]) {
-        this.alerts[realAlert.type] = [];
+      if (!this.alerts[actualAlert.type]) {
+        this.alerts[actualAlert.type] = [];
       }
-      this.alerts[realAlert.type].unshift(realAlert);
+      this.alerts[actualAlert.type].unshift(actualAlert);
       this.alerts.total = (this.alerts.total || 0) + 1;
 
       // Keep only last 10 alerts per type
-      if (this.alerts[realAlert.type].length > 10) {
-        this.alerts[realAlert.type] = this.alerts[realAlert.type].slice(0, 10);
+      if (this.alerts[actualAlert.type].length > 10) {
+        this.alerts[actualAlert.type] = this.alerts[actualAlert.type].slice(0, 10);
       }
 
-      // Display real alert
-      this.displayRealTimeAlert(realAlert);
+      // Display actual alert
+      this.displayRealTimeAlert(actualAlert);
     }
   }
 
-  // 📊 Load real alerts from aggregation data
-  loadRealAlerts() {
+  // 📊 Load actual data from integration - SILENT MODE
+  loadActualData() {
     try {
-      const resultsFile = path.join(this.dataDir, 'simple-daily-results-9-3-2026.json');
-      if (fs.existsSync(resultsFile)) {
-        const results = JSON.parse(fs.readFileSync(resultsFile, 'utf8'));
+      const integrationFile = path.join(this.dataDir, 'real-time-data.json');
+      if (fs.existsSync(integrationFile)) {
+        const integrationData = JSON.parse(fs.readFileSync(integrationFile, 'utf8'));
         
-        // Extract real alerts from hyperIntelligent data
-        if (results.hyperIntelligent && results.hyperIntelligent.realData) {
-          console.log('📊 Loading real alerts from:', results.hyperIntelligent.realData);
+        // Extract actual alerts from integration data
+        if (integrationData.alerts && integrationData.alerts.length > 0) {
+          this.actualAlerts = integrationData.alerts;
         }
       }
     } catch (error) {
-      console.error('❌ Failed to load real alerts:', error.message);
+      // Silent error handling - no console pollution
     }
   }
 
-  // 🎯 Generate alert from data
-  generateRealAlertFromData() {
-    // GitHub API data patterns
-    const alerts = [
-      {
-        type: 'feature',
-        title: '✨ OpenAI Model Update Detected',
-        message: 'GPT-4 Turbo performance improvements available',
-        source: 'OpenAI GitHub',
-        urgency: 'medium'
-      },
-      {
-        type: 'security',
-        title: '🔒 Security Update Available',
-        message: 'Anthropic SDK security patch v0.8.0',
-        source: 'Anthropic GitHub',
-        urgency: 'high'
-      },
-      {
-        type: 'critical',
-        title: '🚨 API Change Detected',
-        message: 'OpenRouter rate limits updated',
-        source: 'OpenRouter GitHub',
-        urgency: 'immediate'
-      }
-    ];
+  // 🎯 Generate alert from integration data
+  generateAlertFromIntegration() {
+    if (this.actualAlerts && this.actualAlerts.length > 0) {
+      // Return actual alert from integration
+      const randomIndex = Math.floor(Math.random() * this.actualAlerts.length);
+      return this.actualAlerts[randomIndex];
+    }
+    
+    // Fallback to integration if no cached data
+    return this.runQuickIntegration();
+  }
 
-    // Return random alert
-    return alerts[Math.floor(Math.random() * alerts.length)];
+  // 🚀 Run quick integration for fresh data - SILENT MODE
+  async runQuickIntegration() {
+    try {
+      const RealDataIntegration = require('./realDataIntegration.js');
+      const integration = new RealDataIntegration();
+      
+      // Get fresh data
+      const freshData = await integration.getRealGitHubData();
+      
+      if (freshData.alerts && freshData.alerts.length > 0) {
+        const randomIndex = Math.floor(Math.random() * freshData.alerts.length);
+        return freshData.alerts[randomIndex];
+      }
+      
+    } catch (error) {
+      // Silent error handling - no console pollution
+    }
+    
+    return null;
   }
 
   // 📝 Generate alert title
@@ -271,32 +261,10 @@ class RealTimeDashboard {
     return levels[type];
   }
 
-  // 🚨 Display real-time alert
+  // � Display real-time alert - SILENT MODE
   displayRealTimeAlert(alert) {
-    const timestamp = new Date().toLocaleTimeString();
-    
-    let icon, color;
-    switch (alert.type) {
-      case 'critical':
-        icon = '🚨';
-        color = colors.red;
-        break;
-      case 'security':
-        icon = '🔒';
-        color = colors.yellow;
-        break;
-      case 'feature':
-        icon = '✨';
-        color = colors.blue;
-        break;
-      default:
-        icon = '📊';
-        color = colors.gray;
-    }
-
-    console.log(`${color(`[${timestamp}] ${icon} ${alert.title}`)}`);
-    console.log(colors.gray(`   ${alert.message} (${alert.urgency})`));
-    console.log('');
+    // Silent mode - no console output to prevent chat pollution
+    // Alert is stored in memory for dashboard display only
   }
 }
 
