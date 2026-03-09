@@ -1,8 +1,8 @@
 {
   "name": "smart-router",
-  "displayName": "Smart Router v2.7.2 - Automated Dashboard Edition",
-  "description": "Automated real-time intelligence dashboard with VS Code/Windsurf integration, continuous GitHub monitoring, and silent background processing",
-  "version": "2.7.2",
+  "displayName": "Smart Router v2.7.3 - Activity-Based Dashboard Edition",
+  "description": "Activity-based real-time intelligence dashboard with IDE detection, resource-efficient operation, and automated lifecycle management",
+  "version": "2.7.3",
   "publisher": "jeroenvanhemert",
   "repository": {
     "type": "git",
@@ -25,7 +25,27 @@
       {
         "command": "smartRouter.startDashboard",
         "title": " Start Smart Router Dashboard",
-        "title": "Start Real Web Scraping Engine"
+        "category": "Smart Router"
+      },
+      {
+        "command": "smartRouter.runDailyCheck",
+        "title": " Run Daily Intelligence Check",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smartRouter.startScheduler",
+        "title": " Start Automated Scheduler",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smartRouter.stopDashboard",
+        "title": " Stop Dashboard",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smartRouter.startActivityMonitor",
+        "title": " Start Activity Monitor",
+        "category": "Smart Router"
       },
       {
         "command": "smart.showCosts",

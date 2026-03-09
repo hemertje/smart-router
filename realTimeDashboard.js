@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-// 🚀 REAL-TIME DASHBOARD - SMART ROUTER V2.7.1
-// Live monitoring van breaking changes, security updates, en feature releases
+// 🚀 REAL-TIME DASHBOARD - SMART ROUTER V2.7.3
+// Activity-based live monitoring met IDE detection en resource-efficient operation
 
 const fs = require('fs');
 const path = require('path');
@@ -24,16 +24,27 @@ class RealTimeDashboard {
     this.dataDir = __dirname;
     this.alertsFile = path.join(this.dataDir, 'real-time-alerts.json');
     this.historyFile = path.join(this.dataDir, 'aggregation-history.json');
-    this.resultsFile = path.join(this.dataDir, 'simple-daily-results-8-3-2026.json');
+    this.resultsFile = path.join(this.dataDir, 'simple-daily-results-9-3-2026.json');
+    
+    // Activity-based mode detection
+    this.activityMode = process.env.IDE_ACTIVITY_MODE === 'true';
+    this.silentMode = process.env.SILENT_MODE === 'true';
     
     this.initializeDashboard();
   }
 
-  // Initialize dashboard - SILENT MODE
+  // Initialize dashboard - ACTIVITY-BASED SILENT MODE
   initializeDashboard() {
-    this.loadCurrentData();
-    this.displayDashboard();
-    this.startRealTimeMonitoring();
+    if (this.activityMode && this.silentMode) {
+      // Silent activity mode - no console output
+      this.loadCurrentData();
+      this.startRealTimeMonitoring();
+    } else {
+      // Normal mode with display
+      this.loadCurrentData();
+      this.displayDashboard();
+      this.startRealTimeMonitoring();
+    }
   }
 
   // Load current data
