@@ -2,27 +2,27 @@
 
 ---
 
-## 📋 **WINDSURF DASHBOARD AUTOMATION**
+## 📋 **WINDSURF DASHBOARD ACTIVITY-BASED INTEGRATION**
 
-**Smart Router dashboard start automatisch wanneer Windsurf opent en draait silent in de background met continue GitHub monitoring!**
+**Smart Router dashboard start automatisch alleen wanneer VS Code/Windsurf actief is en stopt automatisch wanneer IDE niet actief is!**
 
 ---
 
-## 🎯 **AUTOMATION FEATURES**
+## 🎯 **ACTIVITY-BASED AUTOMATION**
 
-### **✅ Auto-Start Integration**
-- **Windsurf Launch** → Dashboard start automatisch
-- **Background Process** → Draait silent zonder UI pollution
-- **Real-time Monitoring** → Continue GitHub repository checks
-- **Silent Mode** → Geen console output in development environment
+### **✅ Smart IDE Detection**
+- **IDE Active** → Dashboard start automatisch
+- **IDE Inactive** → Dashboard stopt automatisch
+- **Activity Monitoring** → Check elke 30 seconden
+- **Resource Efficient** → Draait alleen wanneer nodig
 
-### **🔧 Integration Points**
+### **🔧 Integration Logic**
 ```javascript
-// Windsurf extension activation
-onStartupFinished: {
-  autoStartDashboard: true,
-  silentMode: true,
-  monitoringInterval: 5000
+// Activity-based dashboard control
+if (ideRunning && !dashboardRunning) {
+  startDashboard();
+} else if (!ideRunning && dashboardRunning) {
+  stopDashboard();
 }
 ```
 
@@ -30,82 +30,85 @@ onStartupFinished: {
 
 ## 🚀 **SETUP INSTRUCTIONS**
 
-### **📦 1. Extension Configuration**
-```json
-{
-  "smartRouter.autoStartDashboard": true,
-  "smartRouter.dashboardSilent": true,
-  "smartRouter.monitoringInterval": 5000
-}
-```
-
-### **🔧 2. Automated Dashboard Starter**
-```bash
-# Start dashboard automatisch
-node automatedDashboard.js
-
-# Of via Windsurf extension
-# Dashboard start automatisch bij IDE launch
-```
-
-### **📊 3. Background Monitoring**
+### **📦 1. Activity Monitor Configuration**
 ```javascript
-// Dashboard draait onderwater
-- Real-time GitHub API calls
-- Silent alert generation
-- Background data processing
-- No console pollution
+// ideActivityMonitor.js
+const monitor = new IDEActivityMonitor();
+monitor.startActivityMonitoring();
+// Check elke 30 seconden
+// Auto-start/stop dashboard
+```
+
+### **🔧 2. IDE Detection**
+```bash
+# Windows
+tasklist /fi "imagename eq Code.exe" /fi "imagename eq Windsurf.exe"
+
+# macOS
+ps aux | grep -E "(Visual Studio Code|Windsurf)" | grep -v grep
+
+# Linux
+ps aux | grep -E "(code|windsurf)" | grep -v grep
+```
+
+### **📊 3. Resource Management**
+```javascript
+// Dashboard draait alleen bij IDE activiteit
+- IDE actief → Dashboard monitoring
+- IDE inactief → Dashboard stopped
+- 30-seconden check interval
+- Auto-recovery bij crashes
 ```
 
 ---
 
 ## 🌟 **BENEFITS**
 
-### **🎯 Zero Manual Intervention**
-- **Geen handmatige start** nodig
-- **Automatische monitoring** van repositories
-- **Silent processing** zonder onderbreking
-- **Background intelligence** generatie
+### **🎯 Resource Efficient**
+- **Geen continue monitoring** wanneer IDE niet actief
+- **Auto-stop** wanneer IDE gesloten wordt
+- **Activity-based** resource management
+- **Energy efficient** operation
 
-### **📊 Continuous Intelligence**
-- **24/7 GitHub monitoring** actief
-- **Real-time alerts** in dashboard
-- **Automated data collection** zonder effort
-- **Strategic insights** altijd beschikbaar
+### **📊 Smart Automation**
+- **Zero manual intervention** nodig
+- **Automatic detection** van IDE status
+- **Intelligent start/stop** logic
+- **Crash recovery** systeem
 
 ### **🔥 Professional Workflow**
 - **IDE integration** naadloos
-- **No chat pollution** in development
-- **Silent operation** in background
-- **Instant dashboard** beschikbaar
+- **Background monitoring** alleen wanneer nodig
+- **Silent operation** zonder interference
+- **Instant dashboard** bij IDE start
 
 ---
 
 ## 🎮 **USAGE**
 
-### **🚀 Automatic Start**
+### **🚀 Automatic Workflow**
 ```
-1. Open Windsurf
-2. Smart Router extension activeert
-3. Dashboard start automatisch (10 seconden delay)
-4. GitHub monitoring begint silently
-5. Dashboard beschikbaar in background
-```
-
-### **📊 Dashboard Access**
-```
-- Dashboard draait automatisch
-- Real-time alerts beschikbaar
-- GitHub data continue verwerkt
-- Geen manual intervention nodig
+1. Open VS Code/Windsurf
+2. IDE activity monitor detecteert activiteit
+3. Dashboard start automatisch
+4. GitHub monitoring begint
+5. IDE sluiten → Dashboard stopt automatisch
 ```
 
-### **🔍 Monitoring Status**
+### **📊 Activity Status**
 ```
-📊 Dashboard Status: Running
-🔄 GitHub Monitoring: Active
-🔍 Real-time Alerts: Silent
-📈 Data Processing: Background
+📊 Status: IDE ✅ Active, Dashboard ✅ Running
+📊 Status: IDE ❌ Inactive, Dashboard ❌ Stopped
+📊 Status: IDE ✅ Active, Dashboard ✅ Starting...
+📊 Status: IDE ❌ Inactive, Dashboard ❌ Stopping...
+```
+
+### **🔍 Monitoring Intervals**
+```
+- Check interval: 30 seconden
+- Response time: <1 seconde
+- Auto-stop delay: 5 seconden
+- Recovery time: 5 seconden
 ```
 
 ---
@@ -114,32 +117,39 @@ node automatedDashboard.js
 
 ### **🚀 Process Management**
 ```javascript
-// Background process spawning
-spawn('node', ['realTimeDashboard.js'], {
-  cwd: projectRoot,
-  detached: true,
-  stdio: 'ignore',
-  env: {
-    AUTOMATED_START: 'true',
-    SILENT_MODE: 'true'
+// Activity-based process control
+async checkIDEActivity() {
+  const ideRunning = await this.isIDERunningNow();
+  
+  if (ideRunning && !this.isIDERunning) {
+    await this.startDashboard();
+    this.isIDERunning = true;
+  } else if (!ideRunning && this.isIDERunning) {
+    await this.stopDashboard();
+    this.isIDERunning = false;
   }
-});
+}
 ```
 
-### **📊 Silent Mode Operation**
+### **📊 Cross-Platform Detection**
 ```javascript
-// No console output
-console.log = () => {}; // Disabled
-console.error = () => {}; // Disabled
-// Only dashboard output visible
+// Platform-specifieke IDE detection
+const platform = os.platform();
+if (platform === 'win32') {
+  command = 'tasklist /fi "imagename eq Code.exe"';
+} else if (platform === 'darwin') {
+  command = 'ps aux | grep "Visual Studio Code"';
+} else {
+  command = 'ps aux | grep "code"';
+}
 ```
 
 ### **🔄 Auto-Recovery**
 ```javascript
 // Crash detection en auto-restart
-process.on('exit', (code) => {
-  if (code !== 0) {
-    setTimeout(() => restart(), 5000);
+this.dashboardProcess.on('exit', (code) => {
+  if (code !== 0 && this.isIDERunning) {
+    setTimeout(() => this.startDashboard(), 5000);
   }
 });
 ```
@@ -149,37 +159,37 @@ process.on('exit', (code) => {
 ## 🌟 **INTEGRATION STATUS**
 
 ### **✅ Completed Features**
-- [x] Auto-start in Windsurf
-- [x] Silent background operation
-- [x] Real-time GitHub monitoring
-- [x] Automated data collection
-- [x] Crash recovery system
-- [x] Zero manual intervention
+- [x] Activity-based IDE detection
+- [x] Automatic dashboard start/stop
+- [x] Cross-platform IDE monitoring
+- [x] Resource-efficient operation
+- [x] Auto-recovery system
+- [x] 30-second check interval
 
 ### **🎯 Active Monitoring**
-- **9 GitHub repositories** gemonitord
-- **Real-time alerts** gegenereerd
-- **Background processing** actief
-- **Silent operation** perfect
+- **VS Code process detection** actief
+- **Windsurf process detection** actief
+- **Dashboard lifecycle management** actief
+- **Resource optimization** perfect
 
 ---
 
 ## 🚀 **NEXT STEPS**
 
-### **📈 Enhanced Integration**
-- VS Code integration voltooien
-- Dashboard UI improvements
-- Advanced alert filtering
-- Performance optimizations
+### **📈 Enhanced Detection**
+- Multiple IDE instances support
+- Workspace-specific monitoring
+- Customizable check intervals
+- Advanced activity patterns
 
 ### **🔥 Intelligence Enhancement**
-- Pattern recognition verbeteren
-- Predictive analytics toevoegen
-- Automated response system
-- Strategic recommendation engine
+- Activity-based intelligence depth
+- Resource usage optimization
+- Performance metrics collection
+- Strategic recommendations
 
 ---
 
-**Dit is de ultieme automation - Smart Router dashboard draait automatisch, monitort continu GitHub repositories, en genereert intelligence zonder enige manual intervention!** 🚀📊🌍🎯
+**Dit is de ultieme activity-based automation - Smart Router dashboard draait alleen wanneer de IDE actief is, wat zorgt voor maximale efficiëntie en minimale resource usage!** 🚀📊🌍🎯
 
-*Automated Start ✅ | Silent Mode ✅ | Background Monitoring ✅ | Zero Intervention ✅ | Professional Integration ✅* 🎉🚀🌍
+*Activity-Based ✅ | Resource Efficient ✅ | IDE Detection ✅ | Auto-Start/Stop ✅ | Professional Integration ✅* 🎉🚀🌍

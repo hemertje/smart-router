@@ -94,6 +94,8 @@ function activate(context) {
     var predictiveCost = new predictiveCost_1.PredictiveCostEngine(costTracker);
     // Initialize performance monitor
     var performanceMonitor = new performanceMonitor_1.RealTimePerformanceMonitor();
+    // Initialize IDE activity monitor
+    var ideActivityMonitor = null;
     // Initialize async components
     var initialize = function () { return __awaiter(_this, void 0, void 0, function () {
         var settings, validation, openrouterApiKey, ollama, ollamaAvailable;
@@ -144,40 +146,27 @@ function activate(context) {
                             }
                         });
                     }); }, 5000); // Run after 5 seconds
-                    // 🚀 Auto-start dashboard in VS Code/Windsurf
+                    // 🚀 Dashboard met IDE activity detection
                     if (settings.enabled) {
                         statusBarManager.start();
                         logger.info('Status bar manager started');
                         
-                        // Auto-start dashboard silently
-                        setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
-                            var dashboardProcess, error_2;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        _a.trys.push([0, 2, , 3]);
-                                        logger.info('Starting Smart Router dashboard automatically...');
-                                        dashboardProcess = require('child_process').spawn('node', ['realTimeDashboard.js'], {
-                                            cwd: vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.fsPath : undefined,
-                                            detached: true,
-                    stdio: 'ignore'
-                                        });
-                                        dashboardProcess.unref();
-                                        logger.info('Smart Router dashboard started in background');
-                                        return [3 /*break*/, 3];
-                                    case 1:
-                                        _a.sent();
-                                        return [3 /*break*/, 3];
-                                    case 2:
-                                        error_2 = _a.sent();
-                                        logger.error('Failed to start dashboard:', error_2);
-                                        return [3 /*break*/, 3];
-                                    case 3: return [2 /*return*/];
-                                }
-                            });
-                        }); }, 10000); // Start after 10 seconds
+                        // Start activity monitoring
+                        this.startActivityMonitoring = function () {
+                            var IDEActivityMonitor = require('../ideActivityMonitor');
+                            ideActivityMonitor = new IDEActivityMonitor();
+                            ideActivityMonitor.startActivityMonitoring();
+                            logger.info('IDE activity monitoring started');
+                        };
+                        
+                        // Start monitoring na 5 seconden
+                        setTimeout(function () {
+                            if (this.startActivityMonitoring) {
+                                this.startActivityMonitoring();
+                            }
+                        }.bind(this), 5000);
                     }
-                    }
+                    
                     openrouterApiKey = process.env.OPENROUTER_API_KEY || settings.openrouterApiKey;
                     if (!openrouterApiKey) {
                         logger.warn('OpenRouter API key not configured');
