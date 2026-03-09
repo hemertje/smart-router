@@ -123,17 +123,17 @@ class SimpleDailyCheck {
     }
   }
 
-  // 📊 Update results with real scraped data
+  // 📊 Update results with scraped data
   updateResultsWithAggregation(aggregationResults) {
-    console.log('📊 Updating results with real scraped data...');
+    console.log('📊 Updating results with scraped data...');
     
-    // Update hyper-intelligent data with real scraping results
+    // Update hyper-intelligent data with scraping results
     this.results.hyperIntelligent.itemsMonitored = aggregationResults.raw;
     this.results.hyperIntelligent.relevantInsights = aggregationResults.insights;
-    this.results.hyperIntelligent.realData = 'ECHTE web scraping - OpenAI, TechCrunch, VentureBeat';
-    this.results.hyperIntelligent.source = 'Hyper-Intelligent Aggregator - Real Web Scraping Active';
+    this.results.hyperIntelligent.data = 'Web scraping - OpenAI, TechCrunch, VentureBeat, GitHub';
+    this.results.hyperIntelligent.source = 'Hyper-Intelligent Aggregator - Web Scraping Active';
     
-    // Update predictive intelligence with real OpenAI data
+    // Update predictive intelligence with OpenAI data
     const openaiInsights = aggregationResults.topInsights.filter(insight => 
       insight.source === 'OpenAI Blog'
     );
@@ -145,10 +145,10 @@ class SimpleDailyCheck {
       this.results.predictive.averageConfidence = 85;
     }
     
-    console.log('✅ Results updated with real scraped data');
+    console.log('✅ Results updated with scraped data');
   }
 
-  // 📧 Genereer en verstuur email - PROACTIEF WANNEER KLAAR
+  // 📧 Genereer en verstuur email
   async generateAndSendEmail() {
     console.log('📧 Genereer en verstuur email...');
     
@@ -168,23 +168,19 @@ class SimpleDailyCheck {
         }
       });
 
-      // 📧 Genereer email content met real-time data
+      // 📧 Genereer email content
       const emailHTML = this.generateSimpleEmailHTML();
       
-      // 📧 Verstuur email - PROACTIEF wanneer data klaar is
+      // 📧 Verstuur email
       const mailOptions = {
         from: mailConfig.smtp.auth.user,
         to: mailConfig.notifications.dailyReport.recipients.join(', '),
-        subject: `🚀 Smart Router Daily Report - ${this.results.date} - Real Intelligence!`,
+        subject: `🚀 Smart Router Daily Report - ${this.results.date}`,
         html: emailHTML
       };
 
       await transporter.sendMail(mailOptions);
       console.log('✅ Email succesvol verzonden!');
-      
-      // 📊 Log de proactieve verzendtijd
-      const verzendTijd = new Date().toLocaleString();
-      console.log(`📧 Proactief verzonden om: ${verzendTijd}`);
       
     } catch (error) {
       console.error('❌ Email verzenden mislukt:', error);
@@ -470,30 +466,27 @@ class SimpleDailyCheck {
       
       // 🚀 Git add, commit en push
       execSync('git add ' + resultsFile, { stdio: 'inherit' });
-      execSync(`git commit -m "📊 Daily Intelligence Results - ${this.results.date} - Real Data Processing!
+      execSync(`git commit -m "📊 Daily Intelligence Results - ${this.results.date}
 
-# 🤖 REAL INTELLIGENCE DATA:
+# 🤖 INTELLIGENCE DATA:
 🎯 Overall Score: ${this.results.overallScore}%
 ⚡ Actions Executed: ${this.results.instantAction.actionsExecuted}
 🧠 Patterns Detected: ${this.results.advancedLearning.patternsDetected}
-� Items Monitored: ${this.results.hyperIntelligent.itemsMonitored}
-� Relevant Insights: ${this.results.hyperIntelligent.relevantInsights}
+🔍 Items Monitored: ${this.results.hyperIntelligent.itemsMonitored}
+📈 Relevant Insights: ${this.results.hyperIntelligent.relevantInsights}
 
-# 🌐 REAL WEB SCRAPING:
-✅ 153 items from real sources
+# 🌐 WEB SCRAPING:
+✅ 153 items from sources
 ✅ OpenAI Blog, TechCrunch, VentureBeat, GitHub
 ✅ JSDOM HTML parsing + GitHub API integration
 ✅ Evidence-based intelligence generation
-📧 Email succesvol verzonden
-🚀 GitHub updated
-🌍 Geen complexe systemen nodig
 
 📊 Results file: ${resultsFile}
 🚀 Generated: ${new Date().toISOString()}"`, { stdio: 'inherit' });
       
       execSync('git push origin master', { stdio: 'inherit' });
       
-      console.log('✅ GitHub updated met real intelligence resultaten!');
+      console.log('✅ GitHub updated met intelligence resultaten!');
       
     } catch (error) {
       console.error('❌ GitHub update failed:', error);

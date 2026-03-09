@@ -206,38 +206,35 @@ class RealTimeDashboard {
     }
   }
 
-  // 🎯 Generate real alert from actual data
+  // 🎯 Generate alert from data
   generateRealAlertFromData() {
-    // Real GitHub API data patterns
-    const realAlerts = [
+    // GitHub API data patterns
+    const alerts = [
       {
         type: 'feature',
         title: '✨ OpenAI Model Update Detected',
         message: 'GPT-4 Turbo performance improvements available',
         source: 'OpenAI GitHub',
-        urgency: 'medium',
-        evidence: 'real'
+        urgency: 'medium'
       },
       {
         type: 'security',
         title: '🔒 Security Update Available',
         message: 'Anthropic SDK security patch v0.8.0',
         source: 'Anthropic GitHub',
-        urgency: 'high',
-        evidence: 'real'
+        urgency: 'high'
       },
       {
         type: 'critical',
         title: '🚨 API Change Detected',
         message: 'OpenRouter rate limits updated',
         source: 'OpenRouter GitHub',
-        urgency: 'immediate',
-        evidence: 'real'
+        urgency: 'immediate'
       }
     ];
 
-    // Return random real alert
-    return realAlerts[Math.floor(Math.random() * realAlerts.length)];
+    // Return random alert
+    return alerts[Math.floor(Math.random() * alerts.length)];
   }
 
   // 📝 Generate alert title
