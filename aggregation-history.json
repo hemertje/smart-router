@@ -164,5 +164,49 @@
         "impact": 1
       }
     }
+  },
+  {
+    "timestamp": "2026-03-08T22:19:59.191Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-09T11:15:30.869Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
   }
 ]

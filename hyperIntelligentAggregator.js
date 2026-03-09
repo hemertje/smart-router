@@ -817,7 +817,9 @@ class HyperIntelligentAggregator {
       }
       
       // Breaking changes
-      if (lowerLine.includes('break:') || lowerLine.includes('breaking:') || lowerLine.includes('deprecated:')) {
+      if (lowerLine.includes('break:') || lowerLine.includes('breaking:') || lowerLine.includes('deprecated:') || 
+          lowerLine.includes('removed:') || lowerLine.includes('removed ') || lowerLine.includes('deprecated ') ||
+          lowerLine.includes('breaking change') || lowerLine.includes('no longer supported')) {
         codeChanges.breakingChanges.push(line.trim());
       }
       
@@ -1853,6 +1855,64 @@ class HyperIntelligentAggregator {
       impactIndicators: 1,
       engagementScore: item.engagement / 1000
     };
+  }
+
+  // 🚀 Quick aggregation for real-time monitoring
+  async quickAggregation() {
+    console.log('⚡ Quick aggregation started...');
+    
+    try {
+      // Limit sources for speed - only critical ones
+      const criticalSources = [
+        { name: 'OpenAI Blog', url: 'https://openai.com/index/', type: 'news' },
+        { name: 'OpenRouter GitHub Releases', url: 'https://api.github.com/repos/OpenRouterTeam/openrouter/releases', type: 'github' },
+        { name: 'Anthropic GitHub Releases', url: 'https://api.github.com/repos/anthropics/anthropic-sdk-python/releases', type: 'github' },
+        { name: 'GodOfPrompt Updates', url: 'https://www.godofprompt.ai/', type: 'competitor' }
+      ];
+      
+      const allData = [];
+      
+      for (const source of criticalSources) {
+        try {
+          let data = [];
+          
+          if (source.type === 'github') {
+            data = await this.extractAPIData([source]);
+          } else {
+            data = await this.extractNewsArticles([source]);
+          }
+          
+          allData.push(...data);
+          
+        } catch (error) {
+          console.log(`⚠️ Quick check failed for ${source.name}:`, error.message);
+        }
+      }
+      
+      // Filter for relevance (lower threshold for quick check)
+      const relevantData = allData.filter(item => item.relevance > 0.15);
+      
+      // Extract intelligence and alerts
+      const enhancedResults = await this.extractEnhancedIntelligence(relevantData);
+      
+      return {
+        totalItems: allData.length,
+        relevantItems: relevantData.length,
+        alerts: enhancedResults.alerts,
+        intelligence: enhancedResults.intelligence,
+        timestamp: new Date().toISOString()
+      };
+      
+    } catch (error) {
+      console.error('❌ Quick aggregation failed:', error);
+      return {
+        totalItems: 0,
+        relevantItems: 0,
+        alerts: [],
+        intelligence: [],
+        timestamp: new Date().toISOString()
+      };
+    }
   }
 
   getAggregationHistory() {

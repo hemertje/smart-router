@@ -1,0 +1,36 @@
+[
+  {
+    "id": "learning_1773054995471_ebt7w23sg",
+    "type": "breaking_change_pattern",
+    "feedback": "Add missing patterns: removed, breaking change, no longer supported",
+    "source": "user_feedback",
+    "timestamp": "2026-03-09T11:16:35.470Z",
+    "status": "completed",
+    "actions": []
+  },
+  {
+    "id": "learning_1773054995474_cwzjzo2ks",
+    "type": "mail_timing_issue",
+    "feedback": "Mail should be sent when daily check completes, not fixed at 09:00",
+    "source": "user_feedback",
+    "timestamp": "2026-03-09T11:16:35.474Z",
+    "status": "completed",
+    "actions": [
+      {
+        "type": "system_improvement",
+        "description": "Flexible mail timing geïmplementeerd - mail wanneer data klaar is",
+        "implemented": true
+      },
+      {
+        "type": "user_experience",
+        "description": "Proactieve logging van verzendtijden toegevoegd",
+        "implemented": true
+      },
+      {
+        "type": "scheduler_enhancement",
+        "description": "Scheduler met flexible timing opties",
+        "implemented": true
+      }
+    ]
+  }
+]
