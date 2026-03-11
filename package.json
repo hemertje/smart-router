@@ -1,8 +1,8 @@
 {
   "name": "smart-router",
-  "displayName": "Smart Router v2.7.3 - Activity-Based Dashboard Edition",
-  "description": "Activity-based real-time intelligence dashboard with IDE detection, resource-efficient operation, and automated lifecycle management",
-  "version": "2.7.3",
+  "displayName": "Smart Router v2.7.4 - Complete Silent Dashboard Edition",
+  "description": "100% underwater real-time intelligence dashboard with zero console output, activity-based lifecycle management, and perfect background operation",
+  "version": "2.7.4",
   "publisher": "jeroenvanhemert",
   "repository": {
     "type": "git",
@@ -45,6 +45,11 @@
       {
         "command": "smartRouter.startActivityMonitor",
         "title": " Start Activity Monitor",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smartRouter.startSilentDashboard",
+        "title": " Start Silent Dashboard",
         "category": "Smart Router"
       },
       {
