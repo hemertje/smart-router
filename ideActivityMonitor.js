@@ -52,25 +52,20 @@ class IDEActivityMonitor {
     this.checkIDEActivity();
   }
 
-  // 🔍 Check IDE activity
+  // 🔄 Check IDE activity
   async checkIDEActivity() {
-    try {
-      const ideRunning = await this.isIDERunningNow();
-      
-      if (ideRunning && !this.isIDERunning) {
-        // IDE net gestart -> start dashboard
-        console.log('🚀 IDE detected - starting dashboard...');
-        await this.startDashboard();
-        this.isIDERunning = true;
-      } else if (!ideRunning && this.isIDERunning) {
-        // IDE gestopt -> stop dashboard
-        console.log('🛑 IDE not detected - stopping dashboard...');
-        await this.stopDashboard();
-        this.isIDERunning = false;
-      }
-      
-    } catch (error) {
-      console.error('❌ Error checking IDE activity:', error);
+    const ideRunning = await this.isIDERunningNow();
+    
+    if (ideRunning && !this.isIDERunning) {
+      // IDE started - start dashboard and scheduler
+      await this.startDashboard();
+      await this.startSilentScheduler();
+      this.isIDERunning = true;
+    } else if (!ideRunning && this.isIDERunning) {
+      // IDE stopped - stop dashboard and scheduler
+      await this.stopDashboard();
+      await this.stopSilentScheduler();
+      this.isIDERunning = false;
     }
   }
 
@@ -106,12 +101,12 @@ class IDEActivityMonitor {
   // 🚀 Start dashboard
   async startDashboard() {
     if (this.dashboardProcess) {
-      console.log('📊 Dashboard already running');
+      // Silent - no console output
       return;
     }
 
     try {
-      console.log('🚀 Starting Smart Router dashboard...');
+      // Silent dashboard start
       
       this.dashboardProcess = spawn('node', ['silentDashboard.js'], {
         cwd: this.projectRoot,
@@ -127,36 +122,80 @@ class IDEActivityMonitor {
 
       this.dashboardProcess.unref();
       
-      console.log('✅ Dashboard started - 100% underwater operation');
+      // Silent confirmation
       
       // Monitor dashboard process
       this.monitorDashboardProcess();
       
     } catch (error) {
-      console.error('❌ Failed to start dashboard:', error);
+      // Silent error handling
+    }
+  }
+
+  // 🚀 Start silent scheduler
+  async startSilentScheduler() {
+    if (this.schedulerProcess) {
+      // Silent - no console output
+      return;
+    }
+
+    try {
+      // Silent scheduler start
+      
+      this.schedulerProcess = spawn('node', ['silentScheduler.js'], {
+        cwd: this.projectRoot,
+        detached: true,
+        stdio: 'ignore',
+        env: {
+          ...process.env,
+          SILENT_MODE: 'true',
+          UNDERWATER_MODE: 'true'
+        }
+      });
+
+      this.schedulerProcess.unref();
+      
+      // Silent confirmation
+      
+      // Monitor scheduler process
+      this.monitorSchedulerProcess();
+      
+    } catch (error) {
+      // Silent error handling
     }
   }
 
   // 🛑 Stop dashboard
   async stopDashboard() {
     if (!this.dashboardProcess) {
-      console.log('📊 Dashboard not running');
+      // Silent - no console output
       return;
     }
 
     try {
-      console.log('🛑 Stopping dashboard...');
-      
-      // Probeer graceful shutdown
-      if (this.dashboardProcess.pid) {
-        process.kill(this.dashboardProcess.pid);
-      }
-      
+      // Silent dashboard stop
+      this.dashboardProcess.kill('SIGTERM');
       this.dashboardProcess = null;
-      console.log('✅ Dashboard stopped - IDE is inactive');
       
     } catch (error) {
-      console.error('❌ Failed to stop dashboard:', error);
+      // Silent error handling
+    }
+  }
+
+  // 🛑 Stop silent scheduler
+  async stopSilentScheduler() {
+    if (!this.schedulerProcess) {
+      // Silent - no console output
+      return;
+    }
+
+    try {
+      // Silent scheduler stop
+      this.schedulerProcess.kill('SIGTERM');
+      this.schedulerProcess = null;
+      
+    } catch (error) {
+      // Silent error handling
     }
   }
 
@@ -165,21 +204,28 @@ class IDEActivityMonitor {
     if (!this.dashboardProcess) return;
 
     this.dashboardProcess.on('error', (error) => {
-      console.error('❌ Dashboard process error:', error);
+      // Silent error handling
       this.dashboardProcess = null;
     });
 
-    this.dashboardProcess.on('exit', (code) => {
-      console.log(`📊 Dashboard process exited with code: ${code}`);
+    this.dashboardProcess.on('close', (code) => {
+      // Silent handling
       this.dashboardProcess = null;
-      
-      // Auto-restart als IDE nog actief is
-      if (code !== 0 && this.isIDERunning) {
-        console.log('🔄 Auto-restarting dashboard (IDE still active)...');
-        setTimeout(() => {
-          this.startDashboard();
-        }, 5000);
-      }
+    });
+  }
+
+  // 🔍 Monitor scheduler process
+  monitorSchedulerProcess() {
+    if (!this.schedulerProcess) return;
+
+    this.schedulerProcess.on('error', (error) => {
+      // Silent error handling
+      this.schedulerProcess = null;
+    });
+
+    this.schedulerProcess.on('close', (code) => {
+      // Silent handling
+      this.schedulerProcess = null;
     });
   }
 
@@ -190,8 +236,9 @@ class IDEActivityMonitor {
       this.monitoringTimer = null;
     }
     
-    this.isMonitoring = false;
-    console.log('🛑 IDE activity monitoring stopped');
+    // Silent stop of all processes
+    this.stopDashboard();
+    this.stopSilentScheduler();
   }
 
   // 📊 Get status
@@ -200,9 +247,11 @@ class IDEActivityMonitor {
       monitoring: this.isMonitoring,
       ideRunning: this.isIDERunning,
       dashboardRunning: this.dashboardProcess !== null,
+      schedulerRunning: this.schedulerProcess !== null,
       dashboardPid: this.dashboardProcess ? this.dashboardProcess.pid : null,
+      schedulerPid: this.schedulerProcess ? this.schedulerProcess.pid : null,
       projectRoot: this.projectRoot,
-      checkInterval: this.checkInterval
+      checkInterval: 30000
     };
   }
 }
@@ -214,32 +263,6 @@ module.exports = IDEActivityMonitor;
 if (require.main === module) {
   const monitor = new IDEActivityMonitor();
   
-  console.log('🔍 SMART ROUTER IDE ACTIVITY MONITOR');
-  console.log('======================================');
-  console.log('📊 Monitoring VS Code/Windsurf activity...');
-  console.log('🚀 Dashboard will start/stop automatically');
-  console.log('');
-  
+  // Silent start - no console output
   monitor.startActivityMonitoring();
-  
-  // Status display elke minuut
-  setInterval(() => {
-    const status = monitor.getStatus();
-    console.log(`📊 Status: IDE ${status.ideRunning ? '✅ Active' : '❌ Inactive'}, Dashboard ${status.dashboardRunning ? '✅ Running' : '❌ Stopped'}`);
-  }, 60000);
-  
-  // Graceful shutdown
-  process.on('SIGINT', () => {
-    console.log('\n🛑 Stopping IDE activity monitor...');
-    monitor.stopActivityMonitoring();
-    monitor.stopDashboard();
-    process.exit(0);
-  });
-  
-  process.on('SIGTERM', () => {
-    console.log('\n🛑 Stopping IDE activity monitor...');
-    monitor.stopActivityMonitoring();
-    monitor.stopDashboard();
-    process.exit(0);
-  });
 }
