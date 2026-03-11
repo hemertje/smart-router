@@ -113,20 +113,21 @@ class IDEActivityMonitor {
     try {
       console.log('🚀 Starting Smart Router dashboard...');
       
-      this.dashboardProcess = spawn('node', ['realTimeDashboard.js'], {
+      this.dashboardProcess = spawn('node', ['silentDashboard.js'], {
         cwd: this.projectRoot,
         detached: true,
         stdio: 'ignore',
         env: {
           ...process.env,
           IDE_ACTIVITY_MODE: 'true',
-          SILENT_MODE: 'true'
+          SILENT_MODE: 'true',
+          UNDERWATER_MODE: 'true'
         }
       });
 
       this.dashboardProcess.unref();
       
-      console.log('✅ Dashboard started - IDE is active');
+      console.log('✅ Dashboard started - 100% underwater operation');
       
       // Monitor dashboard process
       this.monitorDashboardProcess();

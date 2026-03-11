@@ -1,46 +1,30 @@
 #!/usr/bin/env node
 
-// 🚀 REAL-TIME DASHBOARD - SMART ROUTER V2.7.3
-// Activity-based live monitoring met IDE detection en resource-efficient operation
+// 🚀 SILENT DASHBOARD - SMART ROUTER V2.7.3
+// 100% onderwater operation - zero console output
 
 const fs = require('fs');
 const path = require('path');
 
-// Simple color functions instead of chalk
-const colors = {
-  cyan: (text) => `\x1b[36m${text}\x1b[0m`,
-  yellow: (text) => `\x1b[33m${text}\x1b[0m`,
-  red: (text) => `\x1b[31m${text}\x1b[0m`,
-  green: (text) => `\x1b[32m${text}\x1b[0m`,
-  blue: (text) => `\x1b[34m${text}\x1b[0m`,
-  magenta: (text) => `\x1b[35m${text}\x1b[0m`,
-  orange: (text) => `\x1b[38;5;208m${text}\x1b[0m`,
-  gray: (text) => `\x1b[90m${text}\x1b[0m`,
-  white: (text) => `\x1b[37m${text}\x1b[0m`
-};
-
-class RealTimeDashboard {
+class SilentDashboard {
   constructor() {
     this.dataDir = __dirname;
     this.alertsFile = path.join(this.dataDir, 'real-time-alerts.json');
     this.historyFile = path.join(this.dataDir, 'aggregation-history.json');
     this.resultsFile = path.join(this.dataDir, 'simple-daily-results-9-3-2026.json');
     
-    // Activity-based mode detection
-    this.activityMode = process.env.IDE_ACTIVITY_MODE === 'true';
-    this.silentMode = process.env.SILENT_MODE === 'true';
-    
-    this.initializeDashboard();
+    // Start completely silent
+    this.initializeSilentDashboard();
   }
 
-  // Initialize dashboard - COMPLETE SILENT MODE
-  initializeDashboard() {
-    // ALWAYS silent mode - no console output whatsoever
+  // Initialize dashboard - COMPLETELY SILENT
+  initializeSilentDashboard() {
+    // No console output whatsoever
     this.loadCurrentData();
-    this.startRealTimeMonitoring();
+    this.startSilentMonitoring();
   }
 
-  // Load current data
+  // Load current data - SILENT
   loadCurrentData() {
     try {
       // Load aggregation history
@@ -72,36 +56,30 @@ class RealTimeDashboard {
     }
   }
 
-  // 📈 Display dashboard - DISABLED FOR SILENT MODE
-  displayDashboard() {
-    // Silent mode - no console output
-    // Dashboard data is processed but not displayed
-  }
-
-  // Start real-time monitoring - SILENT MODE
-  startRealTimeMonitoring() {
-    // Simulate real-time updates
+  // Start silent monitoring - COMPLETELY UNDERWATER
+  startSilentMonitoring() {
+    // Silent monitoring interval
     this.monitoringInterval = setInterval(() => {
-      this.simulateRealTimeUpdate();
+      this.silentUpdate();
     }, 5000); // Every 5 seconds
 
-    // Handle graceful shutdown - SILENT
+    // Silent graceful shutdown
     process.on('SIGINT', () => {
       clearInterval(this.monitoringInterval);
       process.exit(0);
     });
   }
 
-  // Update with actual data - ONDERWATER
-  simulateRealTimeUpdate() {
-    // Load actual data from integration
+  // Silent update - UNDERWATER OPERATION
+  silentUpdate() {
+    // Load actual data silently
     this.loadActualData();
     
     // Generate alert from actual integration data
     const actualAlert = this.generateAlertFromIntegration();
     
     if (actualAlert) {
-      // Add to alerts
+      // Add to alerts silently
       if (!this.alerts[actualAlert.type]) {
         this.alerts[actualAlert.type] = [];
       }
@@ -113,12 +91,12 @@ class RealTimeDashboard {
         this.alerts[actualAlert.type] = this.alerts[actualAlert.type].slice(0, 10);
       }
 
-      // Display actual alert
-      this.displayRealTimeAlert(actualAlert);
+      // Store alert silently - no display
+      this.storeAlertSilently(actualAlert);
     }
   }
 
-  // 📊 Load actual data from integration - SILENT MODE
+  // Load actual data - SILENT
   loadActualData() {
     try {
       const integrationFile = path.join(this.dataDir, 'real-time-data.json');
@@ -135,7 +113,7 @@ class RealTimeDashboard {
     }
   }
 
-  // 🎯 Generate alert from integration data
+  // Generate alert from integration data - SILENT
   generateAlertFromIntegration() {
     if (this.actualAlerts && this.actualAlerts.length > 0) {
       // Return actual alert from integration
@@ -147,7 +125,7 @@ class RealTimeDashboard {
     return this.runQuickIntegration();
   }
 
-  // 🚀 Run quick integration for fresh data - SILENT MODE
+  // Run quick integration - SILENT
   async runQuickIntegration() {
     try {
       const RealDataIntegration = require('./realDataIntegration.js');
@@ -168,50 +146,20 @@ class RealTimeDashboard {
     return null;
   }
 
-  // 📝 Generate alert title
-  generateAlertTitle(type) {
-    const titles = {
-      critical: ['🚨 Breaking Change Detected', '🔥 Critical Update Required', '⚠️ System Impact Detected'],
-      security: ['🔒 Security Update Available', '🛡️ Vulnerability Patched', '🚫 Security Alert'],
-      feature: ['✨ New Feature Released', '🎉 Capability Enhanced', '🚀 Functionality Added']
-    };
-    
-    const typeTitles = titles[type];
-    return typeTitles[Math.floor(Math.random() * typeTitles.length)];
-  }
-
-  // 📝 Generate alert message
-  generateAlertMessage(type) {
-    const messages = {
-      critical: ['API endpoint deprecated', 'Breaking change in model', 'System architecture updated'],
-      security: ['Security vulnerability patched', 'Encryption protocol updated', 'Access control enhanced'],
-      feature: ['New model capability added', 'Performance optimization released', 'Integration feature added']
-    };
-    
-    const typeMessages = messages[type];
-    return typeMessages[Math.floor(Math.random() * typeMessages.length)];
-  }
-
-  // ⚡ Get urgency level
-  getUrgencyLevel(type) {
-    const levels = {
-      critical: 'immediate',
-      security: 'high',
-      feature: 'medium'
-    };
-    return levels[type];
-  }
-
-  // � Display real-time alert - SILENT MODE
-  displayRealTimeAlert(alert) {
-    // Silent mode - no console output to prevent chat pollution
-    // Alert is stored in memory for dashboard display only
+  // Store alert silently - UNDERWATER
+  storeAlertSilently(alert) {
+    try {
+      // Save to file silently
+      fs.writeFileSync(this.alertsFile, JSON.stringify(this.alerts, null, 2));
+    } catch (error) {
+      // Silent error handling
+    }
   }
 }
 
-// 🚀 Start the dashboard
+// 🚀 Start the silent dashboard
 if (require.main === module) {
-  new RealTimeDashboard();
+  new SilentDashboard();
 }
 
-module.exports = RealTimeDashboard;
+module.exports = SilentDashboard;
