@@ -1,8 +1,8 @@
 {
   "name": "smart-router",
-  "displayName": "Smart Router v2.7.4 - Complete Silent Dashboard Edition",
-  "description": "100% underwater real-time intelligence dashboard with zero console output, activity-based lifecycle management, and perfect background operation",
-  "version": "2.7.4",
+  "displayName": "Smart Router v2.7.5 - Real Data Intelligence Edition",
+  "description": "Evidence-based intelligence dashboard with real GitHub release analysis, actionable insights, and pattern recognition",
+  "version": "2.7.5",
   "publisher": "jeroenvanhemert",
   "repository": {
     "type": "git",
@@ -50,6 +50,11 @@
       {
         "command": "smartRouter.startSilentDashboard",
         "title": " Start Silent Dashboard",
+        "category": "Smart Router"
+      },
+      {
+        "command": "smartRouter.analyzeRealData",
+        "title": " Analyze Real Data",
         "category": "Smart Router"
       },
       {
