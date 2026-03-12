@@ -230,5 +230,1881 @@
         "impact": 1
       }
     }
+  },
+  {
+    "timestamp": "2026-03-11T15:37:12.195Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T15:37:57.523Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T17:30:19.552Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T17:30:19.567Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T17:30:19.562Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T17:30:19.569Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T18:30:19.536Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T18:30:19.538Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T18:30:19.551Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T18:30:19.551Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T18:30:19.560Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:00:20.218Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:00:20.221Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:00:20.236Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:00:20.252Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:00:20.342Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:30:23.046Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:30:23.051Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:30:23.056Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T20:30:23.065Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:00:17.755Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:00:17.755Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:00:17.768Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:00:17.771Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:30:21.775Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:30:21.795Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:30:21.803Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T21:30:21.822Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T22:00:20.073Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T22:00:20.086Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T22:00:20.090Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-11T22:00:20.092Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:00:15.945Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:00:15.955Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:00:15.959Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:00:15.965Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:00:15.981Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:30:15.714Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:30:15.753Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:30:15.758Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:30:15.760Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T07:30:15.776Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.158Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.177Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.179Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.188Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.190Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.195Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:00:16.256Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:30:14.502Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:30:14.515Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:30:14.525Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:30:14.537Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T08:30:16.250Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:00:13.931Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:00:13.933Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:00:13.937Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:00:13.952Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:00:14.834Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:30:20.352Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:30:20.460Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:30:20.478Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:30:20.565Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T09:30:21.118Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:00:16.077Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:00:16.101Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:00:16.117Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:00:16.134Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:30:15.970Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:30:15.987Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:30:16.016Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:30:16.020Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T10:30:16.032Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:00:19.160Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:00:19.166Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:00:19.182Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:00:19.187Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:00:19.192Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:30:17.164Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:30:17.171Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:30:17.184Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-12T11:30:17.231Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
   }
 ]

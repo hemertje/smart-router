@@ -2,159 +2,15 @@
   "critical": [],
   "security": [],
   "features": [],
-  "total": 1534,
+  "total": 7356,
   "feature": [
     {
       "type": "feature",
-      "title": "✨ New Release: v2.26.0",
-      "message": "## 2.26.0 (2026-03-05)",
-      "source": "OpenAI GitHub",
-      "url": "https://github.com/openai/openai-python/releases/tag/v2.26.0",
-      "publishedAt": "2026-03-05T23:16:58Z",
-      "urgency": "medium",
-      "evidence": "real",
-      "patterns": {
-        "breaking": 0,
-        "security": 0,
-        "feature": 0,
-        "performance": 0
-      },
-      "metrics": {
-        "versionCount": 4,
-        "percentageCount": 0,
-        "numberCount": 33,
-        "examples": {
-          "versions": [
-            "v2.25.0",
-            "v2.26.0",
-            "v2.25.0"
-          ],
-          "percentages": [],
-          "numbers": [
-            "2",
-            "26",
-            "0",
-            "2026",
-            "03"
-          ]
-        }
-      }
-    },
-    {
-      "type": "feature",
-      "title": "✨ New Release: v2.26.0",
-      "message": "## 2.26.0 (2026-03-05)",
-      "source": "OpenAI GitHub",
-      "url": "https://github.com/openai/openai-python/releases/tag/v2.26.0",
-      "publishedAt": "2026-03-05T23:16:58Z",
-      "urgency": "medium",
-      "evidence": "real",
-      "patterns": {
-        "breaking": 0,
-        "security": 0,
-        "feature": 0,
-        "performance": 0
-      },
-      "metrics": {
-        "versionCount": 4,
-        "percentageCount": 0,
-        "numberCount": 33,
-        "examples": {
-          "versions": [
-            "v2.25.0",
-            "v2.26.0",
-            "v2.25.0"
-          ],
-          "percentages": [],
-          "numbers": [
-            "2",
-            "26",
-            "0",
-            "2026",
-            "03"
-          ]
-        }
-      }
-    },
-    {
-      "type": "feature",
-      "title": "✨ New Release: v2.25.0",
-      "message": "## 2.25.0 (2026-03-05)",
-      "source": "OpenAI GitHub",
-      "url": "https://github.com/openai/openai-python/releases/tag/v2.25.0",
-      "publishedAt": "2026-03-05T18:34:55Z",
-      "urgency": "medium",
-      "evidence": "real",
-      "patterns": {
-        "breaking": 0,
-        "security": 0,
-        "feature": 0,
-        "performance": 0
-      },
-      "metrics": {
-        "versionCount": 4,
-        "percentageCount": 0,
-        "numberCount": 124,
-        "examples": {
-          "versions": [
-            "v2.24.0",
-            "v2.25.0",
-            "v2.24.0"
-          ],
-          "percentages": [],
-          "numbers": [
-            "2",
-            "25",
-            "0",
-            "2026",
-            "03"
-          ]
-        }
-      }
-    },
-    {
-      "type": "feature",
-      "title": "✨ New Release: v2.25.0",
-      "message": "## 2.25.0 (2026-03-05)",
-      "source": "OpenAI GitHub",
-      "url": "https://github.com/openai/openai-python/releases/tag/v2.25.0",
-      "publishedAt": "2026-03-05T18:34:55Z",
-      "urgency": "medium",
-      "evidence": "real",
-      "patterns": {
-        "breaking": 0,
-        "security": 0,
-        "feature": 0,
-        "performance": 0
-      },
-      "metrics": {
-        "versionCount": 4,
-        "percentageCount": 0,
-        "numberCount": 124,
-        "examples": {
-          "versions": [
-            "v2.24.0",
-            "v2.25.0",
-            "v2.24.0"
-          ],
-          "percentages": [],
-          "numbers": [
-            "2",
-            "25",
-            "0",
-            "2026",
-            "03"
-          ]
-        }
-      }
-    },
-    {
-      "type": "feature",
-      "title": "✨ New Release: v0.84.0",
-      "message": "## 0.84.0 (2026-02-25)",
+      "title": "✨ New Release: v0.82.0",
+      "message": "## 0.82.0 (2026-02-18)",
       "source": "Anthropic GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.84.0",
-      "publishedAt": "2026-02-25T05:22:10Z",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.82.0",
+      "publishedAt": "2026-02-18T20:24:48Z",
       "urgency": "medium",
       "evidence": "real",
       "patterns": {
@@ -166,20 +22,56 @@
       "metrics": {
         "versionCount": 4,
         "percentageCount": 0,
-        "numberCount": 146,
+        "numberCount": 48,
         "examples": {
           "versions": [
-            "v0.83.0",
-            "v0.84.0",
-            "v0.83.0"
+            "v0.81.0",
+            "v0.82.0",
+            "v0.81.0"
           ],
           "percentages": [],
           "numbers": [
             "0",
-            "84",
+            "82",
             "0",
             "2026",
             "02"
+          ]
+        }
+      }
+    },
+    {
+      "type": "feature",
+      "title": "✨ New Release: v2.25.0",
+      "message": "## 2.25.0 (2026-03-05)",
+      "source": "OpenAI GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.25.0",
+      "publishedAt": "2026-03-05T18:34:55Z",
+      "urgency": "medium",
+      "evidence": "real",
+      "patterns": {
+        "breaking": 0,
+        "security": 0,
+        "feature": 0,
+        "performance": 0
+      },
+      "metrics": {
+        "versionCount": 4,
+        "percentageCount": 0,
+        "numberCount": 124,
+        "examples": {
+          "versions": [
+            "v2.24.0",
+            "v2.25.0",
+            "v2.24.0"
+          ],
+          "percentages": [],
+          "numbers": [
+            "2",
+            "25",
+            "0",
+            "2026",
+            "03"
           ]
         }
       }
@@ -222,6 +114,78 @@
     },
     {
       "type": "feature",
+      "title": "✨ New Release: v2.25.0",
+      "message": "## 2.25.0 (2026-03-05)",
+      "source": "OpenAI GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.25.0",
+      "publishedAt": "2026-03-05T18:34:55Z",
+      "urgency": "medium",
+      "evidence": "real",
+      "patterns": {
+        "breaking": 0,
+        "security": 0,
+        "feature": 0,
+        "performance": 0
+      },
+      "metrics": {
+        "versionCount": 4,
+        "percentageCount": 0,
+        "numberCount": 124,
+        "examples": {
+          "versions": [
+            "v2.24.0",
+            "v2.25.0",
+            "v2.24.0"
+          ],
+          "percentages": [],
+          "numbers": [
+            "2",
+            "25",
+            "0",
+            "2026",
+            "03"
+          ]
+        }
+      }
+    },
+    {
+      "type": "feature",
+      "title": "✨ New Release: v0.83.0",
+      "message": "## 0.83.0 (2026-02-19)",
+      "source": "Anthropic GitHub",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.83.0",
+      "publishedAt": "2026-02-19T19:26:11Z",
+      "urgency": "medium",
+      "evidence": "real",
+      "patterns": {
+        "breaking": 0,
+        "security": 0,
+        "feature": 0,
+        "performance": 0
+      },
+      "metrics": {
+        "versionCount": 4,
+        "percentageCount": 0,
+        "numberCount": 39,
+        "examples": {
+          "versions": [
+            "v0.82.0",
+            "v0.83.0",
+            "v0.82.0"
+          ],
+          "percentages": [],
+          "numbers": [
+            "0",
+            "83",
+            "0",
+            "2026",
+            "02"
+          ]
+        }
+      }
+    },
+    {
+      "type": "feature",
       "title": "✨ New Release: v2.26.0",
       "message": "## 2.26.0 (2026-03-05)",
       "source": "OpenAI GitHub",
@@ -258,11 +222,11 @@
     },
     {
       "type": "feature",
-      "title": "✨ New Release: v0.84.0",
-      "message": "## 0.84.0 (2026-02-25)",
-      "source": "Anthropic GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.84.0",
-      "publishedAt": "2026-02-25T05:22:10Z",
+      "title": "✨ New Release: v2.24.0",
+      "message": "## 2.24.0 (2026-02-24)",
+      "source": "OpenAI GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.24.0",
+      "publishedAt": "2026-02-24T20:01:29Z",
       "urgency": "medium",
       "evidence": "real",
       "patterns": {
@@ -274,17 +238,17 @@
       "metrics": {
         "versionCount": 4,
         "percentageCount": 0,
-        "numberCount": 146,
+        "numberCount": 80,
         "examples": {
           "versions": [
-            "v0.83.0",
-            "v0.84.0",
-            "v0.83.0"
+            "v2.23.0",
+            "v2.24.0",
+            "v2.23.0"
           ],
           "percentages": [],
           "numbers": [
-            "0",
-            "84",
+            "2",
+            "24",
             "0",
             "2026",
             "02"
@@ -294,11 +258,11 @@
     },
     {
       "type": "feature",
-      "title": "✨ New Release: v0.84.0",
-      "message": "## 0.84.0 (2026-02-25)",
-      "source": "Anthropic GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.84.0",
-      "publishedAt": "2026-02-25T05:22:10Z",
+      "title": "✨ New Release: v2.26.0",
+      "message": "## 2.26.0 (2026-03-05)",
+      "source": "OpenAI GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.26.0",
+      "publishedAt": "2026-03-05T23:16:58Z",
       "urgency": "medium",
       "evidence": "real",
       "patterns": {
@@ -310,31 +274,31 @@
       "metrics": {
         "versionCount": 4,
         "percentageCount": 0,
-        "numberCount": 146,
+        "numberCount": 33,
         "examples": {
           "versions": [
-            "v0.83.0",
-            "v0.84.0",
-            "v0.83.0"
+            "v2.25.0",
+            "v2.26.0",
+            "v2.25.0"
           ],
           "percentages": [],
           "numbers": [
-            "0",
-            "84",
+            "2",
+            "26",
             "0",
             "2026",
-            "02"
+            "03"
           ]
         }
       }
     },
     {
       "type": "feature",
-      "title": "✨ New Release: v0.83.0",
-      "message": "## 0.83.0 (2026-02-19)",
+      "title": "✨ New Release: v0.82.0",
+      "message": "## 0.82.0 (2026-02-18)",
       "source": "Anthropic GitHub",
-      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.83.0",
-      "publishedAt": "2026-02-19T19:26:11Z",
+      "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.82.0",
+      "publishedAt": "2026-02-18T20:24:48Z",
       "urgency": "medium",
       "evidence": "real",
       "patterns": {
@@ -346,17 +310,53 @@
       "metrics": {
         "versionCount": 4,
         "percentageCount": 0,
-        "numberCount": 39,
+        "numberCount": 48,
         "examples": {
           "versions": [
+            "v0.81.0",
             "v0.82.0",
-            "v0.83.0",
-            "v0.82.0"
+            "v0.81.0"
           ],
           "percentages": [],
           "numbers": [
             "0",
-            "83",
+            "82",
+            "0",
+            "2026",
+            "02"
+          ]
+        }
+      }
+    },
+    {
+      "type": "feature",
+      "title": "✨ New Release: v2.24.0",
+      "message": "## 2.24.0 (2026-02-24)",
+      "source": "OpenAI GitHub",
+      "url": "https://github.com/openai/openai-python/releases/tag/v2.24.0",
+      "publishedAt": "2026-02-24T20:01:29Z",
+      "urgency": "medium",
+      "evidence": "real",
+      "patterns": {
+        "breaking": 0,
+        "security": 0,
+        "feature": 0,
+        "performance": 0
+      },
+      "metrics": {
+        "versionCount": 4,
+        "percentageCount": 0,
+        "numberCount": 80,
+        "examples": {
+          "versions": [
+            "v2.23.0",
+            "v2.24.0",
+            "v2.23.0"
+          ],
+          "percentages": [],
+          "numbers": [
+            "2",
+            "24",
             "0",
             "2026",
             "02"
