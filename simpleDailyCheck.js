@@ -178,8 +178,8 @@ class SimpleDailyCheck {
     // Update hyper-intelligent data with scraping results
     this.results.hyperIntelligent.itemsMonitored = aggregationResults.raw;
     this.results.hyperIntelligent.relevantInsights = aggregationResults.insights;
-    this.results.hyperIntelligent.data = 'Web scraping - OpenAI, TechCrunch, VentureBeat, GitHub';
-    this.results.hyperIntelligent.source = 'Hyper-Intelligent Aggregator - Web Scraping Active';
+    this.results.hyperIntelligent.data = 'Web scraping - OpenAI, TechCrunch, VentureBeat, GitHub, Enhanced AI Ecosystem';
+    this.results.hyperIntelligent.source = 'Hyper-Intelligent Aggregator - Enhanced Sources Integration Active';
     
     // Update predictive intelligence with OpenAI data
     const openaiInsights = aggregationResults.topInsights.filter(insight => 

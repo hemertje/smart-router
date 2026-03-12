@@ -1,0 +1,88 @@
+{
+  "timestamp": "2026-03-12T11:49:12.757Z",
+  "sources": {
+    "venturebeat": {
+      "error": "Failed to scrape VentureBeat: Request failed with status code 429",
+      "timestamp": "2026-03-12T11:49:12.847Z"
+    },
+    "alexfinn": {
+      "source": "Alex Finn - Ship/It Weekly",
+      "category": "ai-practical",
+      "focus": "Beginner-friendly AI guides, practical applications",
+      "url": "https://www.alexfinn.ai/",
+      "timestamp": "2026-03-12T11:49:12.977Z",
+      "articles": [],
+      "metrics": {
+        "totalArticles": 0,
+        "recentArticles": 0
+      }
+    },
+    "fullstackpm": {
+      "source": "Full Stack PM",
+      "category": "ai-product-management",
+      "focus": "PMs building with AI tools, Claude Code, Cursor",
+      "url": "https://fullstackpm.com/",
+      "timestamp": "2026-03-12T11:49:13.082Z",
+      "articles": [],
+      "metrics": {
+        "totalArticles": 0,
+        "recentArticles": 0
+      }
+    },
+    "cameronwolfe": {
+      "source": "Deep (Learning) Focus",
+      "category": "ai-research",
+      "focus": "AI research, deep learning, LLM evaluations",
+      "url": "https://cameronrwolfe.substack.com/",
+      "timestamp": "2026-03-12T11:49:13.168Z",
+      "articles": [],
+      "metrics": {
+        "totalArticles": 0,
+        "recentArticles": 0
+      }
+    },
+    "aiwithmike": {
+      "source": "Mathy AI Substack",
+      "category": "ai-mathematical",
+      "focus": "Deep learning paper reviews, mathematical AI",
+      "url": "https://aiwithmike.substack.com/",
+      "timestamp": "2026-03-12T11:49:13.251Z",
+      "articles": [],
+      "metrics": {
+        "totalArticles": 0,
+        "recentArticles": 0
+      }
+    },
+    "diamantai": {
+      "source": "DiamantAI",
+      "category": "ai-advanced",
+      "focus": "Advanced AI techniques, tutorials, breakthroughs",
+      "url": "https://diamantai.substack.com/",
+      "timestamp": "2026-03-12T11:49:13.322Z",
+      "articles": [],
+      "metrics": {
+        "totalArticles": 0,
+        "recentArticles": 0
+      }
+    }
+  },
+  "insights": [
+    {
+      "type": "coverage",
+      "insight": "Comprehensive AI ecosystem coverage: 5 categories",
+      "recommendation": "Maintain diverse source portfolio for complete intelligence",
+      "evidence": "Sources covering: ai-practical, ai-product-management, ai-research, ai-mathematical, ai-advanced"
+    }
+  ],
+  "summary": {
+    "totalSources": 6,
+    "categories": {
+      "ai-practical": 1,
+      "ai-product-management": 1,
+      "ai-research": 1,
+      "ai-mathematical": 1,
+      "ai-advanced": 1
+    },
+    "insights": 1
+  }
+}
