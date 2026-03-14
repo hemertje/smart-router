@@ -47,11 +47,12 @@
 - **Nieuw:** Real data insights in Windsurf integration
 - **Resultaat:** Universal IDE integration met actionable intelligence
 
-### 7️⃣ **Performance Optimization** ✅ COMPLEET MET SINGLE PROCESS MANAGEMENT
-- **Status:** Complete silent resource management met single process system
+### 7️⃣ **Performance Optimization** ✅ COMPLEET MET CATCH-UP MECHANISM
+- **Status:** Complete silent resource management met catch-up voor late wake-up
 - **Features:** Zero console output, minimal CPU/memory usage
 - **Nieuw:** Process lock system, single execution, email flood prevention
-- **Resultaat:** Perfect development experience met 1 mail per dag
+- **Catch-Up:** Late wake-up detection (09:00-23:00), automatische daily check
+- **Resultaat:** Perfect development experience met 1 mail per dag + catch-up garantie
 
 ### 8️⃣ **Real Data Intelligence Integration** ✅ COMPLEET MET ENHANCED SOURCES
 - **Status:** 100% real data analysis met evidence-based insights
@@ -113,6 +114,32 @@
 - **1 Rate Limited:** ai-business (VentureBeat)
 - **Total Sources:** 6 (5 successful, 1 rate limited)
 - **Cross-Category Insights:** Strategic patterns across ecosystem
+
+---
+
+## 🔄 CATCH-UP MECHANISM - LATE WAKE-UP GARANTIE
+
+### 📋 **Problem Solved:**
+- **Issue:** Laptop uit om 09:00 = gemiste daily check
+- **Solution:** Catch-up mechanism voor late wake-up (09:00-23:00)
+- **Result:** Geen gemiste mails meer, automatische catch-up
+
+### 🛠️ **Implementation:**
+- **smartDailyAutomation.js:** Bestaande catch-up (elke 5 minuten)
+- **singleSilentScheduler.js:** Geïntegreerde catch-up (startup check)
+- **catchUpScheduler.js:** Standalone catch-up backup
+
+### ⏰ **Catch-Up Logic:**
+- **Time Window:** 09:00-23:00 (nacht uitgesloten)
+- **Detection:** simple-daily-results-{date}.json missing?
+- **Trigger:** Automatische daily check execution
+- **Guarantee:** Mail wordt alsnog verzonden
+
+### 🎯 **Use Cases:**
+- ✅ Laptop uit om 09:00 → Catch-up bij wake-up
+- ✅ System crash na 09:00 → Catch-up bij restart
+- ✅ Network issues → Catch-up bij herstel
+- ✅ Manual start → Catch-up controle
 
 ---
 
