@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-12T11:38:42.509Z",
+  "timestamp": "2026-03-14T22:46:03.369Z",
   "analysis": {
     "github": {
       "totalReleases": 6,
@@ -22,20 +22,7 @@
         "feature": 0,
         "performance": 0
       },
-      "recentReleases": [
-        {
-          "title": "✨ New Release: v2.26.0",
-          "source": "OpenAI GitHub",
-          "publishedAt": "2026-03-05T23:16:58Z",
-          "urgency": "medium"
-        },
-        {
-          "title": "✨ New Release: v2.25.0",
-          "source": "OpenAI GitHub",
-          "publishedAt": "2026-03-05T18:34:55Z",
-          "urgency": "medium"
-        }
-      ]
+      "recentReleases": []
     },
     "alerts": {
       "totalAlerts": 6,
@@ -61,12 +48,6 @@
         "evidence": "6 releases from 2 sources"
       },
       {
-        "type": "activity",
-        "insight": "High release activity: 2 releases in last 7 days",
-        "recommendation": "Consider impact on integration stability",
-        "evidence": "OpenAI GitHub: ✨ New Release: v2.26.0, OpenAI GitHub: ✨ New Release: v2.25.0"
-      },
-      {
         "type": "alert",
         "insight": "Dominant alert type: feature (6 occurrences)",
         "recommendation": "Focus monitoring on feature events",
@@ -81,16 +62,14 @@
     ],
     "summary": {
       "totalDataPoints": 12,
-      "insightsGenerated": 4,
+      "insightsGenerated": 3,
       "keyFindings": [
         "Multiple AI platforms active: Anthropic GitHub, OpenAI GitHub",
-        "High release activity: 2 releases in last 7 days",
         "Dominant alert type: feature (6 occurrences)",
         "Release span: 16 days of activity"
       ],
       "recommendations": [
         "Monitor cross-platform compatibility requirements",
-        "Consider impact on integration stability",
         "Focus monitoring on feature events",
         "Maintain consistent monitoring schedule"
       ],

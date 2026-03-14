@@ -11,7 +11,7 @@ const cron = require('node-cron');
 class SingleSilentScheduler {
   constructor() {
     this.lockFile = path.join(__dirname, 'scheduler.lock');
-    this.dailyCheckPath = path.join(__dirname, 'simpleDailyCheck.js');
+    this.dailyCheckPath = path.join(__dirname, 'simpleDailyCheck1M.js');
     this.isRunning = false;
     this.dailyMailSent = false;
     this.currentDate = new Date().toLocaleDateString('nl-NL');
@@ -150,7 +150,9 @@ class SingleSilentScheduler {
           ...process.env,
           SILENT_MODE: 'true',
           UNDERWATER_MODE: 'true',
-          SINGLE_EXECUTION: 'true'
+          SINGLE_EXECUTION: 'true',
+          CONTEXT_1M: 'true',
+          COST_OPTIMIZED: 'true'
         }
       });
 

@@ -1,0 +1,89 @@
+{
+  "timestamp": "2026-03-14T22:46:02.792Z",
+  "sources": {
+    "venturebeat": {
+      "name": "VentureBeat",
+      "category": "ai-business",
+      "focus": "AI funding, enterprise trends, venture capital",
+      "error": "Failed to fetch content",
+      "articles": [],
+      "totalArticles": 0,
+      "recentArticles": 0
+    },
+    "alexfinn": {
+      "name": "Alex Finn - Ship/It Weekly",
+      "category": "ai-practical",
+      "focus": "Beginner-friendly AI guides, practical applications",
+      "articles": [],
+      "totalArticles": 0,
+      "recentArticles": 0,
+      "totalWords": 0,
+      "estimatedTokens": 0
+    },
+    "fullstackpm": {
+      "name": "Full Stack PM",
+      "category": "ai-product-management",
+      "focus": "PMs building with AI tools, Claude Code, Cursor",
+      "articles": [],
+      "totalArticles": 0,
+      "recentArticles": 0,
+      "totalWords": 0,
+      "estimatedTokens": 0
+    },
+    "cameronwolfe": {
+      "name": "Deep (Learning) Focus",
+      "category": "ai-research",
+      "focus": "AI research, deep learning, LLM evaluations",
+      "articles": [],
+      "totalArticles": 0,
+      "recentArticles": 0,
+      "totalWords": 0,
+      "estimatedTokens": 0
+    },
+    "aiwithmike": {
+      "name": "AI with Mike",
+      "category": "ai-mathematical",
+      "focus": "Mathematical foundations of AI, paper reviews",
+      "articles": [],
+      "totalArticles": 0,
+      "recentArticles": 0,
+      "totalWords": 0,
+      "estimatedTokens": 0
+    },
+    "diamantai": {
+      "name": "DiamantAI",
+      "category": "ai-advanced",
+      "focus": "Advanced AI techniques, OpenClaw, tutorials",
+      "error": "Failed to fetch content",
+      "articles": [],
+      "totalArticles": 0,
+      "recentArticles": 0
+    }
+  },
+  "totalArticles": 0,
+  "categories": {
+    "ai-practical": 0,
+    "ai-product-management": 0,
+    "ai-research": 0,
+    "ai-mathematical": 0
+  },
+  "insights": [
+    {
+      "type": "content-analysis",
+      "totalArticles": 0,
+      "totalWords": 1,
+      "estimatedTokens": 2,
+      "categories": {},
+      "topics": [],
+      "trends": [],
+      "patterns": [],
+      "contextUtilization": "1% of 1M context window"
+    }
+  ],
+  "crossSourcePatterns": [],
+  "tokenUsage": {
+    "estimated": 0,
+    "contextWindow": "1M",
+    "contextUtilization": "0% of 1M"
+  }
+}
