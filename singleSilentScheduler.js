@@ -85,6 +85,9 @@ class SingleSilentScheduler {
     // Reset daily mail flag at midnight
     this.resetDailyMailFlag();
 
+    // Check for catch-up on startup (laptop was off)
+    this.checkCatchUpOnStartup();
+
     // Schedule daily check om 09:00 - SINGLE EXECUTION
     cron.schedule('0 9 * * *', () => {
       this.runDailyCheckOnce();
@@ -173,7 +176,36 @@ class SingleSilentScheduler {
     }
   }
 
-  // 🔒 Update lock file
+  // � Check for catch-up on startup
+  checkCatchUpOnStartup() {
+    try {
+      const today = new Date().toLocaleDateString('nl-NL');
+      const now = new Date();
+      const currentHour = now.getHours();
+      
+      // Only check if it's after 09:00 and before 23:00
+      if (currentHour >= 9 && currentHour < 23) {
+        // Check if daily results exist for today
+        const resultsFile = path.join(__dirname, `simple-daily-results-${today.replace(/\//g, '-')}.json`);
+        
+        if (!fs.existsSync(resultsFile)) {
+          // Check if mail was already sent today
+          if (!this.dailyMailSent || today !== this.currentDate) {
+            console.log('🔄 Late wake-up detected - running catch-up daily check');
+            
+            // Run catch-up daily check
+            setTimeout(() => {
+              this.runDailyCheckOnce();
+            }, 5000); // Wait 5 seconds for system to stabilize
+          }
+        }
+      }
+    } catch (error) {
+      // Silent error handling
+    }
+  }
+
+  // �🔒 Update lock file
   updateLockFile() {
     try {
       const lockInfo = {

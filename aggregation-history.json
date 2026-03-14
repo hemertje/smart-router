@@ -2128,5 +2128,55 @@
         "impact": 1
       }
     }
+  },
+  {
+    "timestamp": "2026-03-13T08:00:15.720Z",
+    "insights": [
+      {
+        "type": "temporal",
+        "insight": "Morning peak activity detected - likely announcements",
+        "recommendation": "Monitor morning hours for major announcements"
+      },
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 3,
+      "types": {
+        "temporal": 1,
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
+  },
+  {
+    "timestamp": "2026-03-14T21:59:53.870Z",
+    "insights": [
+      {
+        "type": "sentiment",
+        "insight": "Positive sentiment dominates the landscape",
+        "recommendation": "Market sentiment is favorable for new initiatives"
+      },
+      {
+        "type": "impact",
+        "insight": "High number of high-impact events detected",
+        "recommendation": "Market is experiencing significant changes"
+      }
+    ],
+    "summary": {
+      "totalInsights": 2,
+      "types": {
+        "sentiment": 1,
+        "impact": 1
+      }
+    }
   }
 ]
