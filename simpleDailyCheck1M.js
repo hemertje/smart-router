@@ -343,19 +343,11 @@ With 1M context, expect even deeper insights and more comprehensive AI ecosystem
       const mailConfig = JSON.parse(fs.readFileSync(mailConfigPath, 'utf8'));
       const nodemailer = require('nodemailer');
 
-      const transporter = nodemailer.createTransport({
-        host: mailConfig.smtp.host,
-        port: mailConfig.smtp.port,
-        secure: mailConfig.smtp.secure,
-        auth: {
-          user: mailConfig.smtp.user,
-          pass: mailConfig.smtp.pass
-        }
-      });
+      const transporter = nodemailer.createTransport(mailConfig.smtp);
 
       const mailOptions = {
-        from: mailConfig.from,
-        to: mailConfig.to,
+        from: mailConfig.smtp.auth.user,
+        to: mailConfig.notifications.dailyReport.recipients.join(','),
         subject: content.subject,
         html: content.body.replace(/\n/g, '<br>')
       };

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-03-15T11:45:38.774Z",
+  "summary": {
+    "configLoaded": true,
+    "connectionTest": true,
+    "authTest": true,
+    "sendTest": true,
+    "overallStatus": true
+  },
+  "errors": [],
+  "recommendations": []
+}
