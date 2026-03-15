@@ -80,6 +80,36 @@ class EnhancedSources1M {
         rateLimit: 2000,
         lastRequest: 0,
         maxArticles: 10
+      },
+      
+      // AI News Aggregation
+      perplexity_discover: {
+        url: 'https://www.perplexity.ai/discover',
+        name: 'Perplexity Discover',
+        category: 'ai-aggregation',
+        focus: 'AI-powered news aggregation, tech trends, market intelligence',
+        rateLimit: 3000,
+        lastRequest: 0,
+        maxArticles: 20,
+        contentLength: 5000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'AI aggregation leader - 1.2B queries/month',
+        features: ['Pro Search', 'Multi-Model', 'Real-time Updates', 'Citation Quality']
+      },
+      
+      // Perplexity Blog/Updates
+      perplexity_blog: {
+        url: 'https://www.perplexity.ai/hub',
+        name: 'Perplexity Blog',
+        category: 'ai-updates',
+        focus: 'Platform updates, new features, AI insights',
+        rateLimit: 2000,
+        lastRequest: 0,
+        maxArticles: 15,
+        contentLength: 4000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'Official platform updates',
+        features: ['Product Updates', 'Feature Announcements', 'Platform Statistics']
       }
     };
     

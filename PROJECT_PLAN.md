@@ -58,8 +58,8 @@
 - **Status:** 100% real data analysis met 1M context window en evidence-based insights
 - **Features:** Real Data Analyzer, pattern recognition, actionable recommendations
 - **Nieuw:** GitHub release analysis, cross-platform patterns, temporal insights
-- **Enhanced Sources:** 6 nieuwe AI ecosystem bronnen geanalyseerd met 1M context
-- **Categories:** AI Business, Practical, Product Management, Research, Mathematical, Advanced
+- **Enhanced Sources:** 8 nieuwe AI ecosystem bronnen geanalyseerd met 1M context
+- **Categories:** AI Business, Practical, Product Management, Research, Mathematical, Advanced, Aggregation, Updates
 - **1M Context:** Complete document analysis, 5x meer content, cross-source patterns
 - **Cost Optimization:** 95% goedkoper met Qwen 3.5 Plus vs top-ranked modellen
 - **Market Validation:** Windsurf/Cascade #1 AI tool bevestigt agentic workflow trend

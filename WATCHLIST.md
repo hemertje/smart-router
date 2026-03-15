@@ -15,6 +15,8 @@
 - [Hugging Face](https://huggingface.co/inclusionAI) — Ant Group / Ling modellen
 - [DeepSeek Research](https://github.com/deepseek-ai) — DeepSeek V4 ontwikkeling
 - [Tencent AI Lab](https://ai.tencent.com/) — Hunyuan model updates
+- [Perplexity Discover](https://www.perplexity.ai/discover) — AI news aggregation
+- [Perplexity Blog](https://www.perplexity.ai/hub) — Platform updates
 
 **Bij nieuwe release:**
 1. Verifieer model ID op OpenRouter (`/api/v1/models`)
