@@ -99,12 +99,12 @@ class SimpleDailyCheck1M {
     };
   }
 
-  // 🚀 Run enhanced sources analysis with 1M context
+  // 🚀 Run enhanced sources analysis with 1M context (HYBRID)
   async runEnhancedSources1M() {
     return new Promise((resolve, reject) => {
-      console.log('🚀 Running Enhanced Sources 1M Analysis...');
+      console.log('🚀 Running Enhanced Sources Hybrid Analysis...');
       
-      const enhancedSources = spawn('node', ['enhancedSources1M.js'], {
+      const enhancedSources = spawn('node', ['enhancedSourcesHybrid.js'], {
         stdio: 'pipe',
         cwd: __dirname
       });
@@ -123,19 +123,19 @@ class SimpleDailyCheck1M {
       enhancedSources.on('close', (code) => {
         if (code === 0) {
           try {
-            // Read the enhanced sources 1M results
-            const resultsPath = path.join(__dirname, 'enhanced-sources-1m-results.json');
+            // Read the enhanced sources hybrid results
+            const resultsPath = path.join(__dirname, 'enhanced-sources-hybrid-results.json');
             if (fs.existsSync(resultsPath)) {
               const enhancedResults = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
               resolve(enhancedResults);
             } else {
-              resolve({ error: 'Enhanced sources 1M results not found' });
+              resolve({ error: 'Enhanced sources hybrid results not found' });
             }
           } catch (err) {
             reject(err);
           }
         } else {
-          reject(new Error(`Enhanced sources 1M failed: ${error}`));
+          reject(new Error(`Enhanced sources hybrid failed: ${error}`));
         }
       });
 

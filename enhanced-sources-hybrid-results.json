@@ -1,0 +1,527 @@
+{
+  "timestamp": "2026-03-15T12:38:24.821Z",
+  "sources": {
+    "openrouter": {
+      "name": "OpenRouter Models",
+      "category": "ai-models",
+      "focus": "Model rankings, pricing, capabilities",
+      "type": "api",
+      "articles": [
+        {
+          "title": "Model Update: x-ai/grok-4.20-multi-agent-beta",
+          "content": "xAI: Grok 4.20 Multi-Agent Beta - Grok 4.20 Multi-Agent Beta is a variant of xAI’s Grok 4.20 designed for collaborative, agent-based workflows. Multiple agents operate in parallel to conduct deep research, coordinate tool use, and synthesize information across complex tasks.\n\nReasoning effort behavior:\n- low / medium: 4 agents\n- high / xhigh: 16 agents",
+          "link": "https://openrouter.ai/models/x-ai/grok-4.20-multi-agent-beta",
+          "publishedAt": "2026-03-15T12:38:24.986Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: x-ai/grok-4.20-beta",
+          "content": "xAI: Grok 4.20 Beta - Grok 4.20 Beta is xAI's newest flagship model with industry-leading speed and agentic tool calling capabilities. It combines the lowest hallucination rate on the market with strict prompt adherance, delivering consistently precise and truthful responses.\n\nReasoning can be enabled/disabled using the `reasoning` `enabled` parameter in the API. [Learn more in our docs](https://openrouter.ai/docs/use-cases/reasoning-tokens#controlling-reasoning-tokens)",
+          "link": "https://openrouter.ai/models/x-ai/grok-4.20-beta",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: openrouter/hunter-alpha",
+          "content": "Hunter Alpha - Hunter Alpha is a 1 Trillion parameter + 1M token context frontier intelligence model built for agentic use. It excels at long-horizon planning, complex reasoning, and sustained multi-step task execution, with the reliability and instruction-following precision that frameworks like OpenClaw need.\n\n**Note:** All prompts and completions for this model are logged by the provider and may be used to improve the model.",
+          "link": "https://openrouter.ai/models/openrouter/hunter-alpha",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: openrouter/healer-alpha",
+          "content": "Healer Alpha - Healer Alpha is a frontier omni-modal model with vision, hearing, reasoning, and action capabilities. It brings the full power of agentic intelligence into the real world: natively perceiving visual and audio inputs, reasoning across modalities, and executing complex multi-step tasks with precision and reliability.\n\n**Note:** All prompts and completions for this model are logged by the provider and may be used to improve the model.",
+          "link": "https://openrouter.ai/models/openrouter/healer-alpha",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: nvidia/nemotron-3-super-120b-a12b:free",
+          "content": "NVIDIA: Nemotron 3 Super (free) - NVIDIA Nemotron 3 Super is a 120B-parameter open hybrid MoE model, activating just 12B parameters for maximum compute efficiency and accuracy in complex multi-agent applications. Built on a hybrid Mamba-Transformer Mixture-of-Experts architecture with multi-token prediction (MTP), it delivers over 50% higher token generation compared to leading open models.\n \nThe model features a 1M token context window for long-term agent coherence, cross-document reasoning, and multi-step task planning. Latent MoE enables calling 4 experts for the inference cost of only one, improving intelligence and generalization. Multi-environment RL training across 10+ environments delivers leading accuracy on benchmarks including AIME 2025, TerminalBench, and SWE-Bench Verified.\n \nFully open with weights, datasets, and recipes under the NVIDIA Open License, Nemotron 3 Super allows easy customization and secure deployment anywhere — from workstation to cloud.",
+          "link": "https://openrouter.ai/models/nvidia/nemotron-3-super-120b-a12b:free",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: bytedance-seed/seed-2.0-lite",
+          "content": "ByteDance Seed: Seed-2.0-Lite - Seed-2.0-Lite is a versatile, cost‑efficient enterprise workhorse that delivers strong multimodal and agent capabilities while offering noticeably lower latency, making it a practical default choice for most production workloads across text, vision, and tools. Engineered for high-frequency visual understanding and agentic workflows, it's an ideal choice for deployment at scale with minimal latency.",
+          "link": "https://openrouter.ai/models/bytedance-seed/seed-2.0-lite",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: qwen/qwen3.5-9b",
+          "content": "Qwen: Qwen3.5-9B - Qwen3.5-9B is a multimodal foundation model from the Qwen3.5 family, designed to deliver strong reasoning, coding, and visual understanding in an efficient 9B-parameter architecture. It uses a unified vision-language design with early fusion of multimodal tokens, allowing the model to process and reason across text and images within the same context.",
+          "link": "https://openrouter.ai/models/qwen/qwen3.5-9b",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: openai/gpt-5.4-pro",
+          "content": "OpenAI: GPT-5.4 Pro - GPT-5.4 Pro is OpenAI's most advanced model, building on GPT-5.4's unified architecture with enhanced reasoning capabilities for complex, high-stakes tasks. It features a 1M+ token context window (922K input, 128K output) with support for text and image inputs. Optimized for step-by-step reasoning, instruction following, and accuracy, GPT-5.4 Pro excels at agentic coding, long-context workflows, and multi-step problem solving.",
+          "link": "https://openrouter.ai/models/openai/gpt-5.4-pro",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: openai/gpt-5.4",
+          "content": "OpenAI: GPT-5.4 - GPT-5.4 is OpenAI’s latest frontier model, unifying the Codex and GPT lines into a single system. It features a 1M+ token context window (922K input, 128K output) with support for text and image inputs, enabling high-context reasoning, coding, and multimodal analysis within the same workflow.\n\nThe model delivers improved performance in coding, document understanding, tool use, and instruction following. It is designed as a strong default for both general-purpose tasks and software engineering, capable of generating production-quality code, synthesizing information across multiple sources, and executing complex multi-step workflows with fewer iterations and greater token efficiency.",
+          "link": "https://openrouter.ai/models/openai/gpt-5.4",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: inception/mercury-2",
+          "content": "Inception: Mercury 2 - Mercury 2 is an extremely fast reasoning LLM, and the first reasoning diffusion LLM (dLLM).\nInstead of generating tokens sequentially, Mercury 2 produces and refines multiple tokens in parallel, achieving >1,000 tokens/sec on standard GPUs. Mercury 2 is 5x+ faster than leading speed-optimized LLMs like Claude 4.5 Haiku and GPT 5 Mini, at a fraction of the cost. \nMercury 2 supports tunable reasoning levels, 128K context, native tool use, and schema-aligned JSON output. Built for coding workflows where latency compounds, real-time voice/search, and agent loops. OpenAI API compatible. Read more in the [blog post](https://www.inceptionlabs.ai/blog/introducing-mercury-2).",
+          "link": "https://openrouter.ai/models/inception/mercury-2",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: openai/gpt-5.3-chat",
+          "content": "OpenAI: GPT-5.3 Chat - GPT-5.3 Chat is an update to ChatGPT's most-used model that makes everyday conversations smoother, more useful, and more directly helpful. It delivers more accurate answers with better contextualization and significantly reduces unnecessary refusals, caveats, and overly cautious phrasing that can interrupt conversational flow.",
+          "link": "https://openrouter.ai/models/openai/gpt-5.3-chat",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: google/gemini-3.1-flash-lite-preview",
+          "content": "Google: Gemini 3.1 Flash Lite Preview - Gemini 3.1 Flash Lite Preview is Google's high-efficiency model optimized for high-volume use cases. It outperforms Gemini 2.5 Flash Lite on overall quality and approaches Gemini 2.5 Flash performance across key capabilities. Improvements span audio input/ASR, RAG snippet ranking, translation, data extraction, and code completion. Supports full thinking levels (minimal, low, medium, high) for fine-grained cost/performance trade-offs. Priced at half the cost of Gemini 3 Flash.",
+          "link": "https://openrouter.ai/models/google/gemini-3.1-flash-lite-preview",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: bytedance-seed/seed-2.0-mini",
+          "content": "ByteDance Seed: Seed-2.0-Mini - Seed-2.0-mini targets latency-sensitive, high-concurrency, and cost-sensitive scenarios, emphasizing fast response and flexible inference deployment. It delivers performance comparable to ByteDance-Seed-1.6, supports 256k context, four reasoning effort modes (minimal/low/medium/high), multimodal understanding, and is optimized for lightweight tasks where cost and speed take priority.",
+          "link": "https://openrouter.ai/models/bytedance-seed/seed-2.0-mini",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: google/gemini-3.1-flash-image-preview",
+          "content": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview) - Gemini 3.1 Flash Image Preview, a.k.a. \"Nano Banana 2,\" is Google’s latest state of the art image generation and editing model, delivering Pro-level visual quality at Flash speed. It combines advanced contextual understanding with fast, cost-efficient inference, making complex image generation and iterative edits significantly more accessible. Aspect ratios can be controlled with the [image_config API Parameter](https://openrouter.ai/docs/features/multimodal/image-generation#image-aspect-ratio-configuration)",
+          "link": "https://openrouter.ai/models/google/gemini-3.1-flash-image-preview",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: qwen/qwen3.5-35b-a3b",
+          "content": "Qwen: Qwen3.5-35B-A3B - The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency. Its overall performance is comparable to that of the Qwen3.5-27B.",
+          "link": "https://openrouter.ai/models/qwen/qwen3.5-35b-a3b",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: qwen/qwen3.5-27b",
+          "content": "Qwen: Qwen3.5-27B - The Qwen3.5 27B native vision-language Dense model incorporates a linear attention mechanism, delivering fast response times while balancing inference speed and performance. Its overall capabilities are comparable to those of the Qwen3.5-122B-A10B.",
+          "link": "https://openrouter.ai/models/qwen/qwen3.5-27b",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: qwen/qwen3.5-122b-a10b",
+          "content": "Qwen: Qwen3.5-122B-A10B - The Qwen3.5 122B-A10B native vision-language model is built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency. In terms of overall performance, this model is second only to Qwen3.5-397B-A17B. Its text capabilities significantly outperform those of Qwen3-235B-2507, and its visual capabilities surpass those of Qwen3-VL-235B.",
+          "link": "https://openrouter.ai/models/qwen/qwen3.5-122b-a10b",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: qwen/qwen3.5-flash-02-23",
+          "content": "Qwen: Qwen3.5-Flash - The Qwen3.5 native vision-language Flash models are built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency. Compared to the 3 series, these models deliver a leap forward in performance for both pure text and multimodal tasks, offering fast response times while balancing inference speed and overall performance.",
+          "link": "https://openrouter.ai/models/qwen/qwen3.5-flash-02-23",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: liquid/lfm-2-24b-a2b",
+          "content": "LiquidAI: LFM2-24B-A2B - LFM2-24B-A2B is the largest model in the LFM2 family of hybrid architectures designed for efficient on-device deployment. Built as a 24B parameter Mixture-of-Experts model with only 2B active parameters per token, it delivers high-quality generation while maintaining low inference costs. The model fits within 32 GB of RAM, making it practical to run on consumer laptops and desktops without sacrificing capability.",
+          "link": "https://openrouter.ai/models/liquid/lfm-2-24b-a2b",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        },
+        {
+          "title": "Model Update: google/gemini-3.1-pro-preview-customtools",
+          "content": "Google: Gemini 3.1 Pro Preview Custom Tools - Gemini 3.1 Pro Preview Custom Tools is a variant of Gemini 3.1 Pro that improves tool selection behavior by preventing overuse of a general bash tool when more efficient third-party or user-defined functions are available. This specialized preview endpoint significantly increases function calling reliability and ensures the model selects the most appropriate tool in coding agents and complex, multi-tool workflows.\n\nIt retains the core strengths of Gemini 3.1 Pro, including multimodal reasoning across text, image, video, audio, and code, a 1M-token context window, and strong software engineering performance.",
+          "link": "https://openrouter.ai/models/google/gemini-3.1-pro-preview-customtools",
+          "publishedAt": "2026-03-15T12:38:24.987Z",
+          "source": "OpenRouter",
+          "category": "ai-models",
+          "wordCount": 50,
+          "estimatedTokens": 25
+        }
+      ],
+      "totalArticles": 20,
+      "recentArticles": 20,
+      "totalWords": 1000,
+      "estimatedTokens": 500,
+      "method": "api",
+      "success": true
+    },
+    "techcrunch": {
+      "name": "TechCrunch",
+      "category": "ai-business",
+      "focus": "AI startups, funding, technology news",
+      "type": "rss",
+      "articles": [
+        {
+          "title": "The MacBook Neo is ‘the most repairable MacBook’ in years, according to iFixit",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/14/the-macbook-neo-is-the-most-repairable-macbook-in-years-according-to-ifixit/",
+          "publishedAt": "Sat, 14 Mar 2026 21:24:10 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "US Army announces contract with Anduril worth up to $20B",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/14/us-army-announces-contract-with-anduril-worth-up-to-20b/",
+          "publishedAt": "Sat, 14 Mar 2026 20:47:47 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Honda is killing its EVs — and any chance of competing in the future",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/14/honda-is-killing-its-evs-and-any-chance-of-competing-in-the-future/",
+          "publishedAt": "Sat, 14 Mar 2026 17:23:24 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Meta reportedly considering layoffs that could affect 20% of the company",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/14/meta-reportedly-considering-layoffs-that-could-affect-20-of-the-company/",
+          "publishedAt": "Sat, 14 Mar 2026 16:28:42 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "As people look for ways to make new friends, here are the apps promising to help",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/14/as-people-look-for-ways-to-make-new-friends-here-are-the-apps-promising-to-help/",
+          "publishedAt": "Sat, 14 Mar 2026 16:00:00 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "How to use the new ChatGPT app integrations, including DoorDash, Spotify, Uber, and others",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/14/how-to-use-the-new-chatgpt-app-integrations-including-doordash-spotify-uber-and-others/",
+          "publishedAt": "Sat, 14 Mar 2026 13:00:00 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "&#8216;Not built right the first time&#8217; &#8212; Musk&#8217;s xAI is starting over again, again",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/not-built-right-the-first-time-musks-xai-is-starting-over-again-again/",
+          "publishedAt": "Sat, 14 Mar 2026 00:12:22 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Lawyer behind AI psychosis cases warns of mass casualty risks",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/lawyer-behind-ai-psychosis-cases-warns-of-mass-casualty-risks/",
+          "publishedAt": "Sat, 14 Mar 2026 00:01:02 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Digg lays off staff and shuts down app as company retools",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/digg-lays-off-staff-and-shuts-down-app-as-company-retools/",
+          "publishedAt": "Fri, 13 Mar 2026 21:51:17 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Nyne, founded by a father-son duo, gives AI agents the human context they’re missing",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/nyne-founded-by-a-father-son-duo-gives-ai-agents-the-human-context-theyre-missing/",
+          "publishedAt": "Fri, 13 Mar 2026 21:37:01 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Facebook makes it easier for creators to report impersonators",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/facebook-makes-it-easier-for-creators-to-report-impersonators/",
+          "publishedAt": "Fri, 13 Mar 2026 20:48:43 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Steven Spielberg says he&#8217;s &#8216;never used AI&#8217; in any of his films",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/steven-spielberg-says-hes-never-used-ai-in-any-of-his-films/",
+          "publishedAt": "Fri, 13 Mar 2026 19:47:58 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "The biggest AI stories of the year (so far)",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/the-biggest-ai-stories-of-the-year-so-far/",
+          "publishedAt": "Fri, 13 Mar 2026 19:38:11 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Travis Kalanick launches a new company called Atoms focused on robotics",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/travis-kalanick-launches-a-new-company-called-atoms-focused-on-robotics/",
+          "publishedAt": "Fri, 13 Mar 2026 19:28:00 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "The wild six weeks for NanoClaw’s creator that led to a deal with Docker",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/the-wild-six-weeks-for-nanoclaws-creator-that-led-to-a-deal-with-docker/",
+          "publishedAt": "Fri, 13 Mar 2026 17:09:59 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Spotify will let you edit your Taste Profile to control your recommendations",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/spotify-will-let-you-edit-your-taste-profile-to-control-your-recommendations/",
+          "publishedAt": "Fri, 13 Mar 2026 17:04:12 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "The $32B acquisition that one VC is calling the &#8216;Deal of the Decade&#8217;",
+          "content": "",
+          "link": "https://techcrunch.com/video/the-32b-acquisition-that-one-vc-is-calling-the-deal-of-the-decade/",
+          "publishedAt": "Fri, 13 Mar 2026 16:20:23 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Apple drops commission rates in China without a fuss",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/apple-drops-commission-rates-in-china-25-percent/",
+          "publishedAt": "Fri, 13 Mar 2026 15:12:14 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "The FBI is investigating malware hidden inside games hosted on Steam",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/valve-steam-malware-games-fbi/",
+          "publishedAt": "Fri, 13 Mar 2026 14:55:06 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        },
+        {
+          "title": "Peacock expands into AI-driven video, mobile-first live sports, and gaming",
+          "content": "",
+          "link": "https://techcrunch.com/2026/03/13/peacock-expands-into-ai-driven-video-mobile-first-live-sports-and-gaming/",
+          "publishedAt": "Fri, 13 Mar 2026 14:00:00 +0000",
+          "source": "TechCrunch",
+          "wordCount": 1,
+          "estimatedTokens": 2
+        }
+      ],
+      "totalArticles": 20,
+      "recentArticles": 20,
+      "totalWords": 20,
+      "estimatedTokens": 40,
+      "method": "rss",
+      "success": true
+    },
+    "github": {
+      "name": "GitHub AI",
+      "category": "ai-development",
+      "focus": "AI repositories, releases, commits",
+      "type": "archive",
+      "articles": [
+        {
+          "title": "GitHub Release: openai/openai-python - v2.28.0",
+          "content": "## 2.28.0 (2026-03-13)\n\nFull Changelog: [v2.27.0...v2.28.0](https://github.com/openai/openai-python/compare/v2.27.0...v2.28.0)\n\n### Features\n\n* **api:** custom voices ([50dc060](https://github.com/openai/openai-python/commit/50dc060b55767615419219ef567d31210517e613))",
+          "link": "https://github.com/openai/openai-python/releases/tag/v2.28.0",
+          "publishedAt": "2026-03-13T19:55:50Z",
+          "source": "GitHub",
+          "category": "ai-development",
+          "wordCount": 13,
+          "estimatedTokens": 17
+        },
+        {
+          "title": "GitHub Release: anthropics/anthropic-sdk-python - v0.84.0",
+          "content": "## 0.84.0 (2026-02-25)\n\nFull Changelog: [v0.83.0...v0.84.0](https://github.com/anthropics/anthropic-sdk-python/compare/v0.83.0...v0.84.0)\n\n### Features\n\n* **api:** change array_format to brackets ([925d2ad](https://github.com/anthropics/anthropic-sdk-python/commit/925d2ad6b76ad7c15de07b9b2768738775f71631))\n* **api:** remove publishing section from cli target ([7bc7ceb](https://github.com/anthropics/anthropic-sdk-python/commit/7bc7cebc68db70f08fce23e7e0b24acbc9ff37a7))\n* **helpers:** add conversion helpers for MCP tools, prompts, and resources ([#1383](https://github.com/anthropics/anthropic-sdk-python/issues/1383)) ([9489751](https://github.com/anthropics/anthropic-sdk-python/commit/9489751386d1540bf80eff63ab47ca2b3cc18fa1))\n\n\n### Chores\n\n* add missing raw jsonl results method ([1009d4a](https://github.com/anthropics/anthropic-sdk-python/commit/1009d4aca8be42973ca39104bc9bd8087f51ff9c))\n* **internal:** add request options to SSE classes ([4f4bc8e](https://github.com/anthropics/anthropic-sdk-python/commit/4f4bc8e6241c2ccee8dfe4cdbc522081e3e30f08))\n* **internal:** make `test_proxy_environment_variables` more resilient ([f7056e0](https://github.com/anthropics/anthropic-sdk-python/commit/f7056e09411a45798a678be5766a7b7d6dcbc7a9))\n* **internal:** make `test_proxy_environment_variables` more resilient to env ([143efcc](https://github.com/anthropics/anthropic-sdk-python/commit/143efccfcc20c12f920b6ba242eff7c0feeea7c4))\n* **internal:** simplify http snapshots ([#1092](https://github.com/anthropics/anthropic-sdk-python/issues/1092)) ([4a4dc9f](https://github.com/anthropics/anthropic-sdk-python/commit/4a4dc9f6b36ab0224095790f4311c7f60c9845f7))\n* **internal:** update jsonl tests ([a8e6a6e](https://github.com/anthropics/anthropic-sdk-python/commit/a8e6a6e5544b9f1626e3fb5faa31a1accfc81441))\n\n\n### Documentation\n\n* rebrand to Claude SDK and streamline README ([6b54405](https://github.com/anthropics/anthropic-sdk-python/commit/6b544058ab19e55e1c76a4ba9816205d1eedc630))",
+          "link": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.84.0",
+          "publishedAt": "2026-02-25T05:22:10Z",
+          "source": "GitHub",
+          "category": "ai-development",
+          "wordCount": 96,
+          "estimatedTokens": 125
+        }
+      ],
+      "totalArticles": 2,
+      "recentArticles": 1,
+      "totalWords": 109,
+      "estimatedTokens": 142,
+      "method": "archive",
+      "success": true
+    }
+  },
+  "totalArticles": 42,
+  "categories": {
+    "ai-models": 20,
+    "ai-business": 20,
+    "ai-development": 2
+  },
+  "insights": [
+    {
+      "type": "method-performance",
+      "totalMethods": 6,
+      "successRate": "50.0%",
+      "bestMethod": {
+        "method": "api",
+        "count": 1
+      },
+      "failedMethods": 3
+    },
+    {
+      "type": "category-coverage",
+      "categories": 3,
+      "topCategory": {
+        "category": "ai-models",
+        "count": 20
+      },
+      "distribution": {
+        "ai-models": 20,
+        "ai-business": 20,
+        "ai-development": 2
+      }
+    },
+    {
+      "type": "content-volume",
+      "totalArticles": 42,
+      "averagePerSource": "7.0",
+      "topSource": {
+        "source": "OpenRouter Models",
+        "count": 20
+      }
+    }
+  ],
+  "crossSourcePatterns": [
+    {
+      "type": "trending-keywords",
+      "keywords": [
+        {
+          "keyword": "model",
+          "count": 20
+        },
+        {
+          "keyword": "update:",
+          "count": 20
+        },
+        {
+          "keyword": "that",
+          "count": 3
+        },
+        {
+          "keyword": "company",
+          "count": 3
+        },
+        {
+          "keyword": "with",
+          "count": 2
+        }
+      ],
+      "totalTitles": 42
+    }
+  ],
+  "tokenUsage": {
+    "estimated": 682,
+    "contextWindow": "1M",
+    "contextUtilization": "0.07% of 1M"
+  },
+  "methods": {
+    "api": 1,
+    "rss": 1,
+    "browser": 0,
+    "archive": 1,
+    "failed": 3
+  }
+}
