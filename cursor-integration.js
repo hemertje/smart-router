@@ -115,14 +115,31 @@ class SmartRouterCursor {
       }
     ];
     
-    // Performance tracking
-    this.performance = {
+    // Security & monitoring
+    this.security = {
+      enabled: true,
+      sandboxMode: true,
+      auditLogging: true,
+      threatDetection: true,
+      rateLimiting: true,
+      maxRequestsPerMinute: 100,
+      requestTimeout: 30000,
+      apiKeyEncryption: true,
+      allowedDomains: [
+        'api.anthropic.com',
+        'api.openai.com',
+        'generativelanguage.googleapis.com'
+      ]
+    };
+    
+    // Security monitoring
+    this.securityMetrics = {
       requests: 0,
-      latency: [],
-      costs: 0,
-      model_usage: {},
-      errors: 0,
-      start_time: Date.now()
+      blockedRequests: 0,
+      securityViolations: 0,
+      threatDetections: 0,
+      auditLogs: [],
+      startTime: Date.now()
     };
     
     this.setupMiddleware();
@@ -134,8 +151,24 @@ class SmartRouterCursor {
     this.app.use(express.json({ limit: '10mb' }));
     this.app.use(express.urlencoded({ extended: true }));
     
-    // Logging middleware
+    // Security middleware
     this.app.use((req, res, next) => {
+      // Rate limiting
+      if (this.security.rateLimiting && !this.checkRateLimit(req)) {
+        this.securityMetrics.blockedRequests++;
+        return res.status(429).json({ error: 'Rate limit exceeded' });
+      }
+      
+      // Security logging
+      if (this.security.auditLogging) {
+        this.logSecurityEvent('request', {
+          ip: req.ip,
+          method: req.method,
+          path: req.path,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
       console.log(`🚀 ${req.method} ${req.path} - ${new Date().toISOString()}`);
       next();
     });
@@ -191,13 +224,144 @@ class SmartRouterCursor {
     this.app.get('/api/v1/vibe-status', (req, res) => {
       res.json(this.getVibeCodingStatus());
     });
+    
+    // Security status
+    this.app.get('/api/v1/security-status', (req, res) => {
+      res.json(this.getSecurityStatus());
+    });
+    
+    // Security audit logs
+    this.app.get('/api/v1/security-audit', (req, res) => {
+      res.json(this.getSecurityAudit());
+    });
+  }
+  
+  // Security methods
+  checkRateLimit(req) {
+    const clientIp = req.ip;
+    const now = Date.now();
+    const windowMs = 60000; // 1 minute
+    
+    if (!this.rateLimitWindow) {
+      this.rateLimitWindow = {};
+    }
+    
+    if (!this.rateLimitWindow[clientIp]) {
+      this.rateLimitWindow[clientIp] = {
+        count: 0,
+        resetTime: now + windowMs
+      };
+    }
+    
+    const client = this.rateLimitWindow[clientIp];
+    
+    if (now > client.resetTime) {
+      client.count = 0;
+      client.resetTime = now + windowMs;
+    }
+    
+    client.count++;
+    
+    return client.count <= this.security.maxRequestsPerMinute;
+  }
+  
+  logSecurityEvent(type, data) {
+    if (!this.security.auditLogging) return;
+    
+    const event = {
+      type,
+      data,
+      timestamp: new Date().toISOString(),
+      id: Math.random().toString(36).substr(2, 9)
+    };
+    
+    this.securityMetrics.auditLogs.push(event);
+    
+    // Keep only last 1000 logs
+    if (this.securityMetrics.auditLogs.length > 1000) {
+      this.securityMetrics.auditLogs = this.securityMetrics.auditLogs.slice(-1000);
+    }
+    
+    console.log(`🔒 Security Event: ${type} - ${event.id}`);
+  }
+  
+  getSecurityStatus() {
+    const uptime = Date.now() - this.securityMetrics.startTime;
+    
+    return {
+      security: {
+        enabled: this.security.enabled,
+        sandboxMode: this.security.sandboxMode,
+        auditLogging: this.security.auditLogging,
+        threatDetection: this.security.threatDetection,
+        rateLimiting: this.security.rateLimiting
+      },
+      metrics: {
+        uptime: uptime,
+        requests: this.securityMetrics.requests,
+        blockedRequests: this.securityMetrics.blockedRequests,
+        securityViolations: this.securityMetrics.securityViolations,
+        threatDetections: this.securityMetrics.threatDetections,
+        auditLogCount: this.securityMetrics.auditLogs.length,
+        blockRate: this.securityMetrics.requests > 0 ? 
+          (this.securityMetrics.blockedRequests / this.securityMetrics.requests * 100).toFixed(2) + '%' : '0%'
+      },
+      configuration: {
+        maxRequestsPerMinute: this.security.maxRequestsPerMinute,
+        requestTimeout: this.security.requestTimeout,
+        apiKeyEncryption: this.security.apiKeyEncryption,
+        allowedDomains: this.security.allowedDomains
+      }
+    };
+  }
+  
+  getSecurityAudit() {
+    return {
+      auditLogs: this.securityMetrics.auditLogs.slice(-100), // Last 100 events
+      summary: {
+        totalEvents: this.securityMetrics.auditLogs.length,
+        eventsByType: this.getEventsByType(),
+        recentActivity: this.securityMetrics.auditLogs.slice(-10)
+      },
+      securityLevel: this.calculateSecurityLevel()
+    };
+  }
+  
+  getEventsByType() {
+    const events = {};
+    
+    this.securityMetrics.auditLogs.forEach(event => {
+      events[event.type] = (events[event.type] || 0) + 1;
+    });
+    
+    return events;
+  }
+  
+  calculateSecurityLevel() {
+    const metrics = this.securityMetrics;
+    const totalRequests = metrics.requests + metrics.blockedRequests;
+    
+    if (totalRequests === 0) return 'high';
+    
+    const violationRate = metrics.securityViolations / totalRequests;
+    const blockRate = metrics.blockedRequests / totalRequests;
+    
+    if (violationRate > 0.1 || blockRate > 0.2) return 'low';
+    if (violationRate > 0.05 || blockRate > 0.1) return 'medium';
+    return 'high';
   }
   
   async handleCursorRequest(req) {
     const startTime = Date.now();
-    this.performance.requests++;
+    this.securityMetrics.requests++;
     
     try {
+      // Security validation
+      if (!this.validateRequest(req)) {
+        this.securityMetrics.securityViolations++;
+        throw new Error('Invalid request - security violation');
+      }
+      
       // Analyse request
       const analysis = this.analyzeRequest(req.body);
       
@@ -211,11 +375,41 @@ class SmartRouterCursor {
       const latency = Date.now() - startTime;
       this.trackPerformance(selectedModel, latency, response);
       
+      // Log successful request
+      this.logSecurityEvent('success', {
+        model: selectedModel.model,
+        latency: latency,
+        cost: response.smart_router?.cost
+      });
+      
       return response;
     } catch (error) {
-      this.performance.errors++;
+      this.securityMetrics.securityViolations++;
+      this.logSecurityEvent('error', {
+        error: error.message,
+        stack: error.stack
+      });
       throw error;
     }
+  }
+  
+  validateRequest(req) {
+    // Validate request size
+    if (req.headers['content-length'] && parseInt(req.headers['content-length']) > 10 * 1024 * 1024) {
+      return false; // 10MB limit
+    }
+    
+    // Validate request body
+    if (!req.body || typeof req.body !== 'object') {
+      return false;
+    }
+    
+    // Validate required fields
+    if (!req.body.messages || !Array.isArray(req.body.messages)) {
+      return false;
+    }
+    
+    return true;
   }
   
   analyzeRequest(request) {

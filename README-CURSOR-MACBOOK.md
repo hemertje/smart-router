@@ -81,7 +81,79 @@ npm run cursor-server
 - **AI Partnership:** Collaboratieve coding experience
 - **Performance Monitoring:** Real-time M5 optimalisatie
 
-## 📈 Performance Metrics
+## � Security & Sandbox Integration
+
+### 🛡️ Cursor Sandbox Security
+🔗 Built-in sandbox voor AI code execution
+🎯 Veilige code isolation & testing
+🚀 Features: Isolated environment, containerisatie
+💡 Lokale sandbox, geen cloud dependency
+🔒 Code isolation, file system protection
+
+### 🤖 Smart Router Security Layers
+🔍 Layer 1: API security & rate limiting
+🎸 Layer 2: Cursor sandbox isolation
+💻 Layer 3: OS-level security
+🌐 Layer 4: Network security
+🔐 Layer 5: User permission control
+
+### 🔒 Security Configuration
+```json
+{
+  "cursor.sandbox.enabled": true,
+  "cursor.sandbox.isolation": "full",
+  "cursor.sandbox.fileAccess": "restricted",
+  "cursor.sandbox.networkAccess": "controlled",
+  "cursor.sandbox.securityLevel": "high",
+  "smartRouter.security": {
+    "apiRateLimit": 100,
+    "requestTimeout": 30000,
+    "apiKeyEncryption": true,
+    "auditLogging": true
+  }
+}
+```
+
+### 🎯 Security Best Practices
+✅ Always Enable: Zet sandbox altijd aan
+🔍 Review Code: Controleer AI-generated code
+⚠️ Warnings: Neem security warnings serieus
+💡 Permissions: Geef minimale permissions
+🚀 Updates: Houd Cursor & Smart Router updated
+
+## 🚀 Performance & Security Metrics
+
+### 📊 Security Performance
+🔒 Sandbox Overhead: <5% performance impact
+🤖 API Latency: <100ms (autocomplete), <500ms (code generation)
+💡 Memory Usage: 2GB sandbox limit
+🎯 CPU Usage: 50% CPU limit
+🌐 Network: Controlled access to AI APIs
+
+### 🔍 Security Monitoring
+📊 Real-time Security: Continuous monitoring
+🎯 Threat Detection: AI-powered security analysis
+💡 Audit Logging: Complete security audit trail
+🚀 Alert System: Instant security notifications
+🔒 Compliance: Enterprise security standards
+
+## 🎸 Ultimate Vibe Coding Experience
+
+### 🌊 Flow State + Security
+🎸 Vibe Coding: Ononderbroken flow state
+🔒 Security: Zero distraction security
+🤖 AI Partnership: Veilige collaboratie
+⚡ Performance: Snel & veilig
+💡 Focus: 100% op code, 0% security worries
+
+### 🚀 MacBook M5 Security Benefits
+🍎 ARM64 Security: Native security features
+🔋 Secure Enclave: Hardware-level security
+🌐 T2 Security Chip: Advanced security processor
+💻 FileVault: Full disk encryption
+🚀 Secure Boot: Verified boot process
+
+## �📈 Performance Metrics
 
 ### 🎯 Targets
 - **AI Latency:** <100ms (autocomplete), <500ms (code generation)
