@@ -17,6 +17,8 @@
 - [Tencent AI Lab](https://ai.tencent.com/) — Hunyuan model updates
 - [Perplexity Discover](https://www.perplexity.ai/discover) — AI news aggregation
 - [Perplexity Blog](https://www.perplexity.ai/hub) — Platform updates
+- [Cursor IDE](https://cursor.com/) — IDE features, AI enhancements
+- [Cursor Blog](https://cursor.com/blog) — Development insights, AI partnership
 
 **Bij nieuwe release:**
 1. Verifieer model ID op OpenRouter (`/api/v1/models`)

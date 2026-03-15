@@ -75,6 +75,48 @@ class EnhancedSourcesHybrid {
         fallback: 'rss' // Fallback naar RSS indien browser fails
       },
       
+      perplexity_blog: {
+        url: 'https://www.perplexity.ai/hub',
+        name: 'Perplexity Blog',
+        category: 'ai-updates',
+        focus: 'Platform updates, new features, AI insights',
+        rateLimit: 2000,
+        lastRequest: 0,
+        maxArticles: 15,
+        contentLength: 4000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'Official platform updates',
+        features: ['Product Updates', 'Feature Announcements', 'Platform Statistics']
+      },
+      
+      cursor: {
+        url: 'https://cursor.com/',
+        name: 'Cursor IDE',
+        category: 'ide-updates',
+        focus: 'IDE features, AI enhancements, vibe coding tools',
+        rateLimit: 3000,
+        lastRequest: 0,
+        maxArticles: 20,
+        contentLength: 5000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'Leading AI-enhanced IDE',
+        features: ['AI Integration', 'Vibe Coding', 'Composer Mode', 'Multi-Model Support']
+      },
+      
+      cursor_blog: {
+        url: 'https://cursor.com/blog',
+        name: 'Cursor Blog',
+        category: 'ide-insights',
+        focus: 'Development insights, AI partnership, coding experience',
+        rateLimit: 2000,
+        lastRequest: 0,
+        maxArticles: 15,
+        contentLength: 4000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'AI IDE thought leadership',
+        features: ['Development Insights', 'AI Partnership', 'Coding Experience', 'Best Practices']
+      },
+      
       // Archive-based bronnen
       github: {
         type: 'archive',
