@@ -69,18 +69,60 @@ exports.CHINESE_MODELS = {
         model: 'qwen/qwen3.5-plus-02-15',
         cost: 0.24,
         maxTokens: 1000000,
-        description: 'Qwen 3.5 Plus (1M tokens, Chinese model)'
+        description: 'Qwen 3.5 Plus (1M tokens, 95% cheaper than Claude, Not in top 5 but best value)',
+        ranking: 'Best value - 95% cheaper than top models',
+        marketPosition: 'Cost-optimized leader'
     },
     minimax: {
         model: 'minimax/minimax-m2.5',
         cost: 0.15,
         maxTokens: 196608,
-        description: 'MiniMax M2.5 (verbeterde AI agent tools)'
+        description: 'MiniMax M2.5 (verbeterde AI agent tools)',
+        ranking: 'Budget option',
+        marketPosition: 'Ultra-low cost'
     },
     alibaba: {
         model: 'qwen/qwen3.5-397b-a17b',
         cost: 0.36,
         maxTokens: 262144,
-        description: 'Qwen 3.5 397B (next-generation architectuur)'
+        description: 'Qwen 3.5 397B (next-generation architectuur)',
+        ranking: 'Performance option',
+        marketPosition: 'Advanced features'
+    }
+};
+
+// Nieuwe top-ranked modellen (Maart 2026)
+exports.TOP_RANKED_MODELS = {
+    claude_opus: {
+        model: 'anthropic/claude-4.6-opus',
+        cost: 15.00,
+        maxTokens: 1000000,
+        description: 'Claude 4.6 Opus - Technical leader with 1M context',
+        ranking: '#1 Technical leader',
+        marketPosition: 'Premium choice'
+    },
+    gemini_pro: {
+        model: 'google/gemini-3.1-pro',
+        cost: 2.00,
+        maxTokens: 1000000,
+        description: 'Gemini 3.1 Pro - Efficiency champion with $2/$12 pricing',
+        ranking: '#2 Efficiency champion',
+        marketPosition: 'Best price-to-performance'
+    },
+    claude_sonnet: {
+        model: 'anthropic/claude-4.6-sonnet',
+        cost: 3.00,
+        maxTokens: 1000000,
+        description: 'Claude Sonnet 4.6 - Accessible powerhouse with 1M context',
+        ranking: '#3 Accessible powerhouse',
+        marketPosition: 'Balanced choice'
+    },
+    glm_five: {
+        model: 'thudm/glm-5',
+        cost: 1.00,
+        maxTokens: 1000000,
+        description: 'GLM-5 - Open-source leader with MIT license',
+        ranking: '#5 Open-source leader',
+        marketPosition: 'Open-source champion'
     }
 };

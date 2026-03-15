@@ -18,8 +18,10 @@ class EnhancedSources1M {
         category: 'ai-business',
         focus: 'AI funding, enterprise trends, venture capital',
         rateLimit: 3000,
-        lastRequest: 0,
-        maxArticles: 20 // Increased for 1M context
+        maxArticles: 10,
+        contentLength: 8000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'Not ranked but 95% cheaper than top models'
       },
       
       // Practical AI & Tutorials
@@ -30,7 +32,10 @@ class EnhancedSources1M {
         focus: 'Beginner-friendly AI guides, practical applications',
         rateLimit: 2000,
         lastRequest: 0,
-        maxArticles: 15
+        maxArticles: 15,
+        contentLength: 6000,
+        model: 'qwen/qwen3.5-plus-02-15', // Cost-optimized 1M context
+        ranking: 'Not ranked but 95% cheaper than top models'
       },
       
       // Product Management & AI Tools
