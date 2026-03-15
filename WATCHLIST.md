@@ -13,6 +13,8 @@
 - [Anthropic News](https://www.anthropic.com/news) — Claude releases
 - [Qwen Blog](https://qwen.ai/research) — Alibaba model updates
 - [Hugging Face](https://huggingface.co/inclusionAI) — Ant Group / Ling modellen
+- [DeepSeek Research](https://github.com/deepseek-ai) — DeepSeek V4 ontwikkeling
+- [Tencent AI Lab](https://ai.tencent.com/) — Hunyuan model updates
 
 **Bij nieuwe release:**
 1. Verifieer model ID op OpenRouter (`/api/v1/models`)

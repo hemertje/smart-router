@@ -88,6 +88,25 @@ exports.CHINESE_MODELS = {
         description: 'Qwen 3.5 397B (next-generation architectuur)',
         ranking: 'Performance option',
         marketPosition: 'Advanced features'
+    },
+    deepseek_v4: {
+        model: 'deepseek/deepseek-v4',
+        cost: 'TBD', // Wordt verwacht in April 2026
+        maxTokens: 1000000,
+        description: 'DeepSeek V4 (Revolutionary DSA architecture, 50% cost reduction)',
+        ranking: 'Game-changer - Coming April 2026',
+        marketPosition: 'Next-gen cost leader',
+        features: ['DSA', 'Engram Memory', 'Repository-Level', 'Open Source']
+    },
+    tencent_hunyuan: {
+        model: 'tencent/hunyuan-v4',
+        cost: 'TBD', // Wordt verwacht in April 2026
+        maxTokens: 1000000,
+        description: 'Tencent Hunyuan V4 (Ex-OpenAI talent, multimodal capabilities)',
+        ranking: 'Multimodal contender - Coming April 2026',
+        marketPosition: 'Multimodal innovation',
+        leader: 'Yao Shunyu (ex-OpenAI)',
+        features: ['Multimodal', 'Memory Optimization']
     }
 };
 

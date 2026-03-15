@@ -165,6 +165,8 @@
 - **Open Source:** MIT licensed modellen winnen aan populariteit
 - **Cost Optimization:** 90% besparing mogelijk met alternatieven
 - **Market Position:** 1M context is de nieuwe standaard
+- **Chinese Innovation:** DeepSeek V4 DSA biedt 50% cost reduction
+- **Tencent Hunyuan:** Ex-OpenAI talent leidt tot multimodal capabilities
 
 ---
 
