@@ -6,7 +6,7 @@
   "publisher": "jeroenvanhemert",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hemertje/smart-router"
+    "url": "https://github.com/hemertje/smart-router-v3.0.0"
   },
   "engines": {
     "vscode": "^1.74.0"
