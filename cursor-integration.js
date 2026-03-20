@@ -9,16 +9,26 @@
 
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 
-class SmartRouterCursor {
-  constructor() {
+// Import Agent Framework
+const { AgentFramework, ContextManager } = require('./agent-framework');
+const { AgentFactory } = require('./specialized-agents');
+
+class SmartRouterCursorIntegration {
+  constructor(port = 3000) {
+    this.port = port;
     this.app = express();
-    this.port = process.env.CURSOR_PORT || 3000;
     
-    // M5 geoptimaliseerde model portfolio
+    // Initialize Agent Framework
+    this.agentFramework = new AgentFramework();
+    this.contextManager = new ContextManager();
+    
+    // Initialize agents
+    this.initializeAgents();
+    
+    // Enhanced models with agent capabilities
     this.models = {
       // Ultra-fast voor autocomplete
       'cursor-haiku': {
@@ -142,8 +152,31 @@ class SmartRouterCursor {
       startTime: Date.now()
     };
     
+    // Initialize agents
+    this.initializeAgents();
+    
     this.setupMiddleware();
     this.setupRoutes();
+  }
+  
+  // Initialize all AI agents
+  initializeAgents() {
+    const config = {
+      anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+      openaiApiKey: process.env.OPENAI_API_KEY,
+      googleApiKey: process.env.GOOGLE_API_KEY,
+      smartRouterEndpoint: `http://localhost:${this.port}`
+    };
+    
+    // Create and register agents
+    const agents = AgentFactory.createAllAgents(config);
+    
+    for (const [name, agent] of Object.entries(agents)) {
+      this.agentFramework.registerAgent(name, agent, agent.capabilities);
+    }
+    
+    console.log('🤖 All AI agents initialized and registered');
+    console.log('📊 Available agents:', Object.keys(agents));
   }
   
   setupMiddleware() {
@@ -234,6 +267,97 @@ class SmartRouterCursor {
     this.app.get('/api/v1/security-audit', (req, res) => {
       res.json(this.getSecurityAudit());
     });
+    
+    // Agent framework endpoints
+    this.app.get('/api/v1/agents', (req, res) => {
+      res.json(this.getAgentStats());
+    });
+    
+    this.app.get('/api/v1/agents/:name/stats', (req, res) => {
+      const agentName = req.params.name;
+      const stats = this.agentFramework.getAgentStats()[agentName];
+      if (stats) {
+        res.json(stats);
+      } else {
+        res.status(404).json({ error: 'Agent not found' });
+      }
+    });
+    
+    this.app.post('/api/v1/agent-task', async (req, res) => {
+      try {
+        const result = await this.executeAgentTask(req.body);
+        res.json(result);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+  }
+  
+  // Execute task using agent framework
+  async executeAgentTask(task) {
+    const context = {
+      batteryLevel: this.getBatteryLevel(),
+      thermalState: this.getThermalState(),
+      timestamp: new Date().toISOString()
+    };
+    
+    const result = await this.agentFramework.executeTask(task, context);
+    
+    // Log agent usage
+    this.logSecurityEvent('agent-task', {
+      agent: result.agent,
+      taskType: task.type,
+      latency: result.latency,
+      success: result.success
+    });
+    
+    return result;
+  }
+  
+  // Get agent statistics
+  getAgentStats() {
+    return {
+      agents: this.agentFramework.getAgentStats(),
+      framework: {
+        totalAgents: this.agentFramework.agents.size,
+        totalTasks: Array.from(this.agentFramework.performance.values())
+          .reduce((sum, perf) => sum + perf.tasks, 0),
+        avgSuccessRate: this.calculateOverallSuccessRate()
+      }
+    };
+  }
+  
+  // Calculate overall success rate
+  calculateOverallSuccessRate() {
+    const performances = Array.from(this.agentFramework.performance.values());
+    const totalTasks = performances.reduce((sum, perf) => sum + perf.tasks, 0);
+    const totalSuccess = performances.reduce((sum, perf) => sum + perf.success, 0);
+    
+    return totalTasks > 0 ? totalSuccess / totalTasks : 0;
+  }
+  
+  // Get battery level (MacBook specific)
+  getBatteryLevel() {
+    try {
+      // On macOS, we can use system_profiler
+      const { execSync } = require('child_process');
+      const output = execSync('system_profiler SPPowerDataType | grep "Charge Remaining"', { encoding: 'utf8' });
+      const match = output.match(/(\d+)/);
+      return match ? parseInt(match[1]) : 100;
+    } catch (error) {
+      return 100; // Default to full battery
+    }
+  }
+  
+  // Get thermal state
+  getThermalState() {
+    // Simplified thermal detection
+    const cpuUsage = process.cpuUsage();
+    const totalUsage = cpuUsage.user + cpuUsage.system;
+    
+    if (totalUsage > 1000000) return 'high';
+    if (totalUsage > 500000) return 'medium';
+    return 'normal';
   }
   
   // Security methods
