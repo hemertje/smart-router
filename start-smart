@@ -1,0 +1,38 @@
+#!/bin/bash
+# Smart Router v3.0 - Universal Entry Point
+# Usage: start-smart "your task here"
+# Or: start-smart (interactive)
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NODE_PATH="$(which node)"
+
+# Colors for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}🚀 Smart Router v3.0 - Universal AI Orchestrator${NC}\n"
+
+if [ $# -eq 0 ]; then
+    echo -e "${YELLOW}Interactive mode${NC}"
+    echo "Usage: start-smart \"<your task>\""
+    echo ""
+    echo "Examples:"
+    echo "  start-smart \"fix yaml syntax error in package_dao_zendure\""
+    echo "  start-smart \"analyze DAO forecast accuracy\""
+    echo "  start-smart \"refactor automation triggers\""
+    echo ""
+    read -p "📝 Task: " TASK
+    if [ -z "$TASK" ]; then
+        echo -e "${YELLOW}No task provided. Exiting.${NC}"
+        exit 0
+    fi
+else
+    TASK="$@"
+fi
+
+echo -e "\n${GREEN}Routing: \"$TASK\"${NC}\n"
+
+# Run the orchestrator
+"$NODE_PATH" "$SCRIPT_DIR/src/universalOrchestrator.js" "$TASK"
